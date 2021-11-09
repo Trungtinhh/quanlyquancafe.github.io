@@ -170,7 +170,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class='background-success'>
+                                        <div>
                                             <label class="form-label" autocomplete="off">Thời gian bắt đầu: </label>
                                             <input class="form-input" wire:model.lazy='time_start' type="dateTime-local" value="">
                                         </div>

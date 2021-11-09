@@ -48,19 +48,32 @@ class Shift extends Component
     {
         $this->validate();
         if (!SH::where('name', $this->shift_name)->exists()) {
-            SH::create([
-                'name' => $this->shift_name,
-                'time_start' => $this->time_start,
-                'time_end' => $this->time_end,
-                'color' => $this->color,
-            ]);
-            $this->dispatchBrowserEvent('alert', [
-                'type' => 'success',
-                'message' => "Thêm thành công!"
-            ]);
+            if ($this->time_end < $this->time_start) {
+                SH::create([
+                    'name' => $this->shift_name,
+                    'time_start' => $this->time_start,
+                    'time_end' => $this->time_end . ' hôm sau',
+                    'color' => $this->color,
+                ]);
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'success',
+                    'message' => "Thêm thành công!"
+                ]);
+            } else {
+                SH::create([
+                    'name' => $this->shift_name,
+                    'time_start' => $this->time_start,
+                    'time_end' => $this->time_end,
+                    'color' => $this->color,
+                ]);
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'success',
+                    'message' => "Thêm thành công!"
+                ]);
+            }
             $this->resetAll();
             $this->closeAdd();
-        }else{
+        } else {
             $this->noti = 'Tên ca đã có';
         }
     }
@@ -88,17 +101,31 @@ class Shift extends Component
     public function storeEditShift()
     {
         $this->validate();
-        SH::where('id', $this->shift_edit['id'])->update([
-            'name' => $this->shift_name,
-            'time_start' => $this->time_start,
-            'time_end' => $this->time_end,
-            'color' => $this->color,
-        ]);
-        $this->resetAll();
-        $this->dispatchBrowserEvent('alert', [
-            'type' => 'success',
-            'message' => "Cập nhật thành công!"
-        ]);
+        if ($this->time_end < $this->time_start) {
+            SH::where('id', $this->shift_edit['id'])->update([
+                'name' => $this->shift_name,
+                'time_start' => $this->time_start,
+                'time_end' => $this->time_end . ' hôm sau',
+                'color' => $this->color,
+            ]);
+            $this->resetAll();
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Cập nhật thành công!"
+            ]);
+        } else {
+            SH::where('id', $this->shift_edit['id'])->update([
+                'name' => $this->shift_name,
+                'time_start' => $this->time_start,
+                'time_end' => $this->time_end,
+                'color' => $this->color,
+            ]);
+            $this->resetAll();
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Cập nhật thành công!"
+            ]);
+        }
     }
     public function closeEdit()
     {

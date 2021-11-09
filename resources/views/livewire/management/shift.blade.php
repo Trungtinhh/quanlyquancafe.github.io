@@ -195,7 +195,7 @@
                     </div>
                     <div class="modal-footer">
                         <button wire:click='closeAdd' type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Close</button>
-                        <button style='padding-left: 30px;padding-right: 30px;' class="btn btn-danger" type="submit"><i class="mdi mdi-check"></i> XONG </button>
+                        <button wire:click='closeAdd' style='padding-left: 30px;padding-right: 30px;' class="btn btn-danger" type="submit"><i class="mdi mdi-check"></i> XONG </button>
                     </div>
                 </div><!-- /.modal-content -->
             </form>

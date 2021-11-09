@@ -224,7 +224,7 @@
                                     <table class="table table-bordered mb-0">
                                         <thead class='table-dark'>
                                             <tr>
-                                                <th class='text-center align-middle'>Ca làm</th>
+                                                <th class='text-center align-middle'>Ngày</th>
 
                                                 @foreach($shift as $value)
                                                 <th class='text-center align-middle'>{{ $value->name }}</th>
