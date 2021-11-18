@@ -15,7 +15,7 @@ class CreateImportgoodsDrinksTable extends Migration
     {
         Schema::create('importgoods_drinks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('drink_id')->unsigned()->nullable();
+            $table->bigInteger('drink_id')->unsigned();
             $table->foreign('drink_id')->references('drink_id')->on('drinks')->onDelete('cascade');
             $table->integer('amount_add');
             $table->date('date_add');

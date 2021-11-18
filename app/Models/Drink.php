@@ -14,6 +14,11 @@ class Drink extends Model
     protected $fillable = [
         'drink_id',
         'drink_name',
-        'category'
+        'category',
+        'menu_category_id'
     ];
+    public function drinkDetail()
+    {
+        return $this->hasOne('App\Models\DrinkDetail', 'drink_id', 'drink_id');
+    }
 }

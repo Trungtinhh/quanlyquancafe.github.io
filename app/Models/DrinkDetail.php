@@ -14,12 +14,13 @@ class DrinkDetail extends Model
     protected $fillable = [
         'id',
         'drink_id',
-        'ingredent_id',
+        'drink_name',
         'price_id',
         'provider_id',
         'amount',
         'date_add',
-        'date_exp'
+        'date_exp',
+        'image'
     ];
     public function drink()
     {
@@ -35,6 +36,6 @@ class DrinkDetail extends Model
     }
     public function provider()
     {
-        return $this->belongsTo('App\Models\Provider', 'provider_id', 'provider_id');
+        return $this->belongsTo('App\Models\Provider', 'provider_id', 'id');
     }
 }

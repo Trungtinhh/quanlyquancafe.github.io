@@ -15,12 +15,13 @@ class CreateIngredentDetailsTable extends Migration
     {
         Schema::create('ingredent_details', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('ingredent_id')->unsigned()->nullable();
+            $table->bigInteger('ingredent_id')->unsigned();
             $table->foreign('ingredent_id')->references('ingredent_id')->on('ingredents')->onDelete('cascade');
+            $table->string('ingredent_name');
             $table->bigInteger('price_id')->unsigned()->nullable();
             $table->foreign('price_id')->references('price_id')->on('prices')->onDelete('cascade');
             $table->bigInteger('provider_id')->unsigned()->nullable();
-            $table->foreign('provider_id')->references('provider_id')->on('providers')->onDelete('cascade');
+            $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
             $table->integer('amount');
             $table->date('date_add');
             $table->date('date_exp');

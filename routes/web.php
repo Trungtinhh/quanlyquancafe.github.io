@@ -2,9 +2,11 @@
 
 use App\Http\Livewire\Management\Area;
 use App\Http\Livewire\Management\Calendar;
+use App\Http\Livewire\Management\Import;
 use App\Http\Livewire\Management\Importgoods;
 use App\Http\Livewire\Management\ListHuman;
 use App\Http\Livewire\Management\ManagerTimekeeping;
+use App\Http\Livewire\Management\Menu;
 use App\Http\Livewire\Management\Provider;
 use App\Http\Livewire\Management\Shift;
 use App\Http\Livewire\Management\Storehouse;
@@ -98,7 +100,9 @@ Route::name('management.')->group(function () {
         Route::prefix('store_house')->group(function () {
             Route::get('/', Storehouse::class)->name('store_house');
             Route::get('/import_goods', Importgoods::class)->name('import_goods');
+            Route::get('/import_goods/import', Import::class)->name('import');
         });
+        Route::get('/menu', Menu::class)->name('menu');
     });
 });
 

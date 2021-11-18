@@ -14,6 +14,7 @@ class IngredentDetail extends Model
     protected $fillable = [
         'id',
         'ingredent_id',
+        'ingredent_name',
         'price_id',
         'provider_id',
         'amount',
@@ -30,6 +31,6 @@ class IngredentDetail extends Model
     }
     public function provider()
     {
-        return $this->belongsTo('App\Models\Provider', 'provider_id', 'provider_id');
+        return $this->belongsTo('App\Models\Provider', 'provider_id', 'id');
     }
 }

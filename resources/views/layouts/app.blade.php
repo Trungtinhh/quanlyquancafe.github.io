@@ -214,7 +214,7 @@
                             <a class="nav-link" href="#quanlynhansu" title="Quản lý nhân sự">
                                 <i data-feather="layout"></i>
                             </a>
-                            <a class="nav-link" href="#thucuong" title="Thức uống">
+                            <a class="nav-link" href="#thucuong" title="Quản lý menu và pha chế">
                                 <i data-feather="briefcase"></i>
                             </a>
                             <a class="nav-link" href="#kho" title="Quản lý kho">
@@ -298,16 +298,13 @@
 
                             <div class="twocolumn-menu-item" id="thucuong">
                                 <div class="title-box">
-                                    <h5 class="menu-title">Thức uống</h5>
+                                    <h5 class="menu-title">Menu và pha chế</h5>
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="ui-buttons.html">Danh sách thức uống</a>
+                                            <a class="nav-link" href="{{ route('management.menu') }}">Danh sách thức uống</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="ui-cards.html">Danh mục thức uống</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="ui-avatars.html">Thức uống sắp hết hạn</a>
+                                            <a class="nav-link" href="ui-cards.html">Pha chế</a>
                                         </li>
                                     </ul>
                                 </div>

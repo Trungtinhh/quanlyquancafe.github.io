@@ -15,4 +15,8 @@ class Ingredent extends Model
         'ingredent_id',
         'ingredent_name'
     ];
+    public function ingredentDetail()
+    {
+        return $this->hasOne('App\Models\IngredentDetail', 'ingredent_id', 'ingredent_id');
+    }
 }

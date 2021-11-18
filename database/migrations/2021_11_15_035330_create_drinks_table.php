@@ -16,7 +16,8 @@ class CreateDrinksTable extends Migration
         Schema::create('drinks', function (Blueprint $table) {
             $table->id('drink_id');
             $table->string('drink_name');
-            $table->string('category');
+            $table->tinyInteger('category');
+            $table->tinyInteger('menu_category_id')->nullable();
             $table->timestamps();
         });
     }

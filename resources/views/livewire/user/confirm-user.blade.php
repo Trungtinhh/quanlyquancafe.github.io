@@ -67,7 +67,7 @@
                                     <th scope="row"> <span class="badge bg-success">{{$user->id}}</span></th>
                                     <th scope="row">{{$user->name}}</th>
                                     <td scope="row">{{$user->email}}</td>
-                                    <td scope="row"><span class="badge bg-soft-danger text-danger">Chờ xác nhận</span>
+                                    <td scope="row"><span class="badge bg-soft-danger text-danger">Chờ xác nhận</span></td>
                                     <td scope="row">
                                         <button wire:click="confirmUser({{ $user->id }})" class="btn btn-success btn-rounded waves-effect waves-light">
                                             <i class="mdi mdi-check" title='Chấp nhận'></i>

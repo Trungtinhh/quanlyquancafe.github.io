@@ -15,18 +15,17 @@ class CreateDrinkDetailsTable extends Migration
     {
         Schema::create('drink_details', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('drink_id')->unsigned()->nullable();
+            $table->bigInteger('drink_id')->unsigned();
             $table->foreign('drink_id')->references('drink_id')->on('drinks')->onDelete('cascade');
-            $table->bigInteger('ingredent_id')->unsigned()->nullable();
-            $table->foreign('ingredent_id')->references('ingredent_id')->on('ingredents')->onDelete('cascade');
-            $table->bigInteger('price_id')->unsigned()->nullable();
+            $table->string('drink_name');
+            $table->bigInteger('price_id')->unsigned();
             $table->foreign('price_id')->references('price_id')->on('prices')->onDelete('cascade');
             $table->bigInteger('provider_id')->unsigned()->nullable();
-            $table->foreign('provider_id')->references('provider_id')->on('providers')->onDelete('cascade');
-            $table->integer('amount');
-            $table->date('date_add');
-            $table->date('date_exp');
-            $table->string('image')->nullable();
+            $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
+            $table->integer('amount')->default(0);
+            $table->date('date_add')->nullable();
+            $table->date('date_exp')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }

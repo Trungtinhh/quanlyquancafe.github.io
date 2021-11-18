@@ -15,7 +15,7 @@ class CreateImportgoodsIngredentsTable extends Migration
     {
         Schema::create('importgoods_ingredents', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('ingredent_id')->unsigned()->nullable();
+            $table->bigInteger('ingredent_id')->unsigned();
             $table->foreign('ingredent_id')->references('ingredent_id')->on('ingredents')->onDelete('cascade');
             $table->integer('amount_add');
             $table->date('date_add');

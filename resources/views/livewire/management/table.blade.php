@@ -56,7 +56,7 @@
         </div>
         @if(!empty($area))
         @foreach($area as $a)
-        <div class='row'>
+        <div class='row text-end'>
             <div class='col-12 border-bottom border-primary rounded'>
                 <h5>{{ $a->sub_name }}</h5>
             </div>
