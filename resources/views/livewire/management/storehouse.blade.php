@@ -43,7 +43,7 @@
                                     <input class="form-control" id="search1" type="text" placeholder="Tìm kiếm trong bảng hiện tại..">
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
+                                    <table class="table table-striped" id="tickets-table">
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
@@ -53,6 +53,7 @@
                                                 <th>Nhà cung cấp</th>
                                                 <th>Số lượng</th>
                                                 <th>Ngày nhập kho gần nhất</th>
+                                                <th>Hạn dùng</th>
                                                 <th class="text-center">Hành động</th>
                                             </tr>
                                         </thead>
@@ -61,6 +62,7 @@
                                             <?php $temp = 0; ?>
                                             @if(!empty($drink))
                                             @foreach($drink as $value)
+                                            @if($value->provider_id != null)
                                             <tr>
                                                 <th scope="row">{{ ++$loop->index }}</th>
                                                 <th scope="row"><span class="badge bg-success">{{ $value->drink_id }}</span></th>
@@ -69,6 +71,7 @@
                                                 <th scope="row">{{ $value->provider->provider_name }}</th>
                                                 <td scope="row">@if($value->amount != 0)<span class="badge bg-danger"> {{ $value->amount }} </span> @else <span class="text-muted">Hết</span> @endif</td>
                                                 <th scope="row">{{ $value->date_add }}</th>
+                                                <th scope="row">{{ $value->date_exp }}</th>
                                                 <td scope="row" class="text-center">
                                                     <button wire:click="deleteDrink({{ $value->drink_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
                                                         <i class="mdi mdi-delete" title='Xóa'></i>
@@ -76,6 +79,7 @@
                                                 </td>
                                             </tr>
                                             <?php $temp++; ?>
+                                            @endif
                                             @endforeach
                                             @endif
                                         </tbody>
@@ -87,7 +91,6 @@
                                     </div>
 
                                 </div>
-                                {{$drink->links()}}
                             </div>
 
                             <div class="tab-pane " id="ingredents">
@@ -95,7 +98,7 @@
                                     <input class="form-control" id="search2" type="text" placeholder="Tìm kiếm trong bảng hiện tại..">
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
+                                    <table class="table table-striped" id="tickets-table">
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
@@ -105,6 +108,7 @@
                                                 <th>Nhà cung cấp</th>
                                                 <th>Số lượng</th>
                                                 <th>Ngày nhập kho gần nhất</th>
+                                                <th>Hạn dùng</th>
                                                 <th class="text-center">Hành động</th>
                                             </tr>
                                         </thead>
@@ -121,6 +125,7 @@
                                                 <th scope="row">{{ $value->provider->provider_name }}</th>
                                                 <td scope="row">@if($value->amount != 0)<span class="badge bg-danger"> {{ $value->amount }} </span> @else <span class="text-muted">Hết</span> @endif</td>
                                                 <th scope="row">{{ $value->date_add }}</th>
+                                                <th scope="row">{{ $value->date_exp }}</th>
                                                 <td scope="row" class="text-center">
                                                     <button wire:click="deleteIngredent({{ $value->ingredent_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
                                                         <i class="mdi mdi-delete" title='Xóa'></i>
@@ -139,14 +144,13 @@
                                     </div>
 
                                 </div>
-                                {{$ingredent->links()}}
                             </div>
                             <div class="tab-pane " id="all">
                                 <div class='col-3'>
                                     <input class="form-control" id="search3" type="text" placeholder="Tìm kiếm trong bảng hiện tại..">
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
+                                    <table class="table table-striped" id="tickets-table">
                                         <thead>
                                             <tr>
                                                 <th>Danh mục</th>
@@ -155,6 +159,7 @@
                                                 <th>HSD</th>
                                                 <th>Số lượng</th>
                                                 <th>Ngày nhập kho gần nhất</th>
+                                                <th>Hạn dùng</th>
                                                 <th class="text-center">Hành động</th>
                                             </tr>
                                         </thead>
@@ -162,41 +167,45 @@
                                         <tbody id='content3'>
                                             <?php $temp1 = 0; ?>
                                             @if(!empty($ingredent))
-                                                @foreach($ingredent as $value)
-                                                    <tr>
-                                                        <th scope="row">Nguyên liệu</th>
-                                                        <th scope="row"><span class="badge bg-success">{{ $value->ingredent_id }}</span></th>
-                                                        <th scope="row">{{ $value->ingredent_name }}</th>
-                                                        <th scope="row" class='text-primary'>{{ $value->date_exp }}</th>
-                                                        <td scope="row">@if($value->amount != 0)<span class="badge bg-danger"> {{ $value->amount }} </span> @else <span class="text-muted">Hết</span> @endif</td>
-                                                        <th scope="row">{{ $value->date_add }}</th>
-                                                        <td scope="row" class="text-center">
-                                                            <button wire:click="deleteIngredent({{ $value->ingredent_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
-                                                                <i class="mdi mdi-delete" title='Xóa'></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <?php $temp1++; ?>
-                                                @endforeach
+                                            @foreach($ingredent as $value)
+                                            <tr>
+                                                <th scope="row">Nguyên liệu</th>
+                                                <th scope="row"><span class="badge bg-success">{{ $value->ingredent_id }}</span></th>
+                                                <th scope="row">{{ $value->ingredent_name }}</th>
+                                                <th scope="row" class='text-primary'>{{ $value->date_exp }}</th>
+                                                <td scope="row">@if($value->amount != 0)<span class="badge bg-danger"> {{ $value->amount }} </span> @else <span class="text-muted">Hết</span> @endif</td>
+                                                <th scope="row">{{ $value->date_add }}</th>
+                                                <th scope="row">{{ $value->date_exp }}</th>
+                                                <td scope="row" class="text-center">
+                                                    <button wire:click="deleteIngredent({{ $value->ingredent_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                        <i class="mdi mdi-delete" title='Xóa'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <?php $temp1++; ?>
+                                            @endforeach
                                             @endif
                                             <?php $temp = 0; ?>
                                             @if(!empty($drink))
-                                                @foreach($drink as $value)
-                                                    <tr>
-                                                        <th scope="row">Thức uống đóng chai</th>
-                                                        <th scope="row"><span class="badge bg-success">{{ $value->drink_id }}</span></th>
-                                                        <th scope="row">{{ $value->drink_name }}</th>
-                                                        <th scope="row" class='text-primary'>{{ $value->date_exp }}</th>
-                                                        <td scope="row">@if($value->amount != 0)<span class="badge bg-danger"> {{ $value->amount }} </span> @else <span class="text-muted">Hết</span> @endif</td>
-                                                        <th scope="row">{{ $value->date_add }}</th>
-                                                        <td scope="row" class="text-center">
-                                                            <button wire:click="deleteDrink({{ $value->drink_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
-                                                                <i class="mdi mdi-delete" title='Xóa'></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <?php $temp++; ?>
-                                                @endforeach
+                                            @foreach($drink as $value)
+                                            @if($value->provider_id != null)
+                                            <tr>
+                                                <th scope="row">Thức uống đóng chai</th>
+                                                <th scope="row"><span class="badge bg-success">{{ $value->drink_id }}</span></th>
+                                                <th scope="row">{{ $value->drink_name }}</th>
+                                                <th scope="row" class='text-primary'>{{ $value->date_exp }}</th>
+                                                <td scope="row">@if($value->amount != 0)<span class="badge bg-danger"> {{ $value->amount }} </span> @else <span class="text-muted">Hết</span> @endif</td>
+                                                <th scope="row">{{ $value->date_add }}</th>
+                                                <th scope="row">{{ $value->date_exp }}</th>
+                                                <td scope="row" class="text-center">
+                                                    <button wire:click="deleteDrink({{ $value->drink_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                        <i class="mdi mdi-delete" title='Xóa'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <?php $temp++; ?>
+                                            @endif
+                                            @endforeach
                                             @endif
                                         </tbody>
                                     </table>
@@ -207,7 +216,6 @@
                                     </div>
 
                                 </div>
-                                {{$ingredent->links()}}
                             </div>
                         </div>
 

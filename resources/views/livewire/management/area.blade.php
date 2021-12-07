@@ -39,12 +39,14 @@
                 </div> <!-- end widget-rounded-circle-->
             </div> <!-- end col-->
         </div>
+        @canany(['system.permission.management'])
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
             <button data-bs-target="#create-area" data-bs-toggle="modal" wire:click='closeAdd' style='margin-bottom:10px;' class="btn btn-primary btn-rounded waves-effect waves-light">
                 THÊM KHU VỰC
             </button>
         </div>
+        @endcanany
         <div class="row">
             @if(!empty($area))
             @foreach($area as $are)
@@ -57,32 +59,36 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
+                                @canany(['system.permission.management'])
                                 <a wire:click='addTable({{ $are->id }})' class="dropdown-item">Thêm bàn</a>
+                                @endcanany
                                 <a wire:click='detailArea({{ $are->id }})' class="dropdown-item">Chi tiết</a>
+                                @canany(['system.permission.management'])
                                 <a wire:click='deleteArea({{ $are->id }})' class="dropdown-item">Xóa khu vực</a>
+                                @endcanany
                             </div>
                         </div>
                         <h4 class="header-title mb-4">{{ $are->sub_name }}</h4>
                         <div class='text-center border'><img src='{{ asset("image/multi_table.jpg") }}' width="120px;"></div>
                         <div class="row text-center mt-2 border">
                             <?php
-                                $empty = 0;
-                                $notEmpty = 0;
+                            $empty = 0;
+                            $notEmpty = 0;
                             ?>
                             @if(!empty($table))
-                                @foreach($table as $value)
-                                    @if($value->sub_id == $are->id)
-                                        @if($value->status == 0)
-                                            <?php
-                                                $empty++;
-                                            ?>
-                                        @else
-                                            <?php
-                                                $notEmpty++;
-                                            ?>
-                                        @endif
-                                    @endif
-                                @endforeach
+                            @foreach($table as $value)
+                            @if($value->sub_id == $are->id)
+                            @if($value->status == 0)
+                            <?php
+                            $empty++;
+                            ?>
+                            @else
+                            <?php
+                            $notEmpty++;
+                            ?>
+                            @endif
+                            @endif
+                            @endforeach
                             @endif
                             <div class="col-md-4">
                                 <h3 class="fw-normal mt-3">
@@ -162,6 +168,14 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="form-check form-check-inline mb-2 form-check-primary" style="margin: 20px;">
+                                                                            <input class="form-check-input" wire:model.lazy='table_id' type="checkbox" value="{{ -1 }}">
+                                                                            <label class="form-check-label" for="customckeck7">Không chọn bàn</label>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
                                                                 <tr>
                                                                     <th width='100%' class="border">
                                                                         @if(!empty($table))
@@ -281,7 +295,7 @@
         </div><!-- /.modal -->
         <div class="modal fade" wire:ignore.self id="detail-area" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-full-width">
-                <form method="GET" wire:submit.prevent='detail'>
+                <form method="GET" wire:submit.prevent=''>
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header">
@@ -292,69 +306,53 @@
                             <div class="card border-primary border mb-3">
                                 <div class="row" style="margin: 20px;">
                                     @if(!empty($table))
-                                        <?php $dem = 0; ?>
-                                        @foreach($table as $value)
-                                            @if($value->sub_id == $sub_id)
-                                            <div class="col-3">
-                                                <div class="widget-rounded-circle card">
-                                                    <div class="card-body bg-soft-warning">
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <div class="avatar-lg rounded-circle bg-soft-danger">
-                                                                    <i class="fe-card font-22 avatar-title text-secondary">{{ $value->table_name }}</i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <div class="dropdown float-end">
-                                                                    <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
-                                                                    </a>
-                                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                                        @if($value->status == 0)
-                                                                            <a class="dropdown-item" href="#">Gọi món</a>
-                                                                        @else
-                                                                            <a class="dropdown-item" href="#">Thêm món</a>
-                                                                            <a class="dropdown-item" href="#">Chuyển bàn</a>
-                                                                            <a class="dropdown-item" href="#">Chi tiết</a>
-                                                                            <a class="dropdown-item" href="#">Thanh toán</a>
-                                                                        @endif
-                                                                    </div>
-                                                                </div> <!-- end dropdown -->
-                                                                <div>
-                                                                    @if($value->status == 0)
-                                                                    <img src='{{ asset("image/table_empty.png") }}' width="60px;">
-                                                                    <p class="text-muted mb-1 text-truncate">Trống</p>
-                                                                    @else
-                                                                    <img src='{{ asset("image/table_4.png") }}' width="60px;">
-                                                                    <p class="text-muted mb-1 text-truncate">Có người</p>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div> <!-- end row-->
-                                                    </div>
-                                                </div> <!-- end widget-rounded-circle-->
-                                            </div> <!-- end col-->
-                                            <?php $dem++; ?>
-                                            @endif
-                                        @endforeach
-                                        @if($dem == 0)
-                                            <div class="row">
-                                                <div class='col-4 text-center'>
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <h4 class='text-danger'>CHƯA CÓ BÀN <i data-feather="alert-octagon" class="icon-dual-danger"></i></h4>
+                                    <?php $dem = 0; ?>
+                                    @foreach($table as $value)
+                                    @if($value->sub_id == $sub_id)
+                                    <div class="col-3">
+                                        <div class="widget-rounded-circle card">
+                                            <div class="card-body bg-soft-warning">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="avatar-lg rounded-circle bg-soft-danger">
+                                                            <i class="fe-card font-22 avatar-title text-secondary">{{ $value->table_name }}</i>
                                                         </div>
                                                     </div>
+                                                    <div class="col-6">
+                                                        <div>
+                                                            @if($value->status == 0)
+                                                            <img src='{{ asset("image/table_empty.png") }}' width="60px;">
+                                                            <p class="text-muted mb-1 text-truncate">Trống</p>
+                                                            @else
+                                                            <img src='{{ asset("image/table_4.png") }}' width="60px;">
+                                                            <p class="text-muted mb-1 text-truncate">Có người</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end row-->
+                                            </div>
+                                        </div> <!-- end widget-rounded-circle-->
+                                    </div> <!-- end col-->
+                                    <?php $dem++; ?>
+                                    @endif
+                                    @endforeach
+                                    @if($dem == 0)
+                                    <div class="row">
+                                        <div class='col-4 text-center'>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class='text-danger'>CHƯA CÓ BÀN <i data-feather="alert-octagon" class="icon-dual-danger"></i></h4>
                                                 </div>
                                             </div>
-                                            @endif
+                                        </div>
+                                    </div>
+                                    @endif
                                     @endif
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Close</button>
-                            <button style='padding-left: 30px;padding-right: 30px;' class="btn btn-danger" type="submit"><i class="mdi mdi-check"></i> XONG </button>
                         </div>
                     </div><!-- /.modal-content -->
                 </form>

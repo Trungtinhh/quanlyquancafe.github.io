@@ -21,4 +21,8 @@ class Drink extends Model
     {
         return $this->hasOne('App\Models\DrinkDetail', 'drink_id', 'drink_id');
     }
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'drink_id', 'drink_id');
+    }
 }

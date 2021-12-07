@@ -22,6 +22,7 @@ class CreateTimeKeepingsTable extends Migration
             $table->string('hour')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->tinyInteger('status_edit')->nullable();
+            $table->integer('wage')->nullable();
             $table->timestamps();
         });
     }

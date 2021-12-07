@@ -20,12 +20,13 @@
         <!-- end page title -->
         <div class="row">
             <div class="col-12">
+                @canany(['system.permission.management'])
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-
                     <button wire:click='closeAdd' data-bs-target="#create-calendar" data-bs-toggle="modal" style='margin-bottom:10px;' class="btn btn-primary btn-rounded waves-effect waves-light">
                         Sắp lịch làm
                     </button>
                 </div>
+                @endcanany
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -48,11 +49,14 @@
                                                 <th width='5%'>STT</th>
                                                 <th width='12%' class='text-center '>Ca làm</th>
                                                 <th class='text-center'>Nhân viên</th>
+                                                @canany(['system.permission.management'])
                                                 <th width='14%' class='text-center'>Hành động</th>
+                                                @endcanany
                                             </tr>
                                         </thead>
                                         <?php $date_delete = '';
-                                        $shift_delete = '' ?>
+                                        $shift_delete = '';
+                                        ?>
                                         <tbody>
                                             @foreach($shift as $value)
                                             <tr>
@@ -68,14 +72,20 @@
                                                     </ul>
                                                     @endif
                                                     @endforeach
-
                                                 </td>
+                                                @canany(['system.permission.management'])
                                                 <td scope="row" class='text-center align-middle'>
+                                                    @if($date_delete != '' && $date_delete != '')
                                                     <button title='Đặt lại' wire:click="deleteCalendar('{{ $date_delete }}', {{ $shift_delete }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
                                                         <i class="mdi mdi-file"></i>
                                                     </button>
+                                                    @endif
                                                 </td>
+                                                @endcanany
                                             </tr>
+                                            <?php $date_delete = '';
+                                            $shift_delete = '';
+                                            ?>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -163,6 +173,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
+                            @canany(['system.permission.management'])
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button wire:click='deleteAllCalendar' style='margin-bottom:10px;' class="btn btn-danger btn-rounded waves-effect waves-light">
+                                    Đặt lại tất cả
+                                </button>
+                            </div>
+                            @endcanany
                             <div class="col-lg-12">
                                 <h4 class="header-title">Lịch làm trong 7 ngày gần đây: </h4>
                                 <div class="table-responsive">
@@ -173,10 +190,12 @@
                                                 @foreach($week as $w => $value)
                                                 <th class='text-center align-middle'>{{ $w }}</th>
                                                 @endforeach
+                                                <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <?php $date_delete = '';
-                                        $shift_delete = '' ?>
+                                        $shift_delete = '';
+                                        ?>
                                         <tbody>
                                             @foreach($shift as $value)
                                             <tr>
@@ -198,12 +217,19 @@
                                                             @endforeach
                                                         </div>
                                                         <div class="col-3">
+                                                            @canany(['system.permission.management'])
+                                                            @if($date_delete != '' && $shift_delete != '')
                                                             <button title='Đặt lại' wire:click="deleteCalendar('{{ $date_delete }}', {{ $shift_delete }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
                                                                 <i class="mdi mdi-file"></i>
                                                             </button>
+                                                            @endif
+                                                            @endcanany
                                                         </div>
                                                     </div>
                                                 </td>
+                                                <?php $date_delete = '';
+                                                $shift_delete = '';
+                                                ?>
                                                 @endforeach
                                             </tr>
                                             @endforeach

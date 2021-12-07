@@ -14,6 +14,7 @@ class ManagerTimekeeping extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $count_tkp, $count_edit, $info_TKP, $hour;
+    public $wage_money = 0, $wage = 0, $hour_wage = 0;
     public $statusView = false;
 
     public function render()
@@ -21,8 +22,8 @@ class ManagerTimekeeping extends Component
         return view('livewire.management.manager-timekeeping', [
             Carbon::setLocale('vi'),
             'confirmTKP' => TKP::where('status', 2)->orderBy('time_end')->paginate(10),
-            'confirmEdit' => TKP::where('status_edit', 1)->orderBy('time_end')->paginate(10),
-            'user' => User::where('status', 1)->paginate(10),
+            'confirmEdit' => TKP::where('status_edit', 1)->orderBy('time_end')->get(),
+            'user' => User::where('status', 1)->get(),
         ]);
     }
     public function mount()
@@ -58,15 +59,28 @@ class ManagerTimekeeping extends Component
         ]);
     }
     public function detail($user_id)
-    {       
+    {
+        $this->closeDetail();
         $this->statusView = true;
         $this->info_TKP = TKP::where('user_id', $user_id)->orderByDesc('time_start')->get();
+        foreach ($this->info_TKP as $val) {
+            $date = new Carbon($val->time_start, 'Asia/Ho_Chi_minh');
+            $dt = Carbon::now('Asia/Ho_Chi_minh');
+            if ($date->diffInDays($dt) <= $dt->daysInMonth) {
+                $this->hour_wage += $val->hour;
+            }
+        }
+        $this->hour_wage /= 60;
         $TKP = TKP::where('user_id', Auth::user()->id)->where('status', 1)->first();
         if (!empty($TKP)) $this->hour = new Carbon($TKP->time_start, 'Asia/Ho_Chi_Minh');
         $this->dispatchBrowserEvent('show-detail');
     }
-    public function closeDetail(){
+    public function closeDetail()
+    {
         $this->statusView = false;
+        $this->wage_money = 0;
+        $this->wage = 0;
+        $this->hour_wage = 0;
     }
     public function delete($id)
     {
@@ -76,5 +90,9 @@ class ManagerTimekeeping extends Component
             'type' => 'success',
             'message' => "Đã xóa!"
         ]);
+    }
+    public function wage()
+    {
+        $this->wage = $this->hour_wage * $this->wage_money;
     }
 }

@@ -22,9 +22,9 @@ class CreateIngredentDetailsTable extends Migration
             $table->foreign('price_id')->references('price_id')->on('prices')->onDelete('cascade');
             $table->bigInteger('provider_id')->unsigned()->nullable();
             $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
-            $table->integer('amount');
-            $table->date('date_add');
-            $table->date('date_exp');
+            $table->integer('amount')->default(0);
+            $table->date('date_add')->nullable();
+            $table->date('date_exp')->nullable();
             $table->timestamps();
         });
     }

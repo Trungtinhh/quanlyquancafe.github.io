@@ -199,14 +199,15 @@
                                 <img src="{{asset('assets/images/logo-sm-light.png')}}" alt="" height="28">
                             </span>
                         </a>
+                        @canany(['system.view.basic'])
                         <nav class="nav flex-column" id="two-col-sidenav-main">
-                            <a class="nav-link" href="{{ route('dashboard') }}" title="Bảng điều khiển">
+                            <a class="nav-link" href="#home" title="Bảng điều khiển">
                                 <i data-feather="home"></i>
                             </a>
                             <a class="nav-link" href="#quanlybanvakhuvuc" title="Quản lý bàn và khu vực">
                                 <i data-feather="grid"></i>
                             </a>
-                            @canany(['system.configuration.management', 'system.permission.management'])
+                            @canany(['system.permission.management'])
                             <a class="nav-link" href="#quanlynguoidung" title="Quản lý người dùng">
                                 <i data-feather="file-text"></i>
                             </a>
@@ -217,22 +218,39 @@
                             <a class="nav-link" href="#thucuong" title="Quản lý menu và pha chế">
                                 <i data-feather="briefcase"></i>
                             </a>
+                            @canany(['system.permission.management'])
                             <a class="nav-link" href="#kho" title="Quản lý kho">
                                 <i data-feather="package"></i>
                             </a>
+                            @endcanany
+                            @canany(['system.permission.management'])
                             <a class="nav-link" href="{{ route('management.provider') }}" title="Nhà cung cấp">
                                 <i data-feather="gift"></i>
                             </a>
+                            @endcanany
+                            @canany(['system.permission.management', 'system.configuration.management'])
+                            <a class="nav-link" href="{{ route('management.statistical') }}" title="Thống kê">
+                                <i data-feather="database"></i>
+                            </a>
+                            @endcanany
                         </nav>
+                        @endcanany
                     </div>
                     <!--- Sidemenu -->
                     <div class="sidebar-main-menu">
                         <div id="two-col-menu" class="h-100" data-simplebar>
-                            <div class="twocolumn-menu-item d-block" id="dashboard">
-                                <div class="title-box">
-                                    <h5 class="menu-title text-center">Bảng điều khiển</h5>
-                                    <h4 class='text-center text-success'>Chào mừng {{ auth::user()->name }} đến với <br /> Quán cafe</h4>
-                                </div>
+                            <div class="twocolumn-menu-item" id="home">
+                                <h5 class="menu-title">Gọi món và Hóa đơn</h5>
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('management.order') }}">Gọi món</a>
+                                    </li>
+                                    @canany(['system.configuration.management', 'system.permission.management'])
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('management.invoice') }}">Hóa đơn</a>
+                                    </li>
+                                    @endcanany
+                                </ul>
                             </div>
 
                             <div class="twocolumn-menu-item" id="quanlybanvakhuvuc">
@@ -249,7 +267,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            @canany(['system.configuration.management', 'system.permission.management'])
+                            @canany(['system.permission.management'])
                             <div class="twocolumn-menu-item" id="quanlynguoidung">
                                 <div class="title-box">
                                     <h5 class="menu-title">Quản lý người dùng</h5>
@@ -271,7 +289,7 @@
                                 <div class="title-box">
                                     <h5 class="menu-title">Quản lý nhân sự</h5>
                                     <ul class="nav flex-column">
-                                        @canany(['system.configuration.management', 'system.permission.management'])
+                                        @canany(['system.permission.management', 'system.configuration.management'])
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.list') }}">Danh sách nhân sự</a>
                                         </li>
@@ -279,12 +297,12 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.timekeeping') }}">Chấm công</a>
                                         </li>
-                                        @canany(['system.configuration.management', 'system.permission.management'])
+                                        @canany(['system.permission.management'])
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.manager_timekeeping') }}">Quản lý chấm công</a>
                                         </li>
                                         @endcanany
-                                        @canany(['system.configuration.management', 'system.permission.management'])
+                                        @canany(['system.permission.management'])
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.shift') }}">Quản lý ca làm</a>
                                         </li>
@@ -303,13 +321,15 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.menu') }}">Danh sách thức uống</a>
                                         </li>
+                                        @canany(['system.basic.management', 'system.permission.management'])
                                         <li class="nav-item">
-                                            <a class="nav-link" href="ui-cards.html">Pha chế</a>
+                                            <a class="nav-link" href="{{ route('management.bartending') }}">Pha chế</a>
                                         </li>
+                                        @endcanany
                                     </ul>
                                 </div>
                             </div>
-
+                            @canany(['system.permission.management'])
                             <div class="twocolumn-menu-item" id="kho">
                                 <div class="title-box">
                                     <h5 class="menu-title">Quản lý kho</h5>
@@ -320,9 +340,13 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.import_goods') }}">Nhập hàng</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('management.export_goods') }}">Xuất kho</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
+                            @endcanany
                         </div>
                     </div>
                     <div class="clearfix"></div>

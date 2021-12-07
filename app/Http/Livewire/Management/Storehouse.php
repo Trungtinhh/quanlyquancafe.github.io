@@ -13,8 +13,8 @@ class Storehouse extends Component
     public function render()
     {
         return view('livewire.management.storehouse',[
-            'drink' => DrinkDetail::orderBy('drink_name')->paginate(10),
-            'ingredent' => IngredentDetail::orderBy('ingredent_name')->paginate(10)
+            'drink' => DrinkDetail::orderBy('drink_name')->get(),
+            'ingredent' => IngredentDetail::orderBy('ingredent_name')->get()
         ]);
     }
     public function deleteDrink($drink_id)

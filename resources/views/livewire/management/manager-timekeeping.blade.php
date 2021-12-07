@@ -89,6 +89,7 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
+                                        <th>Tên</th>
                                         <th>Bắt đầu</th>
                                         <th>Kết thúc</th>
                                         <th>Tổng thời gian</th>
@@ -101,6 +102,7 @@
                                     @foreach($confirmTKP as $value)
                                     <tr>
                                         <td scope="row">{{ ++$loop->index }}</td>
+                                        <td scope="row">{{ $value->user->name }}</td>
                                         <td scope="row">{{ $value->time_start }}</td>
                                         <td scope="row">{{ $value->time_end }}</td>
                                         <td scope="row"><span class="badge  text-primary"></span>{{ $value->hour }} phút</td>
@@ -143,6 +145,7 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
+                                        <th>Tên</th>
                                         <th>Bắt đầu</th>
                                         <th>Kết thúc</th>
                                         <th>Tổng thời gian</th>
@@ -155,6 +158,7 @@
                                     @foreach($confirmEdit as $value)
                                     <tr>
                                         <td scope="row">{{ ++$loop->index }}</td>
+                                        <td scope="row">{{ $value->user->name }}</td>
                                         <td scope="row">{{ $value->time_start }}</td>
                                         <td scope="row">{{ $value->time_end }}</td>
                                         <td scope="row"><span class="badge  text-primary"></span>{{ $value->hour }} phút</td>
@@ -177,7 +181,6 @@
                                 <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
                             </div>
                             @endif
-                            {{ $confirmEdit->links() }}
                         </div>
                     </div>
                 </div>
@@ -231,160 +234,191 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="myLargeModalLabel">Danh sách chấm công</h4>
-                                        <button type="button" wire:click='closeDetail' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <button type="button" wire:click='' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="card">
                                                     <div class="card-body">
-                                                        <div class='col-4'>
-                                                            <input class="form-control" id="search" type="text" placeholder="Tìm kiếm...">
-                                                        </div>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>STT</th>
-                                                                        <th>Bắt đầu</th>
-                                                                        <th>Kết thúc</th>
-                                                                        <th>Tổng thời gian</th>
-                                                                        <th>Trạng thái</th>
-                                                                        <th class="text-center">Xác nhận</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <?php $temp = 0; ?>
-                                                                <tbody id='content'>
-                                                                    @foreach($info_TKP as $value)
-                                                                    <tr>
-                                                                        <td scope="row">{{ ++$loop->index }}</td>
-                                                                        <td scope="row">{{ $value->time_start }}</td>
-                                                                        @if($value->status == 1)
-                                                                        <td scope="row">Chưa kết thúc</td>
-                                                                        <td scope="row"><span class="badge  text-primary"></span>{{ $hour->diffInMinutes(now('Asia/Ho_Chi_Minh')) }} phút</td>
-                                                                        <td scope="row"> <span class="badge bg-warning">Đang điểm danh</span></td>
-                                                                        <td scope="row" class="text-center"> <span class="badge bg-danger"></span>---</td>
-                                                                        @else
-                                                                        <td scope="row">{{ $value->time_end }}</td>
-                                                                        <td scope="row"><span class="badge  text-primary"></span>{{ $value->hour }} phút</td>
-                                                                        <td scope="row"> <span class="badge bg-success">Hoàn thành</span></td>
-                                                                        @if($value->status_edit == 1 || $value->status == 2)
-                                                                        <td scope="row" class="text-center"> <span class="badge bg-danger">Chờ xác nhận</span></td>
-                                                                        @else
-                                                                        <td scope="row" class="text-center"> <span class="badge bg-primary">Đã xác nhận</span></td>
-                                                                        @endif
-                                                                        @endif
-
-                                                                    </tr>
-                                                                    <?php $temp++; ?>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                            @if($temp == 0)
-                                                            <div>
-                                                                <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
+                                                        <div class="row">
+                                                            <div class='col-3'>
+                                                                <div>
+                                                                    <span>Giờ làm trong tháng: (giờ)</span>
+                                                                    <input class="form-control" type="text" wire:model='hour_wage' readonly>
+                                                                </div>                                                              
                                                             </div>
-                                                            @endif
+                                                            <div class="col-5">
+                                                                <form wire:submit.prevent='wage'>
+                                                                    @csrf
+                                                                    <div class="row">
+                                                                        <div class="col-7">
+                                                                            <span for="">Nhập lương:(tiền/giờ)</span>
+                                                                            <input wire:model.lazy='wage_money' class="form-control" type="number" min='0'>
+                                                                        </div>
+                                                                        <div class="col-5">
+                                                                            <br>
+                                                                            <button type='submit' class="btn btn-primary">Tính lương</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <span for=""><i class="fe-dollar-sign"></i>Lương:(nghìn)</span>
+                                                                <input wire:model='wage' class="form-control" type="text" readonly name="" id="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-8">
+                                                            <span>Tìm kiếm:</span>
+                                                                <input class="form-control" id="search" type="text">
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>STT</th>
+                                                                    <th>Bắt đầu</th>
+                                                                    <th>Kết thúc</th>
+                                                                    <th>Tổng thời gian</th>
+                                                                    <th>Trạng thái</th>
+                                                                    <th class="text-center">Xác nhận</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <?php $temp = 0; ?>
+                                                            <tbody id='content'>
+                                                                @foreach($info_TKP as $value)
+                                                                <tr>
+                                                                    <td scope="row">{{ ++$loop->index }}</td>
+                                                                    <td scope="row">{{ $value->time_start }}</td>
+                                                                    @if($value->status == 1)
+                                                                    <td scope="row">Chưa kết thúc</td>
+                                                                    <td scope="row"><span class="badge  text-primary"></span>---</td>
+                                                                    <td scope="row"> <span class="badge bg-warning">Đang điểm danh</span></td>
+                                                                    <td scope="row" class="text-center"> <span class="badge bg-danger"></span>---</td>
+                                                                    @else
+                                                                    <td scope="row">{{ $value->time_end }}</td>
+                                                                    <td scope="row"><span class="badge  text-primary"></span>{{ $value->hour }} phút</td>
+                                                                    <td scope="row"> <span class="badge bg-success">Hoàn thành</span></td>
+                                                                    @if($value->status_edit == 1 || $value->status == 2)
+                                                                    <td scope="row" class="text-center"> <span class="badge bg-danger">Chờ xác nhận</span></td>
+                                                                    @else
+                                                                    <td scope="row" class="text-center"> <span class="badge bg-primary">Đã xác nhận</span></td>
+                                                                    @endif
+                                                                    @endif
+                                                                </tr>
+                                                                <?php $temp++; ?>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        @if($temp == 0)
+                                                        <div>
+                                                            <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
+                                                        </div>
+                                                        @endif
+                                                    </div>
+                                                    <br>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button wire:click='closeDetail' data-bs-dismiss="modal" style='padding-left: 30px;padding-right: 30px;' class="btn btn-secondary"><i class='fa fa-times-circle mr-1'></i> Đóng </button>
+                                        <button wire:click='' data-bs-dismiss="modal" style='padding-left: 30px;padding-right: 30px;' class="btn btn-secondary"><i class='fa fa-times-circle mr-1'></i> Đóng </button>
                                     </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $("#search").on("keyup", function() {
-                                                var value = $(this).val().toLowerCase();
-                                                $("#content tr").filter(function() {
-                                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                                                });
-                                            });
-                                        });
-                                    </script>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-                        @endif
-
-                        @if($temp == 0)
-                        <div>
-                            <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
+                                </div>
+                            </div>
                         </div>
-                        @endif
-                        {{$user->links()}}
-                    </div>
-                </div>
-            </div><!-- end col -->
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            @endif
+
+            @if($temp == 0)
+            <div>
+                <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
+            </div>
+            @endif
         </div>
-        <!-- end row -->
-        @section('script')
-        <script>
-            window.addEventListener('show-detail', event => {
-                $('#detail').modal('show');
-            })
-        </script>
-        <script>
-            $(document).ready(function() {
-                $("#search1").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#content1 tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
+    </div><!-- end col -->
+</div>
+<!-- end row -->
+@section('script')
+<script>
+    $(document).ready(function() {
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#content tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $("#search2").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#content2 tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
+        });
+    });
+</script>
+<script>
+    window.addEventListener('show-detail', event => {
+        $('#detail').modal('show');
+    })
+</script>
+<script>
+    $(document).ready(function() {
+        $("#search1").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#content1 tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $("#search3").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#content3 tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#search2").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#content2 tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
-        </script>
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#search3").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#content3 tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
-        <!-- Toastr js-->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-right',
-                showConfirmButton: false,
-                showCloseButton: true,
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
+<!-- Toastr js-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        showConfirmButton: false,
+        showCloseButton: true,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
 
-            window.addEventListener('alert', ({
-                detail: {
-                    type,
-                    message
-                }
-            }) => {
-                Toast.fire({
-                    icon: type,
-                    title: message
-                })
-            })
-        </script>
-        @endsection
-    </div>
+    window.addEventListener('alert', ({
+        detail: {
+            type,
+            message
+        }
+    }) => {
+        Toast.fire({
+            icon: type,
+            title: message
+        })
+    })
+</script>
+@endsection
+</div>
 </div>

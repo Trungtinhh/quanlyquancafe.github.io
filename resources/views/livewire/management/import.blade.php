@@ -211,12 +211,12 @@
                             </div> <!-- end col -->
 
                             <div class="col-lg-6">
-
                                 <div class="card border-success border mb-3">
                                     <div class="card-body">
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Hình ảnh</h5>
                                         <div class="row">
                                             <div class="col-12">
+
                                                 <input type="file" wire:model="image">
                                                 @error('image')
                                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -234,9 +234,11 @@
                                                 <img src="{{ $image->temporaryUrl() }}" width="100px">
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div>                      
                                     </div>
                                 </div> <!-- end col-->
+                                <br>
+                                <div wire:loading class="text-center">Đang xử lý</div>
                             </div> <!-- end col-->
                         </div>
                         <!-- end row -->
@@ -364,7 +366,6 @@
                                                 <img src="{{ $product_image->temporaryUrl() }}" width="100px">
                                                 @endif
                                             </div>
-
                                         </div>
                                     </div>
                                 </div> <!-- end col-->
@@ -374,6 +375,7 @@
                                     {{ $noti }}
                                 </div>
                                 @endif
+                                <div wire:loading class="text-center">Đang xử lý</div>
                             </div> <!-- end col-->
 
                             @endif

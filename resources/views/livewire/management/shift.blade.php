@@ -39,9 +39,11 @@
     <div class="row">
         <div class="col-12">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-
-                <button data-bs-target="#create-shift" data-bs-toggle="modal" wire:click='closeAdd' style='margin-bottom:10px;' class="btn btn-primary btn-rounded waves-effect waves-light">
-                    THÊM CA
+                <button wire:click='deleteShift' style='margin-bottom:10px;' class="btn btn-danger btn-rounded waves-effect waves-light">
+                    <i class="fe-file"></i> ĐẶT LẠI
+                </button>
+                <button wire:click='showAdd' style='margin-bottom:10px;' class="btn btn-primary btn-rounded waves-effect waves-light">
+                    <i class="fe-plus-circle"></i> THÊM CA
                 </button>
             </div>
             <div class="card">
@@ -59,30 +61,22 @@
                                     <th>Bắt đầu</th>
                                     <th>Kết thúc</th>
                                     <th>Màu đại diện</th>
-                                    <th class='text-center'>Hành động</th>
                                 </tr>
                             </thead>
 
                             <tbody id='content'>
                                 <?php $temp = 0; ?>
+
                                 @if(!empty($shift))
-                                @foreach ($shift as $value)
+                                @foreach ($shift as $shi=>$value)
                                 <tr>
-                                    <td scope="row">{{++$loop->index}}</td>
-                                    <td scope="row"> <span class="badge bg-primary ">{{$value->name}}</span></td>
-                                    <td scope="row">{{$value->time_start}}</td>
-                                    <td scope="row">{{$value->time_end}}</td>
+                                    <td scope="row">{{ ++$loop->index }}</td>
+                                    <td scope="row"> <span class="badge bg-primary ">{{ $value['name'] }}</span></td>
+                                    <td scope="row">{{ $value['time_start'] }}</td>
+                                    <td scope="row">{{ $value['time_end'] }}</td>
                                     <td scope="row">
-                                        <div class="avatar-sm rounded-circle {{$value->color}}">
+                                        <div class="avatar-sm rounded-circle {{ $value['color'] }}">
                                         </div>
-                                    </td>
-                                    <td scope="row" class='text-center'>
-                                        <button wire:click="editShift({{ $value }})" class="btn btn-soft-success btn-rounded waves-effect waves-light">
-                                            <i class="mdi mdi-file-edit" title='Sửa'></i>
-                                        </button>
-                                        <button wire:click="deleteShift({{ $value->id }})" class="btn btn-soft-danger btn-rounded waves-effect waves-light">
-                                            <i class="mdi mdi-delete" title='Xóa'></i>
-                                        </button>
                                     </td>
                                 </tr>
                                 <?php
@@ -105,7 +99,7 @@
     <!-- end row -->
     <div class="modal fade" wire:ignore.self id="create-shift" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <form method="GET" wire:submit.prevent='addShift'>
+            <form method="GET">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -115,27 +109,6 @@
                     <div class="modal-body">
                         <div class="card border-primary border mb-3">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @if ($errors->any())
-                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        @endif
-                                        @if(!empty($noti))
-                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            <ul>
-                                                <li>{{ $noti }}</li>
-                                            </ul>
-                                        </div>
-                                        @endif
-
-                                    </div>
-                                </div>
                                 <div>
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -146,6 +119,11 @@
                                                     <div class="mb-3 row">
                                                         <div class="col-sm-10">
                                                             <input wire:model.lazy='shift_name' type="text" class="form-control" value="">
+                                                            @error('shift_name')
+                                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                                {{ $message}}
+                                                            </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
@@ -154,6 +132,7 @@
                                                 <br />
                                                 <br />
                                             </div>
+                                            <br />
                                             <div class='row'>
                                                 <div class="col-lg-4">
                                                     <h4 class="header-title">Thời gian làm: </h4>
@@ -163,12 +142,22 @@
 
                                             <div class='row'>
                                                 <div class="col-lg-4">
-                                                    <span class="header-title">Bắt đầu lúc: </span>
+                                                    @if(empty($shift))
+                                                    <span class="header-title">Quán bạn làm từ mấy giờ?: </span>
                                                     <input type="time" wire:model.lazy='time_start' class="form-control">
+                                                    @else
+                                                    <span class="header-title">Bắt đầu lúc: </span>
+                                                    <input type="time" wire:model.lazy='time_start' class="form-control" readonly>
+                                                    @endif
                                                 </div>
-                                                <div class="col-lg-4">
-                                                    <span class="header-title">Kết thúc lúc: </span>
+                                                <div class="col-lg-5">
+                                                    <span class="header-title">Kết thúc lúc: (Tối đa đến 23:59) </span>
                                                     <input type="time" wire:model.lazy='time_end' class="form-control">
+                                                    @error('time_end')
+                                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                        {{ $message}}
+                                                    </div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <br>
@@ -184,6 +173,11 @@
                                                         <option value="bg-dark">Đen</option>
                                                         <option value="bg-warning">Vàng</option>
                                                     </select>
+                                                    @error('color')
+                                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                        {{ $message}}
+                                                    </div>
+                                                    @enderror
                                                 </div>
                                             </div>
 
@@ -195,7 +189,7 @@
                     </div>
                     <div class="modal-footer">
                         <button wire:click='closeAdd' type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Close</button>
-                        <button wire:click='closeAdd' style='padding-left: 30px;padding-right: 30px;' class="btn btn-danger" type="submit"><i class="mdi mdi-check"></i> XONG </button>
+                        <button wire:click='addShift' style='padding-left: 30px;padding-right: 30px;' data-bs-dismiss="modal" class="btn btn-danger"><i class="mdi mdi-check"></i> XONG </button>
                     </div>
                 </div><!-- /.modal-content -->
             </form>
@@ -251,7 +245,7 @@
                                                 </div>
                                             </div>
                                             <br>
-
+                                            <br>
                                             <div class='row'>
                                                 <div class="col-lg-4">
                                                     <span class="header-title">Bắt đầu lúc: </span>
@@ -296,6 +290,11 @@
     <script>
         window.addEventListener('show-edit', event => {
             $('#edit-shift').modal('show');
+        })
+    </script>
+    <script>
+        window.addEventListener('show-add', event => {
+            $('#create-shift').modal('show');
         })
     </script>
     <script>

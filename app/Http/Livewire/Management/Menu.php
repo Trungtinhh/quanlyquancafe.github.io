@@ -10,15 +10,16 @@ use App\Models\DrinkDetail;
 use App\Models\Drink;
 use App\Models\Ingredent;
 use App\Models\Price;
+use Carbon\Carbon;
 
 class Menu extends Component
 {
     use WithFileUploads;
     public $provider, $drink_name, $drink_price, $drink_image, $drink_date_exp, $menu_category_id, $menu_category_name, $type;
     public $provider_name, $phone, $email, $address, $image, $relationship;
+    public $drink_menu_category_id, $null_menu_category_name;
     public $noti = '';
-    public $drinkDetail, $statusModalDetail = false;
-    public $statusFilter = false, $filter;
+    public $drinkDetail, $drinkDetail_1, $statusModalDetail = false;
 
     protected $messages = [
         'menu_category_name.required' => 'Tên danh mục không được bỏ trống',
@@ -48,31 +49,31 @@ class Menu extends Component
         'drink_image.mimes' => 'Định dạng không hỗ trợ',
         'drink_image.max' => 'Ảnh quá lớn',
         'drink_date_exp.required' => 'Chọn hạn sử dụng cho sản phẩm',
-        'type.required' => 'Vui lòng chọn loại sản phẩm'
+        'drink_date_exp.after' => 'Hạn sử dụng không hợp lý',
+        'type.required' => 'Vui lòng chọn loại sản phẩm',
+
+        'drink_menu_category_id.required' => 'Danh mục sản phẩm không được bỏ trống',
+        'null_menu_category_name.required' => 'Vui lòng chọn thức uống'
     ];
     public function render()
     {
         return view('livewire.management.menu', [
             'Menu_category' => MenuCategory::all(),
-            'Drink' => Drink::all(),
+            'Drink' => Drink::all()->groupBy('drink_name'),
+            'DrinkNullMenuCategory' => Drink::where('menu_category_id', null)->get()->groupBy('drink_name'),
             'Pro' => Provider::all(),
             'Ingredent' => Ingredent::all()
         ]);
     }
-    public function filter()
+    public function mount()
     {
-        if (!empty($this->filter)) {
-            $this->statusFilter = true;
-        }
-    }
-    public function closeFilter()
-    {
-        $this->statusFilter = false;
+        $this->null_menu_category_name = [];
     }
     public function closeAdd()
     {
         $this->resetValidation();
         $this->noti = '';
+        $this->null_menu_category_name = [];
     }
     public function addCategory()
     {
@@ -112,6 +113,23 @@ class Menu extends Component
             'message' => "Đã thêm!"
         ]);
     }
+    public function addMenuCategoryDrink()
+    {
+        $this->validate([
+            'drink_menu_category_id' => 'required',
+            'null_menu_category_name' => 'required',
+        ]);
+        foreach ($this->null_menu_category_name as $value) {
+            Drink::where('drink_name', $value)->update([
+                'menu_category_id' => $this->drink_menu_category_id,
+            ]);
+        }
+        $this->closeAdd();
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Đã thêm thức uống vào danh mục!"
+        ]);
+    }
     public function addDrink()
     {
         $this->validate([
@@ -124,7 +142,7 @@ class Menu extends Component
         if ($this->type == 'co_san') {
             $this->validate([
                 'provider' => 'required',
-                'drink_date_exp' => 'required',
+                'drink_date_exp' => 'required|after:'.Carbon::now()->toDateString(),
             ]);
             if (!DrinkDetail::where('drink_name', $this->drink_name)
                 ->where('provider_id', $this->provider)->where('date_exp', $this->drink_date_exp)
@@ -197,9 +215,9 @@ class Menu extends Component
             'message' => "Đã xóa danh mục!"
         ]);
     }
-    public function deleteMenuCategoryDrink($drink_id)
+    public function deleteMenuCategoryDrink($drink_name)
     {
-        Drink::where('drink_id', $drink_id)->update([
+        Drink::where('drink_name', $drink_name)->update([
             'menu_category_id' => null
         ]);
         $this->dispatchBrowserEvent('alert', [
@@ -207,10 +225,19 @@ class Menu extends Component
             'message' => "Đã xóa thức uống khỏi danh mục!"
         ]);
     }
-    public function drinkDetail($drink_id)
+    public function drinkDetail($drink_name)
     {
         $this->statusModalDetail = true;
-        $this->drinkDetail = DrinkDetail::where('drink_id', $drink_id)->first();
+        $this->drinkDetail = DrinkDetail::where('drink_name', $drink_name)->get();
+        $this->drinkDetail_1 = DrinkDetail::where('drink_name', $drink_name)->get()->toArray();
         $this->dispatchBrowserEvent('show-detail');
+    }
+    public function deleteDrink($drink_name)
+    {
+        Drink::where('drink_name', $drink_name)->delete();
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Đã xóa thức uống khỏi danh sách!"
+        ]);
     }
 }

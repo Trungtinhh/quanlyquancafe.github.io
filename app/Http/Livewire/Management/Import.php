@@ -37,6 +37,7 @@ class Import extends Component
         'product.required' => 'Tên không được bỏ trống',
         'price.required' => 'Giá không được bỏ trống',
         'amount_add.required' => 'Số lượng không được bỏ trống',
+        'amount_add.min' => 'Số lượng không hợp lệ',
         'date_add.required' => 'Ngày nhập kho không được bỏ trống',
         'date_exp.required' => 'Hạn sử dụng không được bỏ trống',
         'date_exp.after' => 'Hạn sử dụng không hợp lý',
@@ -135,7 +136,7 @@ class Import extends Component
                     'price_id' => $price->getKey(),
                     'provider_id' => $this->provider,
                     'date_exp' =>  $this->product_date_exp,
-                    'image' => $this->product_image
+                    'image' => $this->product_image->store('images', 'public'),
                 ]);
                 $this->dispatchBrowserEvent('alert', [
                     'type' => 'success',
@@ -198,7 +199,7 @@ class Import extends Component
             'category' => 'required',
             'provider' => 'required',
             'product' => 'required',
-            'amount_add' => 'required',
+            'amount_add' => 'required|numeric|min:1',
             'date_add' => 'required',
             'date_exp' => 'required|after:date_add',
 
@@ -210,6 +211,7 @@ class Import extends Component
                 $drinkNew = Drink::create([
                     'drink_name' => $this->product,
                     'category' => 1,
+                    'menu_category_id' => $drink->drink->menu_category_id
                 ]);
                 $price = Price::create([
                     'price_cost' => $drink->price->price_cost,

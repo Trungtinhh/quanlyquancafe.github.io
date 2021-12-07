@@ -13,207 +13,221 @@
             </div>
         </div>
     </div>
+    @canany(['system.permission.management'])
     <div class="row">
-        <div class="col-md-3">
-            <div class="text-md mt-3 mt-md-0">
-                <form wire:submit.prevent='filter'>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button data-bs-target="#create-category" data-bs-toggle="modal" style='margin-bottom:10px;' class="btn btn-danger btn-rounded waves-effect waves-light">
+                <i class="fe-plus-circle"></i> Thêm danh mục
+            </button>
+            <button data-bs-target="#create-category-drink" data-bs-toggle="modal" style='margin-bottom:10px;' class="btn btn-primary btn-rounded waves-effect waves-light">
+                <i class="fe-plus-circle"></i> Thêm món vào danh mục
+            </button>
+            <button data-bs-target="#create-drink" data-bs-toggle="modal" style='margin-bottom:10px;' class="btn btn-success btn-rounded waves-effect waves-light">
+                <i class="fe-plus-circle"></i> Thêm món mới
+            </button>
+        </div>
+    </div>
+    @endcanany
+    <ul class="nav nav-pills navtab-bg nav-justified">
+        <li class="nav-item">
+            <a href="#category" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
+                Danh mục thức uống
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#all" data-bs-toggle="tab" aria-expanded="false" class="nav-link ">
+                Tất cả
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="category">
+            @if(!empty($Menu_category))
+            <div class="row">
+                @foreach($Menu_category as $cate)
+                <div class="col-lg-6">
+                    <!-- Portlet card -->
                     <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-check mb-2 form-check-warning">
-                                        <input class="form-check-input" wire:model.lazy='filter' type="checkbox" value="all" id="customckeck7">
-                                        <label class="form-check-label" for="customckeck7">Tất cả thức uống</label>
-                                    </div>
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light"> Ok </button>
-                                        @if($statusFilter)
-                                        <button type="button" wire:click='closeFilter' class="btn btn-danger btn-rounded waves-effect waves-light"><i class="mdi mdi-close me-1"></i></button>
+                        <div class="card-header bg-primary py-3 text-white">
+                            <div class="card-widgets">
+                                @canany(['system.permission.management'])
+                                <a wire:click="deleteMenuCategory( {{ $cate->menu_category_id }} )" class="text-light">
+                                    <i class="mdi mdi-delete" title='Xóa'></i>
+                                </a>
+                                @endcanany
+                                <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh" title='Làm mới'></i></a>
+                                <a data-bs-toggle="collapse" href="#collapse{{ $cate->menu_category_id }}" role="button" aria-expanded="false" aria-controls="cardCollpase2"><i class="mdi mdi-minus" title='Thu nhỏ'></i></a>
+                                <a href="#" data-toggle="remove"><i class="mdi mdi-close" title='Ẩn'></i></a>
+                            </div>
+                            <h4 class="card-title mb-0 text-white">
+                                {{ $cate->menu_category_name }}
+                            </h4>
+                        </div>
+                        <div id="collapse{{ $cate->menu_category_id }}" class="collapse show">
+                            <div class="card-body">
+                                <div class='col-3'>
+                                    <input class="form-control" id="search{{ $cate->menu_category_id }}" type="text" placeholder="Tìm thức uống..">
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id='content{{ $cate->menu_category_id }}'>
+                                            <?php $temp = 0 ?>
+                                            @if(!empty($Drink))
+                                                @foreach($Drink as $dri=>$drink)
+                                                @if($drink[0]->menu_category_id == $cate->menu_category_id)
+                                                <?php $temp++ ?>
+                                                <tr>
+                                                    <th scope="row"><span class="badge bg-primary">{{ $temp }}</span></th>
+                                                    <th scope="row">{{ $dri }}</th>
+                                                    <td scope="row">{{ $drink[0]->drinkDetail->price->price_cost }}</td>
+                                                    <td scope="row">
+                                                        <?php $drink_amount = 0;?>
+                                                        @foreach($drink as $val)
+                                                            <?php $drink_amount += $val->drinkDetail->amount;?>
+                                                        @endforeach
+                                                        @if($drink[0]->category == 1 )
+                                                            @if($drink_amount != 0)
+                                                                {{ $drink_amount }}
+                                                            @else
+                                                                Hết
+                                                            @endif
+                                                        @else
+                                                            --
+                                                        @endif
+                                                    </td>
+                                                    
+                                                    <td scope="row">
+                                                        <button wire:click="drinkDetail('{{$dri}}')" class="btn btn-success btn-rounded waves-effect waves-light">
+                                                            <i class="mdi mdi-text" title='Chi tiết'></i>
+                                                        </button>
+                                                        @canany(['system.permission.management'])
+                                                            <button wire:click="deleteMenuCategoryDrink('{{$dri}}')" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                                <i class="mdi mdi-delete" title='Xóa khỏi danh mục'></i>
+                                                            </button>
+                                                        @endcanany
+                                                    </td>                                                  
+                                                </tr>
+                                                @endif
+                                                
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                    <div class="page-title-box">
+                                        @if($temp == 0)
+                                        <h6 class="page-title" style="text-align: center;"><i data-feather="alert-triangle" class="icon-dual-danger"></i>Trống !</h6>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </div> <!-- end card-->
+                </div><!-- end col -->
+                @endforeach
             </div>
-        </div><!-- end col-->
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button data-bs-target="#create-category" data-bs-toggle="modal" style='margin-bottom:10px;' class="btn btn-danger btn-rounded waves-effect waves-light">
-                <i class="fe-plus-circle"></i> Thêm danh mục
-            </button>
-            <button data-bs-target="#create-drink" data-bs-toggle="modal" style='margin-bottom:10px;' class="btn btn-success btn-rounded waves-effect waves-light">
-                <i class="fe-plus-circle"></i> Thêm món
-            </button>
-        </div>
-    </div>
-    @if(!$statusFilter)
-    @if(!empty($Menu_category))
-    <div class="row">
-        @foreach($Menu_category as $cate)
-        <div class="col-lg-6">
-            <!-- Portlet card -->
-            <div class="card">
-                <div class="card-header bg-primary py-3 text-white">
-                    <div class="card-widgets">
-                        <a wire:click="deleteMenuCategory( {{ $cate->menu_category_id }} )" class="text-light">
-                            <i class="mdi mdi-delete" title='Xóa'></i>
-                        </a>
-                        <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh" title='Làm mới'></i></a>
-                        <a data-bs-toggle="collapse" href="#collapse{{ $cate->menu_category_id }}" role="button" aria-expanded="false" aria-controls="cardCollpase2"><i class="mdi mdi-minus" title='Thu nhỏ'></i></a>
-                        <a href="#" data-toggle="remove"><i class="mdi mdi-close" title='Ẩn'></i></a>
-                    </div>
-                    <h4 class="card-title mb-0 text-white">
-                        {{ $cate->menu_category_name }}
-                    </h4>
-                </div>
-                <div id="collapse{{ $cate->menu_category_id }}" class="collapse show">
-                    <div class="card-body">
-                        <div class='col-3'>
-                            <input class="form-control" id="search{{ $cate->menu_category_id }}" type="text" placeholder="Tìm thức uống..">
+            @else
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Portlet card -->
+                    <div class="card">
+                        <div class="card-header bg-primary py-3 text-white">
+                            <div class="card-widgets">
+                                <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                <a data-bs-toggle="collapse" href="#cardCollpase5" role="button" aria-expanded="false" aria-controls="cardCollpase2"><i class="mdi mdi-minus"></i></a>
+                                <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                            </div>
+                            <h5 class="card-title mb-0 text-white">Không có món nào</h5>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Tên</th>
-                                        <th>Giá</th>
-                                        <th>Số lượng</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id='content{{ $cate->menu_category_id }}'>
-                                    <?php $temp = 0 ?>
-                                    @if(!empty($Drink))
-                                    @foreach($Drink as $drink)
-                                    @if($drink->menu_category_id == $cate->menu_category_id)
-                                    <tr>
-                                        <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
-                                        <th scope="row">{{ $drink->drink_name }}</th>
-                                        <td scope="row">{{ $drink->drinkDetail->price->price_cost }}</td>
-                                        <td scope="row">
-                                            @if($drink->category == 1 )
-                                            @if($drink->drinkDetail->amount != 0)
-                                            {{$drink->drinkDetail->amount}}
-                                            @else
-                                            Hết
-                                            @endif
-                                            @else
-                                            --
-                                            @endif
-                                        </td>
-                                        <td scope="row">
-                                            <button wire:click="drinkDetail({{ $drink->drink_id }})" class="btn-success btn-rounded waves-effect waves-light">
-                                                <i class="mdi mdi-text" title='Chi tiết'></i>
-                                            </button>
-                                            <button wire:click="deleteMenuCategoryDrink({{ $drink->drink_id }})" class="btn-danger btn-rounded waves-effect waves-light">
-                                                <i class="mdi mdi-delete" title='Xóa khỏi danh mục'></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <?php $temp++ ?>
-                                    @endif
-                                    @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
-                            <div class="page-title-box">
-                                @if($temp == 0)
-                                <h6 class="page-title" style="text-align: center;"><i data-feather="alert-triangle" class="icon-dual-danger"></i>Trống !</h6>
-                                @endif
+                        <div id="cardCollpase5" class="collapse show">
+                            <div class="card-body">
+                                Chọn <a href="#">Thêm danh mục</a> để tạo danh mục thức uống cho Menu
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div> <!-- end card-->
-        </div><!-- end col -->
-        @endforeach
-    </div>
-    @else
-    <div class="row">
-        <div class="col-lg-6">
-            <!-- Portlet card -->
-            <div class="card">
-                <div class="card-header bg-primary py-3 text-white">
-                    <div class="card-widgets">
-                        <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
-                        <a data-bs-toggle="collapse" href="#cardCollpase5" role="button" aria-expanded="false" aria-controls="cardCollpase2"><i class="mdi mdi-minus"></i></a>
-                        <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a>
-                    </div>
-                    <h5 class="card-title mb-0 text-white">Card title</h5>
-                </div>
-                <div id="cardCollpase5" class="collapse show">
-                    <div class="card-body">
-                        Chọn <a href="#">Thêm danh mục</a> để tạo danh mục thức uống cho Menu
-                    </div>
-                </div>
-            </div> <!-- end card-->
-        </div><!-- end col -->
-    </div>
-    @endif
-    @else
-    <div class="card">
-        <div class="card-body">
-            <div class='col-3'>
-                <input class="form-control" id="search_all" type="text" placeholder="Tìm thức uống..">
+                    </div> <!-- end card-->
+                </div><!-- end col -->
             </div>
-            <div class="table-responsive">
-                <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tên</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
+            @endif
+        </div>
 
-                    <tbody id='content_all'>
-                        <?php $temp = 0 ?>
-                        @if(!empty($Drink))
-                        @foreach($Drink as $drink)
-                        <tr>
-                            <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
-                            <th scope="row">{{ $drink->drink_name }}</th>
-                            <td scope="row">{{ $drink->drinkDetail->price->price_cost }}</td>
-                            <td scope="row">
-                                @if($drink->category == 1 )
-                                @if($drink->drinkDetail->amount != 0)
-                                {{$drink->drinkDetail->amount}}
-                                @else
-                                Hết
+        <div class="tab-pane " id="all">
+            <div class="card">
+                <div class="card-body">
+                    <div class='col-3'>
+                        <input class="form-control" id="search_all" type="text" placeholder="Tìm thức uống..">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    @canany(['system.permission.management'])
+                                    <th>Hành động</th>
+                                    @endcanany
+                                </tr>
+                            </thead>
+
+                            <tbody id='content_all'>
+                                <?php $temp = 0 ?>
+                                @if(!empty($Drink))
+                                    @foreach($Drink as $dri=>$drink)
+                                        <tr>
+                                            <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
+                                            <th scope="row">{{ $dri }}</th>
+                                            <td scope="row">{{ $drink[0]->drinkDetail->price->price_cost }}</td>
+                                            <td scope="row">
+                                                <?php $drink_amount = 0;?>
+                                                    @foreach($drink as $val)
+                                                        <?php $drink_amount += $val->drinkDetail->amount;?>
+                                                    @endforeach
+                                                    @if($drink[0]->category == 1 )
+                                                        @if($drink_amount != 0)
+                                                            {{ $drink_amount }}
+                                                        @else
+                                                            Hết
+                                                        @endif
+                                                    @else
+                                                        --
+                                                    @endif
+                                            </td>                                           
+                                            <td scope="row">
+                                                <button wire:click="drinkDetail('{{ $dri }}')" class="btn btn-success btn-rounded waves-effect waves-light">
+                                                    <i class="mdi mdi-text" title='Chi tiết'></i>
+                                                </button>
+                                                @canany(['system.permission.management'])
+                                                <button wire:click="deleteDrink('{{ $dri }}')" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                    <i class="mdi mdi-delete" title='Xóa'></i>
+                                                </button>
+                                                @endcanany
+                                            </td>                                          
+                                        </tr>  
+                                        <?php $temp++ ?>                                     
+                                    @endforeach
                                 @endif
-                                @else
-                                --
-                                @endif
-                            </td>
-                            <td scope="row">
-                                <button wire:click="drinkDetail({{ $drink->drink_id }})" class="btn btn-success btn-rounded waves-effect waves-light">
-                                    <i class="mdi mdi-text" title='Chi tiết'></i>
-                                </button>
-                                <button wire:click="deleteDrink({{ $drink->drink_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
-                                    <i class="mdi mdi-delete" title='Xóa'></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <?php $temp++ ?>
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
-                <div class="page-title-box">
-                    @if($temp == 0)
-                    <h6 class="page-title" style="text-align: center;"><i data-feather="alert-triangle" class="icon-dual-danger"></i>Trống !</h6>
-                    @endif
+                            </tbody>
+                        </table>
+                        <div class="page-title-box">
+                            @if($temp == 0)
+                            <h6 class="page-title" style="text-align: center;"><i data-feather="alert-triangle" class="icon-dual-danger"></i>Trống !</h6>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    @endif
     <div class="modal fade" wire:ignore.self id="create-provider" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <form method="GET" wire:submit.prevent='addProvider'>
@@ -291,7 +305,6 @@
                             </div> <!-- end col -->
 
                             <div class="col-lg-6">
-
                                 <div class="card border-success border mb-3">
                                     <div class="card-body">
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Hình ảnh</h5>
@@ -317,7 +330,68 @@
                                         </div>
                                     </div>
                                 </div> <!-- end col-->
+                                <div wire:loading class="text-center">Đang xử lý</div>
                             </div> <!-- end col-->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <div class="modal-footer">
+                        <button wire:click='' type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Close</button>
+                        <button wire:click='' style='padding-left: 30px;padding-right: 30px;' class="btn btn-danger" type="submit"><i class="mdi mdi-check"></i> XONG </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </form>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" wire:ignore.self id="create-category-drink" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form method="GET" wire:submit.prevent='addMenuCategoryDrink'>
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myLargeModalLabel">Thêm thức uống vào danh mục</h4>
+                        <button type="button" wire:click='' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card border-success border mb-3">
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="product-name" class="form-label">Danh mục sản phẩm</label>
+                                            <select wire:model.lazy='drink_menu_category_id' class="form-control">
+                                                <option value="">Chọn danh mục</option>
+                                                @foreach($Menu_category as $value)
+                                                <option value="{{ $value->menu_category_id }}">{{ $value->menu_category_name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('drink_menu_category_id')
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                {{ $message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="product-name" class="form-label">Chọn sản phẩm</label>
+                                            <div class="row">
+                                                @foreach($DrinkNullMenuCategory as $drinkNull=>$vl)
+                                                    <div class="col-3">                      
+                                                        <div class="form-check form-check-inline mb-2 form-check-primary">
+                                                            <input class="form-check-input" wire:model.lazy='null_menu_category_name' type="checkbox" value="{{ $drinkNull }}" id="customckeck7">
+                                                            <label class="form-check-label" for="customckeck7">{{ $drinkNull }}</label>
+                                                        </div>                                                   
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            @error('null_menu_category_name')
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                {{ $message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div> <!-- end card -->
+                            </div> <!-- end col -->
                         </div>
                         <!-- end row -->
                     </div>
@@ -491,7 +565,6 @@
                                                 @endif
                                             </div>
                                         </div>
-
                                     </div>
                                 </div> <!-- end col-->
                                 <br>
@@ -500,6 +573,8 @@
                                     {{ $noti }}
                                 </div>
                                 @endif
+                                <br>
+                                <div wire:loading class="text-center">Đang xử lý</div>
                             </div> <!-- end col-->
                         </div>
                         <!-- end row -->
@@ -530,36 +605,52 @@
                                             @if(!empty($drinkDetail))
                                             <tr>
                                                 <th style="widtd: 35%;">Hình ảnh</th>
-                                                <td><img src="{{ asset('storage/'.$drinkDetail->image) }}" width="100"></td>
+                                                <td><img src="{{ asset('storage/'.$drinkDetail_1[0]['image']) }}" width="100"></td>
                                             </tr>
                                             <tr>
                                                 <th>Tên thức uống</th>
                                                 <td>
-                                                    {{ $drinkDetail->drink_name }}
+                                                    {{ $drinkDetail_1[0]['drink_name']}}
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <th>Nhà cung cấp</th>
-                                                <td> {{!empty($drinkDetail->provider_id) ?  $drinkDetail->provider->provider_name  : 'Không có'}}</td>
-                                            </tr>
+                                            </tr>                 
                                             <tr>
                                                 <th>Số lượng</th>
                                                 <td>
-                                                    @if($drinkDetail->drink->category == 1 )
-                                                    @if($drinkDetail->amount != 0)
-                                                    {{$drinkDetail->amount}}
-                                                    @else
-                                                    Hết
-                                                    @endif
-                                                    @else
-                                                    --
-                                                    @endif
+                                                    @foreach($drinkDetail as $drinkdt)                                                      
+                                                        @if($drinkdt->drink->category == 1 )                                                                                                              
+                                                            @if($drinkdt->amount != 0)
+                                                                <ul>     
+                                                                    <li> 
+                                                                        {{ $drinkdt->provider->provider_name ." - ". $drinkdt->date_exp." : ". $drinkdt->amount }}
+                                                                    </li>
+                                                                </ul>
+                                                            @else
+                                                                <ul>     
+                                                                    <li> 
+                                                                        {{ $drinkdt->provider->provider_name ." - ". $drinkdt->date_exp." : ". "Hết" }}
+                                                                    </li>
+                                                                </ul>
+                                                            @endif
+                                                        @else
+                                                            --
+                                                        @endif   
+                                                    @endforeach                                    
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>Hạn sử dụng</th>
-                                                <td>
-                                                    {{ $drinkDetail->date_exp }}
+                                                <th>Nhà cung cấp và HSD</th>
+                                                <td>   
+                                                @foreach($drinkDetail as $vl)   
+                                                    @if($drinkdt->drink->category == 1 )     
+                                                        <ul>     
+                                                            <li>                          
+                                                                {{ $vl->provider->provider_name ." - ". $vl->date_exp}}
+                                                            </li>
+                                                        </ul>
+                                                    @else
+                                                    --
+                                                    @endif
+                                                @endforeach
                                                 </td>
                                             </tr>
                                             @endif

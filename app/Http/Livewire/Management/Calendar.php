@@ -13,7 +13,7 @@ class Calendar extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $shift, $user, $noti, $Calendar_week, $week;
+    public $user, $noti, $Calendar_week, $week;
     public $date_work, $shift_work, $user_work;
 
     protected $rules = [
@@ -31,6 +31,7 @@ class Calendar extends Component
     public function render()
     {
         return view('livewire.management.calendar', [
+            'shift' => Shift::all(),
             'calendar' => CLD::where('date', now('Asia/Ho_Chi_Minh')->toDateString())->get(),
             'dayOfWeek' => CLD::orderBy('date', 'desc')->get()->groupBy('date')->take(7),
             'fullCalendar' => CLD::orderBy('date', 'desc')->get()->groupBy('date'),
@@ -39,7 +40,6 @@ class Calendar extends Component
     public function mount()
     {
         $this->noti = '';
-        $this->shift = Shift::all();
         $this->Calendar_week = CLD::orderBy('date', 'desc')->get()->groupBy('date')->take(7)->toArray();
         $this->week = array_reverse($this->Calendar_week);
         $this->user = User::all();
@@ -75,5 +75,18 @@ class Calendar extends Component
         if (!empty($date_delete) && !empty($shift_delete)) {
             CLD::where('date', $date_delete)->where('shift_id', $shift_delete)->delete();
         }
+    }
+    public function deleteAllCalendar()
+    {
+        $allWeek = CLD::orderBy('date', 'desc')->get()->groupBy('date')->take(7);
+        foreach ($allWeek as $all => $week) {
+            foreach ($week as $val) {
+                CLD::where('id', $val->id)->delete();
+            }
+        }
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Đặt lại thành công!"
+        ]);
     }
 }

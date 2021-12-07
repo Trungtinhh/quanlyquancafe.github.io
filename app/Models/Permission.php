@@ -16,6 +16,7 @@ class Permission extends \Spatie\Permission\Models\Permission
 {
     const SYSTEM__CONFIGURATION__MANAGEMENT = 'system.configuration.management';
     const SYSTEM__PERMISSION__MANAGEMENT = 'system.permission.management';
+    const SYSTEM__BASIC__MANAGEMENT = 'system.basic.management';
     const SYSTEM__VIEW__BASIC = 'system.view.basic';
     const SYSTEM__UPDATE = 'system.update';
     const SYSTEM__CREATE = 'system.create';
@@ -35,14 +36,18 @@ class Permission extends \Spatie\Permission\Models\Permission
 
     public static function getPermissionDefault()
     {
-        return [
+        return [          
+            static::SYSTEM__PERMISSION__MANAGEMENT => [
+                'title' => 'Quản lý người dùng, phân quyền',
+                'name' => static::SYSTEM__PERMISSION__MANAGEMENT,
+            ],
             static::SYSTEM__CONFIGURATION__MANAGEMENT => [
                 'title' => 'Quản lý cấu hình',
                 'name' => static::SYSTEM__CONFIGURATION__MANAGEMENT,
             ],
-            static::SYSTEM__PERMISSION__MANAGEMENT => [
-                'title' => 'Quản lý người dùng, phân quyền',
-                'name' => static::SYSTEM__PERMISSION__MANAGEMENT,
+            static::SYSTEM__BASIC__MANAGEMENT => [
+                'title' => 'Quản lý cơ bản',
+                'name' => static::SYSTEM__BASIC__MANAGEMENT,
             ],
             static::SYSTEM__VIEW__BASIC => [
                 'title' => 'Xem',

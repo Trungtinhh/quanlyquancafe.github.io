@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-sm-2">
                             <div class="text-center mt-3 mt-sm-0">
-                                @if($pro->relationship == 1) <div class="badge font-14 bg-soft-success rounded-circle p-1"><i class="fa fa-star" style="font-size:20px;color:yellow"></i></i></div>@endif
+                                @if($pro->relationship == 1) <div class="badge font-14 bg-soft-success rounded-circle p-1"><i class="fa fa-star" style="font-size:20px;color:yellow"></i></div>@endif
                             </div>
                         </div>
                         <div class="col-sm-2">

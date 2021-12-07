@@ -20,4 +20,8 @@ class Provider extends Model
         'image',
         'relationship'
     ];
+    public function drinkDetail()
+    {
+        return $this->hasOne('App\Models\DrinkDetail', 'id', 'provider_id');
+    }
 }

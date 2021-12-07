@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Livewire\Home;
 use App\Http\Livewire\Management\Area;
 use App\Http\Livewire\Management\Calendar;
 use App\Http\Livewire\Management\Import;
 use App\Http\Livewire\Management\Importgoods;
+use App\Http\Livewire\Management\Exportgoods;
 use App\Http\Livewire\Management\ListHuman;
 use App\Http\Livewire\Management\ManagerTimekeeping;
 use App\Http\Livewire\Management\Menu;
@@ -13,6 +15,10 @@ use App\Http\Livewire\Management\Storehouse;
 use App\Http\Livewire\Management\TimeKeeping;
 use App\Http\Livewire\Management\Table;
 use App\Http\Livewire\Management\TableEmpty;
+use App\Http\Livewire\Management\Bartending;
+use App\Http\Livewire\Management\Invoice;
+use App\Http\Livewire\Management\Order;
+use App\Http\Livewire\Management\Statistical;
 use App\Http\Livewire\Profile\PrintPDF;
 use App\Http\Livewire\Profile\ProfileInfo;
 
@@ -43,9 +49,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('home');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', Home::class)->name('dashboard');
 
 //verify email
 Route::get('/email/verify', function () {
@@ -101,8 +105,13 @@ Route::name('management.')->group(function () {
             Route::get('/', Storehouse::class)->name('store_house');
             Route::get('/import_goods', Importgoods::class)->name('import_goods');
             Route::get('/import_goods/import', Import::class)->name('import');
+            Route::get('/export_goods', Exportgoods::class)->name('export_goods');
         });
         Route::get('/menu', Menu::class)->name('menu');
+        Route::get('/bartending', Bartending::class)->name('bartending');
+        Route::get('/statistical', Statistical::class)->name('statistical');
+        Route::get('/order', Order::class)->name('order');
+        Route::get('/invoice', Invoice::class)->name('invoice');
     });
 });
 

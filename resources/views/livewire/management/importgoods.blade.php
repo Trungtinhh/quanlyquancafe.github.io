@@ -70,7 +70,7 @@
                                                             <th scope="row"><span class="badge bg-success">{{ $value->drink_id }}</span></th>
                                                             <th scope="row">{{ $value->drink->drink_name }}</th>
                                                             <th scope="row" class='text-primary'>{{ $value->drink->drinkDetail->date_exp }}</th>
-                                                            <th scope="row">{{ $value->drink->drinkDetai->provider->provider_name }}</th>
+                                                            <th scope="row">{{ $value->drink->drinkDetail->provider->provider_name }}</th>
                                                             <td scope="row"><span class="badge bg-danger">{{ $value->amount_add }}</span></td>
                                                             <th scope="row">{{ $value->date_add }}</th>
                                                             <td scope="row" class="text-center">
