@@ -195,28 +195,39 @@
                                                         @foreach($search_drink as $search)
                                                         <li class="list-group-item justify-content-between align-items-center">
                                                             <div class="row">
-                                                                <div class="col-3">
+                                                                <div class="col-2">
                                                                     {{ $search->drink_name }}
                                                                 </div>
                                                                 <div class="col-2">
                                                                     <div class='badge bg-primary rounded-pill'>{{ $search->price->price_cost }}</div>
                                                                 </div>
-                                                                <div class="col-3 text-center">
+                                                                <div class="col-6 text-center">
                                                                     @if($search->drink->category == 1)
-                                                                    @if($search->amount == 0)
-                                                                    <div class='badge bg-danger rounded-pill'>Hết</div>
-                                                                    @else
-                                                                    <div>
-                                                                        <input type="number" wire:model.defer='drink_amount' min='0' max='{{ $search->amount }}' class="form-control">
+                                                                    <div class="row">
+                                                                        @if($search->amount == 0)
+                                                                        <div class="col-6">
+                                                                            <div class='badge bg-danger rounded-pill'>Hết</div>
+                                                                        </div>
+                                                                        @else
+                                                                        <div class="col-6">
+                                                                            <div>
+                                                                                <input type="number" wire:model.defer='drink_amount' min='0' max='{{ $search->amount }}' class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
+                                                                        <div class="col-6">
+                                                                            <div>
+                                                                                <div class='badge bg-danger rounded-pill'>{{ $search->provider->provider_name ." - ". $search->date_exp }}</div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                    @endif
                                                                     @else
-                                                                    <div>
+                                                                    <div class="col-6">
                                                                         <input type="number" wire:model.defer='drink_amount' min='0' class="form-control">
                                                                     </div>
                                                                     @endif
                                                                 </div>
-                                                                <div class="col-4 text-end">
+                                                                <div class="col-2 text-end">
                                                                     <div class='text-end rounded-pill'>
                                                                         <button wire:click='addDrinkToOrder({{ $search->drink_id }})' data-bs-target="#create-drink_amount" data-bs-toggle="modal" class="btn btn-success btn-rounded waves-effect waves-light">
                                                                             <i class="mdi mdi-check" title='Chọn'></i>
@@ -300,6 +311,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                    <button wire:click='resetOrder' data-bs-dismiss="modal" style='padding-left: 30px;padding-right: 30px;' class="btn btn-secondary"><i class="dripicons-cross"></i> HỦY </button>
                         <button wire:click='addOrder' data-bs-dismiss="modal" style='padding-left: 30px;padding-right: 30px;' class="btn btn-success"><i class='fa fa-check-circle mr-1'></i> XONG </button>
                     </div>
                 </div><!-- /.modal-content -->

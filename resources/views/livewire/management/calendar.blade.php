@@ -46,8 +46,8 @@
                                     <table class="table table-bordered mb-0">
                                         <thead class='table-dark'>
                                             <tr>
-                                                <th width='5%'>STT</th>
-                                                <th width='12%' class='text-center '>Ca làm</th>
+                                                <th width='10%'>STT</th>
+                                                <th width='20%' class='text-center '>Ca làm</th>
                                                 <th class='text-center'>Nhân viên</th>
                                                 @canany(['system.permission.management'])
                                                 <th width='14%' class='text-center'>Hành động</th>
@@ -63,15 +63,15 @@
                                                 <td scope="row" class='text-center align-middle'>{{ ++$loop->index }}</td>
                                                 <th class='text-center align-middle'>{{ $value->name }}</th>
                                                 <td scope="row" class=' align-middle'>
-                                                    @foreach($calendar as $cal)
-                                                    @if($cal->shift_id == $value->id)
                                                     <ul>
+                                                        @foreach($calendar as $cal)
+                                                        @if($cal->shift_id == $value->id)
                                                         <li>{{ $cal->user->name }}</li>
                                                         <?php $date_delete = $cal->date;
                                                         $shift_delete = $value->id; ?>
+                                                        @endif
+                                                        @endforeach
                                                     </ul>
-                                                    @endif
-                                                    @endforeach
                                                 </td>
                                                 @canany(['system.permission.management'])
                                                 <td scope="row" class='text-center align-middle'>
@@ -147,12 +147,16 @@
                                                     <div class="col-12">
                                                         <div class="mb-3">
                                                             <label class="form-label">Người làm: </label>
-                                                            @foreach($user as $u)
-                                                            <div class="form-check mb-2 form-check-warning">
-                                                                <input class="form-check-input" wire:model.lazy='user_work' type="checkbox" value="{{ $u->id }}" id="customckeck7">
-                                                                <label class="form-check-label" for="customckeck7">{{ $u->name }}</label>
+                                                            <div class="row">
+                                                                @foreach($user as $u)
+                                                                <div class="col-3">
+                                                                    <div class="form-check mb-2 form-check-warning">
+                                                                        <input class="form-check-input" wire:model.lazy='user_work' type="checkbox" value="{{ $u->id }}" id="customckeck7">
+                                                                        <label class="form-check-label" for="customckeck7">{{ $u->name }}</label>
+                                                                    </div>
+                                                                </div>
+                                                                @endforeach
                                                             </div>
-                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div> <!-- end row -->
@@ -190,7 +194,6 @@
                                                 @foreach($week as $w => $value)
                                                 <th class='text-center align-middle'>{{ $w }}</th>
                                                 @endforeach
-                                                <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <?php $date_delete = '';
@@ -203,26 +206,26 @@
                                                 @foreach($week as $w => $temp)
                                                 <td scope="row">
                                                     <div class='row'>
-                                                        <div class="col-9">
-                                                            @foreach($dayOfWeek as $cal => $val)
-                                                            @foreach($val as $a)
-                                                            @if($a['shift_id'] == $value->id && $a['date'] == $w)
+                                                       <div class="col-9">
                                                             <ul>
-                                                                <li>{{ $a['user']->name }}</li>
-                                                                <?php $date_delete = $a['date'];
-                                                                $shift_delete = $a['shift_id']; ?>
+                                                                @foreach($dayOfWeek as $cal => $val)
+                                                                    @foreach($val as $a)
+                                                                        @if($a['shift_id'] == $value->id && $a['date'] == $w)
+                                                                            <li>{{ $a['user']->name }}</li>
+                                                                            <?php $date_delete = $a['date'];
+                                                                            $shift_delete = $a['shift_id']; ?>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endforeach
                                                             </ul>
-                                                            @endif
-                                                            @endforeach
-                                                            @endforeach
                                                         </div>
                                                         <div class="col-3">
                                                             @canany(['system.permission.management'])
-                                                            @if($date_delete != '' && $shift_delete != '')
-                                                            <button title='Đặt lại' wire:click="deleteCalendar('{{ $date_delete }}', {{ $shift_delete }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
-                                                                <i class="mdi mdi-file"></i>
-                                                            </button>
-                                                            @endif
+                                                                @if($date_delete != '' && $shift_delete != '')
+                                                                <button title='Đặt lại' wire:click="deleteCalendar('{{ $date_delete }}', {{ $shift_delete }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
+                                                                    <i class="mdi mdi-file"></i>
+                                                                </button>
+                                                                @endif
                                                             @endcanany
                                                         </div>
                                                     </div>
@@ -264,19 +267,18 @@
                                             <tr>
                                                 <th class='text-center align-middle'>{{ $w }}</th>
                                                 @foreach($shift as $value)
-                                                <td scope="row">
-
-                                                    @foreach($fullCalendar as $cal => $val)
-                                                    @foreach($val as $a)
-                                                    @if($a['shift_id'] == $value->id && $a['date'] == $w)
+                                                <td scope="row">                                                   
                                                     <ul>
-                                                        <li>{{ $a['user']->name }}</li>
-                                                        <?php $date_delete = $a['date'];
-                                                        $shift_delete = $a['shift_id']; ?>
-                                                    </ul>
-                                                    @endif
-                                                    @endforeach
-                                                    @endforeach
+                                                        @foreach($fullCalendar as $cal => $val)
+                                                            @foreach($val as $a)
+                                                                @if($a['shift_id'] == $value->id && $a['date'] == $w)
+                                                                    <li>{{ $a['user']->name }}</li>
+                                                                    <?php $date_delete = $a['date'];
+                                                                    $shift_delete = $a['shift_id']; ?>
+                                                                @endif
+                                                            @endforeach
+                                                        @endforeach
+                                                    </ul>                                                   
                                                 </td>
                                                 @endforeach
                                             </tr>

@@ -22,7 +22,7 @@ class CreateInvoiceDetailsTable extends Migration
             $table->string('user_name');
             $table->dateTime('time_in')->nullable();
             $table->dateTime('time_out')->nullable();
-            $table->float('total')->default(0);
+            $table->double('total')->default(0);
             $table->tinyInteger('status');
             $table->timestamps();
         });

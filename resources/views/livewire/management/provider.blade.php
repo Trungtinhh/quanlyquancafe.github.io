@@ -76,7 +76,6 @@
                         <div class="col-sm-2">
                             <div class="text-sm">
                                 <a wire:click='editProvider({{ $pro }})' class="action-icon bg-primary text-light"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                <a wire:click='deleteProvider({{ $pro->id }})' class="action-icon bg-danger text-light"> <i class="mdi mdi-delete"></i></a>
                             </div>
                         </div> <!-- end col-->
                     </div> <!-- end row -->

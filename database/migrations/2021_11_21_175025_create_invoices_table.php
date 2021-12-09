@@ -21,7 +21,7 @@ class CreateInvoicesTable extends Migration
             $table->foreign('table_id')->references('id')->on('tables')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->float('total')->default(0);
+            $table->double('total')->default(0);
             $table->dateTime('time_in')->nullable();
             $table->dateTime('time_out')->nullable();
             $table->tinyInteger('status');

@@ -53,7 +53,7 @@ class Order extends Component
     public function addDrinkToOrder($drinkIDSelected)
     {
         $temp = DrinkDetail::where('drink_id', $drinkIDSelected)->first();
-        if ($this->drink_amount > 0 && $this->drink_amount <= $temp->amount) {
+        if ($this->drink_amount > 0) {
             $drinkSelected = Od::where('drink_id', $drinkIDSelected)
                 ->where('status', 0)
                 ->where('table_id', $this->table_order['id'])
@@ -62,39 +62,46 @@ class Order extends Component
                 $drink_all = DrinkDetail::where('drink_id', $drinkIDSelected)->first();
                 if ($drink_all->drink->category == 1) {
                     if ($drink_all->amount > 0) {
-                        $order = Od::create([
-                            'table_id' => $this->table_order['id'],
-                            'user_id' => Auth::user()->id,
-                            'drink_id' => $drinkIDSelected,
-                            'drink_amount' => $this->drink_amount,
-                            'status' => 0
-                        ]);
-                        OrderDetail::create([
-                            'order_id' => $order->getKey(),
-                            'table_name' => $order->table->table_name,
-                            'user_name' => Auth::user()->name,
-                            'drink_name' => $order->drink->drink_name,
-                            'drink_amount' => $this->drink_amount,
-                            'price' => $order->drink->drinkDetail->price->price_cost,
-                            'status' => 0
-                        ]);
-                        $invoice = Invoice::create([
-                            'order_id' => $order->getKey(),
-                            'table_id' => $this->table_order['id'],
-                            'user_id' => Auth::user()->id,
-                            'status' => 0
-                        ]);
-                        InvoiceDetail::create([
-                            'invoice_id' => $invoice->getKey(),
-                            'drink_name' => $invoice->order->drink->drink_name,
-                            'table_name' => $invoice->order->table->table_name,
-                            'user_name' => Auth::user()->name,
-                            'status' => 0
-                        ]);
-                        DrinkDetail::where('drink_id', $drinkIDSelected)->update([
-                            'amount' => $drink_all->amount - $this->drink_amount
-                        ]);
-                        $this->drink_amount = 1;
+                        if ($this->drink_amount <= $drink_all->amount) {
+                            $order = Od::create([
+                                'table_id' => $this->table_order['id'],
+                                'user_id' => Auth::user()->id,
+                                'drink_id' => $drinkIDSelected,
+                                'drink_amount' => $this->drink_amount,
+                                'status' => 0
+                            ]);
+                            OrderDetail::create([
+                                'order_id' => $order->getKey(),
+                                'table_name' => $order->table->table_name,
+                                'user_name' => Auth::user()->name,
+                                'drink_name' => $order->drink->drink_name,
+                                'drink_amount' => $this->drink_amount,
+                                'price' => $order->drink->drinkDetail->price->price_cost,
+                                'status' => 0
+                            ]);
+                            $invoice = Invoice::create([
+                                'order_id' => $order->getKey(),
+                                'table_id' => $this->table_order['id'],
+                                'user_id' => Auth::user()->id,
+                                'status' => 0
+                            ]);
+                            InvoiceDetail::create([
+                                'invoice_id' => $invoice->getKey(),
+                                'drink_name' => $invoice->order->drink->drink_name,
+                                'table_name' => $invoice->order->table->table_name,
+                                'user_name' => Auth::user()->name,
+                                'status' => 0
+                            ]);
+                            DrinkDetail::where('drink_id', $drinkIDSelected)->update([
+                                'amount' => $drink_all->amount - $this->drink_amount
+                            ]);
+                            $this->drink_amount = 1;
+                        } else {
+                            $this->dispatchBrowserEvent('alert', [
+                                'type' => 'warning',
+                                'message' => "Số lượng không hợp lý!"
+                            ]);
+                        }
                     } else {
                         $this->dispatchBrowserEvent('alert', [
                             'type' => 'warning',
@@ -154,7 +161,7 @@ class Order extends Component
             $this->order = Od::where('status', 0)
                 ->where('table_id', $this->table_order['id'])
                 ->where('user_id', Auth::user()->id)->get();
-        }else{
+        } else {
             $this->dispatchBrowserEvent('alert', [
                 'type' => 'warning',
                 'message' => "Số lượng không hợp lý!"
@@ -165,6 +172,18 @@ class Order extends Component
     {
         $this->order = '';
         $this->searchDrink = '';
+        $od = Od::where('status', 0)
+            ->where('table_id', $this->table_order['id'])
+            ->where('user_id', Auth::user()->id)->get();
+        foreach ($od as $o) {
+            $drink_order = Od::find($o->id)->first();
+            $amount_of_drink = DrinkDetail::where('drink_id', $o->drink_id)->first();
+            if ($amount_of_drink->drink->category == 1) {
+                DrinkDetail::where('drink_id', $o->drink_id)->update([
+                    'amount' => $amount_of_drink->amount + $drink_order->drink_amount
+                ]);
+            }
+        }
         Od::where('status', 0)
             ->where('table_id', $this->table_order['id'])
             ->where('user_id', Auth::user()->id)->delete();
@@ -218,9 +237,9 @@ class Order extends Component
     public function deleteDrinkOrder($drinkOrderID)
     {
         $drink_order = Od::find($drinkOrderID)->first();
-        $amount_of_drink = DrinkDetail::where('drink_id', $drinkOrderID)->first();
+        $amount_of_drink = DrinkDetail::where('drink_id', $drink_order->drink_id)->first();
         if ($amount_of_drink->drink->category == 1) {
-            DrinkDetail::where('drink_id', $drinkOrderID)->update([
+            DrinkDetail::where('drink_id', $drink_order->drink_id)->update([
                 'amount' => $amount_of_drink->amount + $drink_order->drink_amount
             ]);
         }
