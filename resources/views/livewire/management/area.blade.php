@@ -181,7 +181,7 @@
                                                                         @if(!empty($table))
                                                                         @foreach($table as $value)
                                                                         @if(empty($value->sub_id))
-                                                                        <div class="form-check form-check-inline mb-2 form-check-danger" style="margin: 20px;">
+                                                                        <div class="form-check form-check-inline mb-2 form-check-danger" style="margin: 33px;">
                                                                             <input class="form-check-input" wire:model.lazy='table_id' type="checkbox" value="{{ $value->id }}" checked>
                                                                             <label class="form-check-label" for="customckeck7">{{ $value->table_name }}</label>
                                                                         </div>
@@ -312,6 +312,17 @@
                                     <div class="col-3">
                                         <div class="widget-rounded-circle card">
                                             <div class="card-body bg-soft-warning">
+                                                <div class="dropdown float-end">
+                                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="mdi mdi-dots-vertical"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <!-- item-->
+                                                        @canany(['system.permission.management'])
+                                                        <a wire:click='deleteTableInArea({{ $value->id }})' class="dropdown-item">Xóa bàn khỏi khu vực</a>
+                                                        @endcanany                                               
+                                                    </div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="avatar-lg rounded-circle bg-soft-danger">

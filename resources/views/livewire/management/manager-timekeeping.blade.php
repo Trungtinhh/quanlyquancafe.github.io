@@ -246,7 +246,7 @@
                                                                 <div>
                                                                     <span>Giờ làm trong tháng: (giờ)</span>
                                                                     <input class="form-control" type="text" wire:model='hour_wage' readonly>
-                                                                </div>                                                              
+                                                                </div>
                                                             </div>
                                                             <div class="col-5">
                                                                 <form wire:submit.prevent='wage'>
@@ -263,14 +263,22 @@
                                                                     </div>
                                                                 </form>
                                                             </div>
+                                                        </div>
+                                                        <div class="row">
                                                             <div class="col-3">
-                                                                <span for=""><i class="fe-dollar-sign"></i>Lương:(nghìn)</span>
+                                                                <span for=""><i class="fe-dollar-sign"></i>Lương:(VND)</span>
                                                                 <input wire:model='wage' class="form-control" type="text" readonly name="" id="">
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <br>
+                                                                <button wire:click='undoWage' class="btn btn-secondary">Tính lại</button>
+                                                                <button wire:click='insertWage' class="btn btn-success">Lưu lại</button>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-8">
-                                                            <span>Tìm kiếm:</span>
+                                                            <div class="col-7"></div>
+                                                            <div class="col-5">
+                                                                <span>Tìm kiếm:</span>
                                                                 <input class="form-control" id="search" type="text">
                                                             </div>
                                                         </div>
@@ -344,6 +352,22 @@
     </div><!-- end col -->
 </div>
 <!-- end row -->
+<div class="modal fade" wire:ignore.self id="confirm-wage" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                Bạn chắc chắn muốn lưu chứ ?
+            </div>
+            <div class="modal-footer">
+                <button wire:click='insertWage' style='padding-left: 30px;padding-right: 30px;' class="btn btn-danger" type="button"> XÓA </button>
+            </div>
+        </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @section('script')
 <script>
     $(document).ready(function() {

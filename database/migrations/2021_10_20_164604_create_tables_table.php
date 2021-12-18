@@ -17,7 +17,7 @@ class CreateTablesTable extends Migration
             $table->id();
             $table->string('table_name');
             $table->bigInteger('sub_id')->unsigned()->nullable();
-            $table->foreign('sub_id')->references('id')->on('areas')->onDelete('cascade');
+            $table->foreign('sub_id')->references('id')->on('areas');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

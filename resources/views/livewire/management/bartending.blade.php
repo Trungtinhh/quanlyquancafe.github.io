@@ -94,7 +94,7 @@
                                         <th>Khu vực</th>
                                         <th>Số lượng</th>
                                         <th>Trạng thái</th>
-                                        @canany(['system.configuration.management'])
+                                        @canany(['system.basic.management', 'system.permission.management'])
                                         <th class='text-center'>Hành động</th>
                                         @endcanany
                                     </tr>
@@ -109,7 +109,7 @@
                                         <td scope="row">{{ $bar->table->area->sub_name }}</td>
                                         <td scope="row">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
                                         <td scope="row"> <span class="badge bg-danger">Chưa làm</span></td>
-                                        @canany(['system.configuration.management'])
+                                        @canany(['system.basic.management', 'system.permission.management'])
                                         <td scope="row" class='text-center'>
                                             <button wire:click="doing({{ $bar->id }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
                                                 <i class="mdi mdi-check-circle" title='Chế biến'></i>
@@ -153,7 +153,7 @@
                                         <th>Khu vực</th>
                                         <th>Số lượng</th>
                                         <th>Trạng thái</th>
-                                        @canany(['system.configuration.management'])
+                                        @canany(['system.basic.management', 'system.permission.management'])
                                         <th class='text-center'>Hành động</th>
                                         @endcanany
                                     </tr>
@@ -168,7 +168,7 @@
                                         <td scope="row">{{ $bar->table->area->sub_name }}</td>
                                         <td scope="row">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
                                         <td scope="row"> <span class="badge bg-warning">Đang làm</span></td>
-                                        @canany(['system.configuration.management'])
+                                        @canany(['system.basic.management', 'system.permission.management'])
                                         <td scope="row" class='text-center'>
                                             <button wire:click="success({{ $bar->id }})" class="btn btn-success btn-rounded waves-effect waves-light">
                                                 Hoàn thành

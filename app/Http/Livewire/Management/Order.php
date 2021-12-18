@@ -10,6 +10,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\Drink;
 use App\Models\DrinkDetail;
+use App\Models\Statistical;
 use PDF;
 use Illuminate\Support\Carbon;
 
@@ -33,7 +34,8 @@ class Order extends Component
     public function render()
     {
         return view('livewire.management.order', [
-            'table' => Table::paginate(12),
+            'table' => Table::get(),
+            'table_move' => Table::paginate(12),
             'Drink' => Drink::paginate(5),
             'Invoice' => Invoice::all()->groupBy(['time_in', 'table_id']),
             'area' => Area::all(),
@@ -321,12 +323,14 @@ class Order extends Component
     }
     public function payInvoice()
     {
+        $turnover = 0;
         $pay = Invoice::where('table_id', $this->invoice_table)->where('status', 0)->get();
         foreach ($pay as $value) {
             InvoiceDetail::where('invoice_id', $value->id)->update([
                 'time_out' => Carbon::now('Asia/Ho_Chi_Minh'),
                 'status' => 1,
             ]);
+            $turnover += $value->total;
         }
         Invoice::where('table_id', $this->invoice_table)->where('status', 0)->update([
             'status' => 1,
@@ -338,6 +342,19 @@ class Order extends Component
         Od::where('table_id', $this->invoice_table)->update([
             'status' => 2
         ]);
+        if (!Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->exists()) {
+            Statistical::create([
+                'date' => Carbon::now('Asia/Ho_Chi_Minh')->toDateString(),
+                'turnover' => $turnover,
+                'total_order' => 1
+            ]);
+        }else{
+            $statistical_update = Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->first();
+            Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->update([
+                'turnover' => $statistical_update->turnover + $turnover,
+                'total_order' => $statistical_update->total_order += 1
+            ]);
+        }
         $this->dispatchBrowserEvent('alert', [
             'type' => 'success',
             'message' => "Thanh toán thành công!"

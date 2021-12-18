@@ -31,7 +31,7 @@
                             <div class="col-6">
                                 <div class="text-end">
                                     <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $count }}</span></h3>
-                                    <p class="text-muted mb-1 text-truncate">Tổng số bàn trống</p>
+                                    <button wire:click='allTableEmpty' class="btn btn-light waves-effect waves-light text-muted mb-1 text-truncate">Tất cả bàn trống</button>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -82,7 +82,7 @@
         @foreach($area as $a)
         <div class='row text-end'>
             <div class='col-12 border-bottom border-primary rounded '>
-                <h5 class="text-danger font-22">{{ $a->sub_name }}</h5>
+                <h5 class="text-primary font-22">{{ $a->sub_name }}</h5>
             </div>
         </div>
         <br>
@@ -130,7 +130,84 @@
         @endforeach
         @endif
     </div>
+    <div class="modal fade" wire:ignore.self id="all-table-empty" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Danh sách bàn trống</h4>
+                    <button type="button" wire:click='' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class='col-4'>
+                                        <input class="form-control" id="search" type="text" placeholder="Tìm kiếm...">
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>ID</th>
+                                                    <th>Tên</th>
+                                                    <th>Khu vực</th>
+                                                    <th>Trạng thái</th>
+                                                    @canany(['system.permission.management'])
+                                                    <th class="text-center">Hành động</th>
+                                                    @endcanany
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id='content'>
+                                                <?php $temp = 0; ?>
+                                                @if(!empty($all_table_empty))
+                                                @foreach($all_table_empty as $value)
+                                                <tr>
+                                                    <th scope="row">{{ ++$loop->index }}</th>
+                                                    <th scope="row"><span class="badge bg-success">{{ $value->id }}</span></th>
+                                                    <th scope="row">{{ $value->table_name }}</th>
+                                                    <th scope="row" class='text-primary'>{{ empty($value->sub_id) ? 'Chưa thêm' : $value->area->sub_name }}</th>
+                                                    <th scope="row">Trống</th>
+                                                    @canany(['system.permission.management'])
+                                                    <td scope="row" class="text-center">
+                                                        <button wire:click="deleteTable({{ $value->id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                            <i class="mdi mdi-delete" title='Xóa'></i>
+                                                        </button>
+                                                    </td>
+                                                    @endcanany
+                                                </tr>
+                                                <?php $temp++; ?>
+                                                @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                        <div class="page-title-box">
+                                            @if($temp == 0)
+                                            <h6 class="page-title" style="text-align: center;">Trống!</i></h6>
+                                            @endif
+                                        </div>
+                                        {{ $all_table_empty->links() }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button wire:click='' data-bs-dismiss="modal" style='padding-left: 30px;padding-right: 30px;' class="btn btn-secondary"><i class='fa fa-times-circle mr-1'></i> Đóng </button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     @section('script')
+    <script>
+        window.addEventListener('show-all-table-empty', event => {
+            $('#all-table-empty').modal('show');
+        })
+    </script>
     <!-- Toastr js-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>

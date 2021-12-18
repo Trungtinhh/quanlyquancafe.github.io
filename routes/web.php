@@ -19,6 +19,7 @@ use App\Http\Livewire\Management\Bartending;
 use App\Http\Livewire\Management\Invoice;
 use App\Http\Livewire\Management\Order;
 use App\Http\Livewire\Management\Statistical;
+use App\Http\Livewire\Management\Wage;
 use App\Http\Livewire\Profile\PrintPDF;
 use App\Http\Livewire\Profile\ProfileInfo;
 
@@ -97,6 +98,7 @@ Route::name('management.')->group(function () {
             Route::get('/list_empty', TableEmpty::class)->name('list_table_empty');
             Route::get('/list', Table::class)->name('list_table');
         });
+        Route::get('/wage', Wage::class)->name('wage');
         Route::prefix('area')->group(function () {
             Route::get('/', Area::class)->name('area');
         });

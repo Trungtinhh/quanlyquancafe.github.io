@@ -152,7 +152,7 @@
                             <div class='col-12 text-center'>
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class='text-danger'>CHƯA CÓ BÀN <i data-feather="alert-octagon" class="icon-dual-danger"></i></h4>
+                                        <h4 class='text-danger'>HẾT BÀN <i data-feather="alert-octagon" class="icon-dual-danger"></i></h4>
                                     </div>
                                 </div>
                             </div>
@@ -336,9 +336,9 @@
                             </div>
                         </div>
                         <div class="row" id='content'>
-                            @if(!empty($table))
+                            @if(!empty($table_move))
                             <?php $dem = 0; ?>
-                            @foreach($table as $value)
+                            @foreach($table_move as $value)
                             <div class="col-3" style="z-index:0">
                                 <div class="widget-rounded-circle card">
                                     <div class="card-body">
@@ -381,7 +381,7 @@
                             </div>
                             @endif
                             <div style="z-index:0">
-                                {{ $table->links() }}
+                                {{ $table_move->links() }}
                             </div>
                             @endif
                         </div> <!-- container -->

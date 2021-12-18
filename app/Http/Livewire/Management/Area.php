@@ -62,6 +62,9 @@ class Area extends Component
     }
     public function deleteArea($sub_id)
     {
+        Table::where('sub_id', $sub_id)->update([
+                'sub_id' => null
+            ]);
         Are::where('id', $sub_id)->delete();
         $this->mount();
         $this->dispatchBrowserEvent('alert', [
@@ -87,8 +90,7 @@ class Area extends Component
                 'type' => 'success',
                 'message' => "Thêm thành công!"
             ]);
-        }
-        else{
+        } else {
             $this->noti = 'Vui lòng chọn bàn';
         }
     }
@@ -96,5 +98,19 @@ class Area extends Component
     {
         $this->sub_id = $sub_id;
         $this->dispatchBrowserEvent('show-detail-area');
+    }
+    public function deleteTableInArea($table_id_in_area)
+    {
+        $table_update = Table::where('id', $table_id_in_area)->first();
+        if ($table_update->status != 1) {
+            Table::where('id', $table_id_in_area)->update([
+                'sub_id' => null
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'warning',
+                'message' => "Bàn đang có người không thể xóa!"
+            ]);
+        }
     }
 }

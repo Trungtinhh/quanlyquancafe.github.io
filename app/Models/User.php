@@ -63,4 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile(){
         return $this->hasOne('App\Models\Profile', 'user_id', 'id');
     }
+    public function timeKeeping(){
+        return $this->hasOne('App\Models\TimeKeeping', 'user_id', 'id');
+    }
 }

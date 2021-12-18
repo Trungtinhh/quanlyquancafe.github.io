@@ -90,7 +90,7 @@
                             <label class="form-label" autocomplete="off">Số lượng</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="number" class="form-control" wire:model.lazy='amount_add'>
+                            <input type="number" min='0' class="form-control" wire:model.lazy='amount_add'>
                             @error('amount_add')
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                 {{ $message}}

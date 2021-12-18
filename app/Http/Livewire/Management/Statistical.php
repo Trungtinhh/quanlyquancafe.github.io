@@ -3,18 +3,25 @@
 namespace App\Http\Livewire\Management;
 
 use Livewire\Component;
+use App\Models\Statistical as Statis;
 use App\Models\Invoice;
 use App\Models\ImportgoodsDrink;
 use App\Models\ImportgoodsIngredent;
 use App\Models\DrinkDetail;
 use App\Models\IngredentDetail;
 use App\Models\Order;
+use App\Models\Drink;
+use App\Models\Ingredent;
 use Illuminate\Support\Carbon;
 
 class Statistical extends Component
 {
-    public $revenue = 0, $order = 0, $importgoods = 0, $expired = 0;
+    public $revenue = 0, $order = 0, $importgoods = 0, $expired = 0,
+        $importgoodsIngredent = [], $importgoodsDrink = [],
+        $expired_drink = [], $expired_ingredent = [];
+
     public $drink_sale = [], $date_revenue = [], $value_revenue = [];
+    public $data_revenue_all = [], $value_revenue_all = [];
     public $data_drink_sale = [], $value_drink_sale = [];
     public function render()
     {
@@ -51,24 +58,30 @@ class Statistical extends Component
         foreach ($importgoodsDrink as $im) {
             if ($im->date_add == Carbon::now('Asia/Ho_Chi_Minh')->toDateString()) {
                 $this->importgoods++;
+                $this->importgoodsDrink[] = $im;
             }
         }
         $importgoodsIngredent = ImportgoodsIngredent::all();
         foreach ($importgoodsIngredent as $imIngredent) {
             if ($imIngredent->date_add == Carbon::now('Asia/Ho_Chi_Minh')->toDateString()) {
                 $this->importgoods++;
+                $this->importgoodsIngredent[] = $imIngredent;
             }
         }
         $drinkExpired = DrinkDetail::all();
         foreach ($drinkExpired as $drink) {
-            if ($drink->drink->category == 1 && $drink->date_exp < Carbon::now('Asia/Ho_Chi_Minh')->day) {
+            $day = new Carbon($drink->date_exp, 'Asia/Ho_Chi_Minh');
+            if ($drink->drink->category == 1 && $day->lessThan(Carbon::now('Asia/Ho_Chi_Minh'))) {
                 $this->expired++;
+                $this->expired_drink[] = $drink;
             }
         }
         $ingredentExpired = IngredentDetail::all();
         foreach ($ingredentExpired as $ingredent) {
-            if ($ingredent->date_exp < Carbon::now('Asia/Ho_Chi_Minh')->day) {
+            $day = new Carbon($ingredent->date_exp, 'Asia/Ho_Chi_Minh');
+            if ($day->lessThan(Carbon::now('Asia/Ho_Chi_Minh'))) {
                 $this->expired++;
+                $this->expired_ingredent[] = $ingredent;
             }
         }
         $this->data_drink_sale = [];
@@ -84,12 +97,30 @@ class Statistical extends Component
                     $drink_sale_name = $val->drink->drink_name;
                 }
             }
-            $this->drink_sale[$drink_sale_name] = ($drink_amount_sale);
+            if ($drink_amount_sale != 0) {
+                $this->drink_sale[$drink_sale_name] = ($drink_amount_sale);
+            }
         }
         arsort($this->drink_sale);
         foreach ($this->drink_sale as $drink => $vl) {
             $this->data_drink_sale[] = $drink;
             $this->value_drink_sale[] = $vl;
         }
+    }
+    public function deleteDrink($drink_id)
+    {
+        Drink::where('drink_id', $drink_id)->delete();
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Đã xóa!"
+        ]);
+    }
+    public function deleteIngredent($ingredent_id)
+    {
+        Ingredent::where('ingredent_id', $ingredent_id)->delete();
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Đã xóa!"
+        ]);
     }
 }

@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\TimeKeeping as TKP;
 use Livewire\WithPagination;
 use App\Models\User;
+use App\Models\Wage;
 
 class ManagerTimekeeping extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $count_tkp, $count_edit, $info_TKP, $hour;
-    public $wage_money = 0, $wage = 0, $hour_wage = 0;
+    public $wage_money = 0, $wage = 0, $hour_wage = 0, $user_id, $insertWage;
     public $statusView = false;
 
     public function render()
@@ -62,6 +63,7 @@ class ManagerTimekeeping extends Component
     {
         $this->closeDetail();
         $this->statusView = true;
+        $this->user_id = $user_id;
         $this->info_TKP = TKP::where('user_id', $user_id)->orderByDesc('time_start')->get();
         foreach ($this->info_TKP as $val) {
             $date = new Carbon($val->time_start, 'Asia/Ho_Chi_minh');
@@ -94,5 +96,36 @@ class ManagerTimekeeping extends Component
     public function wage()
     {
         $this->wage = $this->hour_wage * $this->wage_money;
+    }
+    public function undoWage()
+    {
+        $this->wage_money = 0;
+        $this->wage = 0;
+    }
+    public function insertWage()
+    {
+        if ($this->wage != 0) {
+            if (!Wage::where('wage', $this->wage)->where('user_id', $this->user_id)->where('date', Carbon::now()->toDateString())->exists()) {
+                $this->insertWage = Wage::create([
+                    'wage' => $this->wage,
+                    'user_id' => $this->user_id,
+                    'date' => Carbon::now()->toDateString(),
+                ]);
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'success',
+                    'message' => "Đã lưu lại!"
+                ]);
+            } else {
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'warning',
+                    'message' => "Đã thêm lương tháng này!"
+                ]);
+            }
+        } else {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'warning',
+                'message' => "Chưa có lương!"
+            ]);
+        }
     }
 }

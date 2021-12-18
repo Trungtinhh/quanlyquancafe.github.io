@@ -310,6 +310,11 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.calendar') }}">Lịch làm việc</a>
                                         </li>
+                                        @canany(['system.permission.management'])
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('management.wage') }}">Lương</a>
+                                        </li>
+                                        @endcanany
                                     </ul>
                                 </div>
                             </div>
@@ -320,12 +325,10 @@
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.menu') }}">Danh sách thức uống</a>
-                                        </li>
-                                        @canany(['system.basic.management', 'system.permission.management'])
+                                        </li>                             
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.bartending') }}">Pha chế</a>
                                         </li>
-                                        @endcanany
                                     </ul>
                                 </div>
                             </div>

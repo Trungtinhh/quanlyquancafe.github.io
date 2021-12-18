@@ -21,7 +21,7 @@ class CreateOrderDetailsTable extends Migration
             $table->string('user_name');
             $table->string('drink_name');
             $table->integer('drink_amount')->nullable();
-            $table->float('price');
+            $table->double('price');
             $table->tinyInteger('status');
             $table->timestamps();
         });

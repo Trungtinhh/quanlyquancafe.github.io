@@ -19,7 +19,7 @@ class Invoice extends Model
         'total',
         'time_in',
         'time_out',
-        'status'
+        'status',
     ];
 
     public function order()

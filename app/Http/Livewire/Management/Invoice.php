@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Management;
 use App\Models\Table;
 use App\Models\Order as Od;
 use App\Models\Invoice as Iv;
+use App\Models\Statistical;
 use App\Models\InvoiceDetail;
 use PDF;
 use Illuminate\Support\Carbon;
@@ -43,12 +44,14 @@ class Invoice extends Component
     }
     public function payInvoice()
     {
+        $turnover = 0;
         $pay = Iv::where('table_id', $this->invoice_table)->where('status', 0)->get();
         foreach ($pay as $value) {
             InvoiceDetail::where('invoice_id', $value->id)->update([
                 'time_out' => Carbon::now('Asia/Ho_Chi_Minh'),
                 'status' => 1,
             ]);
+            $turnover += $value->total;
         }
         Iv::where('table_id', $this->invoice_table)->where('status', 0)->update([
             'status' => 1,
@@ -60,6 +63,19 @@ class Invoice extends Component
         Od::where('table_id', $this->invoice_table)->update([
             'status' => 2
         ]);
+        if (!Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->exists()) {
+            Statistical::create([
+                'date' => Carbon::now('Asia/Ho_Chi_Minh')->toDateString(),
+                'turnover' => $turnover,
+                'total_order' => 1
+            ]);
+        }else{
+            $statistical_update = Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->first();
+            Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->update([
+                'turnover' => $statistical_update->turnover + $turnover,
+                'total_order' => $statistical_update->total_order += 1
+            ]);
+        }
         $this->dispatchBrowserEvent('alert', [
             'type' => 'success',
             'message' => "Thanh toán thành công!"

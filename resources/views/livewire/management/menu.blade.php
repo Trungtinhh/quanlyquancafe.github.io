@@ -83,43 +83,46 @@
                                         <tbody id='content{{ $cate->menu_category_id }}'>
                                             <?php $temp = 0 ?>
                                             @if(!empty($Drink))
-                                                @foreach($Drink as $dri=>$drink)
-                                                @if($drink[0]->menu_category_id == $cate->menu_category_id)
-                                                <?php $temp++ ?>
-                                                <tr>
-                                                    <th scope="row"><span class="badge bg-primary">{{ $temp }}</span></th>
-                                                    <th scope="row">{{ $dri }}</th>
-                                                    <td scope="row">{{ $drink[0]->drinkDetail->price->price_cost }}</td>
-                                                    <td scope="row">
-                                                        <?php $drink_amount = 0;?>
-                                                        @foreach($drink as $val)
-                                                            <?php $drink_amount += $val->drinkDetail->amount;?>
-                                                        @endforeach
-                                                        @if($drink[0]->category == 1 )
-                                                            @if($drink_amount != 0)
-                                                                {{ $drink_amount }}
-                                                            @else
-                                                                Hết
-                                                            @endif
-                                                        @else
-                                                            --
-                                                        @endif
-                                                    </td>
-                                                    
-                                                    <td scope="row">
-                                                        <button wire:click="drinkDetail('{{$dri}}')" class="btn btn-success btn-rounded waves-effect waves-light">
-                                                            <i class="mdi mdi-text" title='Chi tiết'></i>
-                                                        </button>
-                                                        @canany(['system.permission.management'])
-                                                            <button wire:click="deleteMenuCategoryDrink('{{$dri}}')" class="btn btn-danger btn-rounded waves-effect waves-light">
-                                                                <i class="mdi mdi-delete" title='Xóa khỏi danh mục'></i>
-                                                            </button>
-                                                        @endcanany
-                                                    </td>                                                  
-                                                </tr>
-                                                @endif
-                                                
-                                                @endforeach
+                                            @foreach($Drink as $dri=>$drink)
+                                            @if($drink[0]->menu_category_id == $cate->menu_category_id)
+                                            <?php $temp++ ?>
+                                            <tr>
+                                                <th scope="row"><span class="badge bg-primary">{{ $temp }}</span></th>
+                                                <th scope="row">{{ $dri }}</th>
+                                                <td scope="row">{{ $drink[0]->drinkDetail->price->price_cost }}</td>
+                                                <td scope="row">
+                                                    <?php $drink_amount = 0; ?>
+                                                    @foreach($drink as $val)
+                                                    <?php $drink_amount += $val->drinkDetail->amount; ?>
+                                                    @endforeach
+                                                    @if($drink[0]->category == 1 )
+                                                    @if($drink_amount != 0)
+                                                    {{ $drink_amount }}
+                                                    @else
+                                                    Hết
+                                                    @endif
+                                                    @else
+                                                    --
+                                                    @endif
+                                                </td>
+
+                                                <td scope="row">
+                                                    <button wire:click="drinkDetail('{{$dri}}')" class="btn btn-success btn-rounded waves-effect waves-light">
+                                                        <i class="mdi mdi-text" title='Chi tiết'></i>
+                                                    </button>
+                                                    @canany(['system.permission.management'])
+                                                    <button wire:click="showEditPrice('{{$dri}}')" class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                        <i class="mdi mdi-file-edit" title='Sửa giá'></i>
+                                                    </button>
+                                                    <button wire:click="deleteMenuCategoryDrink('{{$dri}}')" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                        <i class="mdi mdi-delete" title='Xóa khỏi danh mục'></i>
+                                                    </button>
+                                                    @endcanany
+                                                </td>
+                                            </tr>
+                                            @endif
+
+                                            @endforeach
                                             @endif
                                         </tbody>
                                     </table>
@@ -182,39 +185,42 @@
                             <tbody id='content_all'>
                                 <?php $temp = 0 ?>
                                 @if(!empty($Drink))
-                                    @foreach($Drink as $dri=>$drink)
-                                        <tr>
-                                            <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
-                                            <th scope="row">{{ $dri }}</th>
-                                            <td scope="row">{{ $drink[0]->drinkDetail->price->price_cost }}</td>
-                                            <td scope="row">
-                                                <?php $drink_amount = 0;?>
-                                                    @foreach($drink as $val)
-                                                        <?php $drink_amount += $val->drinkDetail->amount;?>
-                                                    @endforeach
-                                                    @if($drink[0]->category == 1 )
-                                                        @if($drink_amount != 0)
-                                                            {{ $drink_amount }}
-                                                        @else
-                                                            Hết
-                                                        @endif
-                                                    @else
-                                                        --
-                                                    @endif
-                                            </td>                                           
-                                            <td scope="row">
-                                                <button wire:click="drinkDetail('{{ $dri }}')" class="btn btn-success btn-rounded waves-effect waves-light">
-                                                    <i class="mdi mdi-text" title='Chi tiết'></i>
-                                                </button>
-                                                @canany(['system.permission.management'])
-                                                <button wire:click="deleteDrink('{{ $dri }}')" class="btn btn-danger btn-rounded waves-effect waves-light">
-                                                    <i class="mdi mdi-delete" title='Xóa'></i>
-                                                </button>
-                                                @endcanany
-                                            </td>                                          
-                                        </tr>  
-                                        <?php $temp++ ?>                                     
-                                    @endforeach
+                                @foreach($Drink as $dri=>$drink)
+                                <tr>
+                                    <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
+                                    <th scope="row">{{ $dri }}</th>
+                                    <td scope="row">{{ $drink[0]->drinkDetail->price->price_cost }}</td>
+                                    <td scope="row">
+                                        <?php $drink_amount = 0; ?>
+                                        @foreach($drink as $val)
+                                        <?php $drink_amount += $val->drinkDetail->amount; ?>
+                                        @endforeach
+                                        @if($drink[0]->category == 1 )
+                                        @if($drink_amount != 0)
+                                        {{ $drink_amount }}
+                                        @else
+                                        Hết
+                                        @endif
+                                        @else
+                                        --
+                                        @endif
+                                    </td>
+                                    <td scope="row">
+                                        <button wire:click="drinkDetail('{{ $dri }}')" class="btn btn-success btn-rounded waves-effect waves-light">
+                                            <i class="mdi mdi-text" title='Chi tiết'></i>
+                                        </button>
+                                        @canany(['system.permission.management'])
+                                        <button wire:click="showEditPrice('{{$dri}}')" class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                            <i class="mdi mdi-file-edit" title='Sửa giá'></i>
+                                        </button>
+                                        <button wire:click="deleteDrink('{{ $dri }}')" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                            <i class="mdi mdi-delete" title='Xóa'></i>
+                                        </button>
+                                        @endcanany
+                                    </td>
+                                </tr>
+                                <?php $temp++ ?>
+                                @endforeach
                                 @endif
                             </tbody>
                         </table>
@@ -375,12 +381,12 @@
                                             <label for="product-name" class="form-label">Chọn sản phẩm</label>
                                             <div class="row">
                                                 @foreach($DrinkNullMenuCategory as $drinkNull=>$vl)
-                                                    <div class="col-3">                      
-                                                        <div class="form-check form-check-inline mb-2 form-check-primary">
-                                                            <input class="form-check-input" wire:model.lazy='null_menu_category_name' type="checkbox" value="{{ $drinkNull }}" id="customckeck7">
-                                                            <label class="form-check-label" for="customckeck7">{{ $drinkNull }}</label>
-                                                        </div>                                                   
+                                                <div class="col-3">
+                                                    <div class="form-check form-check-inline mb-2 form-check-primary">
+                                                        <input class="form-check-input" wire:model.lazy='null_menu_category_name' type="checkbox" value="{{ $drinkNull }}" id="customckeck7">
+                                                        <label class="form-check-label" for="customckeck7">{{ $drinkNull }}</label>
                                                     </div>
+                                                </div>
                                                 @endforeach
                                             </div>
                                             @error('null_menu_category_name')
@@ -612,45 +618,45 @@
                                                 <td>
                                                     {{ $drinkDetail_1[0]['drink_name']}}
                                                 </td>
-                                            </tr>                 
+                                            </tr>
                                             <tr>
                                                 <th>Số lượng</th>
                                                 <td>
-                                                    @foreach($drinkDetail as $drinkdt)                                                      
-                                                        @if($drinkdt->drink->category == 1 )                                                                                                              
-                                                            @if($drinkdt->amount != 0)
-                                                                <ul>     
-                                                                    <li> 
-                                                                        {{ $drinkdt->provider->provider_name ." - ". $drinkdt->date_exp." : ". $drinkdt->amount }}
-                                                                    </li>
-                                                                </ul>
-                                                            @else
-                                                                <ul>     
-                                                                    <li> 
-                                                                        {{ $drinkdt->provider->provider_name ." - ". $drinkdt->date_exp." : ". "Hết" }}
-                                                                    </li>
-                                                                </ul>
-                                                            @endif
-                                                        @else
-                                                            --
-                                                        @endif   
-                                                    @endforeach                                    
+                                                    @foreach($drinkDetail as $drinkdt)
+                                                    @if($drinkdt->drink->category == 1 )
+                                                    @if($drinkdt->amount != 0)
+                                                    <ul>
+                                                        <li>
+                                                            {{ $drinkdt->provider->provider_name ." - ". $drinkdt->date_exp." : ". $drinkdt->amount }}
+                                                        </li>
+                                                    </ul>
+                                                    @else
+                                                    <ul>
+                                                        <li>
+                                                            {{ $drinkdt->provider->provider_name ." - ". $drinkdt->date_exp." : ". "Hết" }}
+                                                        </li>
+                                                    </ul>
+                                                    @endif
+                                                    @else
+                                                    --
+                                                    @endif
+                                                    @endforeach
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>Nhà cung cấp và HSD</th>
-                                                <td>   
-                                                @foreach($drinkDetail as $vl)   
-                                                    @if($drinkdt->drink->category == 1 )     
-                                                        <ul>     
-                                                            <li>                          
-                                                                {{ $vl->provider->provider_name ." - ". $vl->date_exp}}
-                                                            </li>
-                                                        </ul>
+                                                <td>
+                                                    @foreach($drinkDetail as $vl)
+                                                    @if($drinkdt->drink->category == 1 )
+                                                    <ul>
+                                                        <li>
+                                                            {{ $vl->provider->provider_name ." - ". $vl->date_exp}}
+                                                        </li>
+                                                    </ul>
                                                     @else
                                                     --
                                                     @endif
-                                                @endforeach
+                                                    @endforeach
                                                 </td>
                                             </tr>
                                             @endif
@@ -670,10 +676,44 @@
         </div>
     </div>
     @endif
+    @if($statusModalEditPrice)
+    <div class="modal fade" wire:ignore.self id="edit-price" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa giá</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label for="product-reference" class="form-label">Nhập giá </label>
+                        <input type="number" min='0' wire:model.lazy='edit_price_value' class="form-control">
+                        @error('edit_price_value')
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{ $message}}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class='fa fa-times-circle mr-1'></i> Close</button>
+                        <button type="button" wire:click='editPrice("{{ $drink_edit_name }}")' class="btn btn-primary"><i class='fa fa-file-edit mr-1'></i> Sửa</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    @endif
     @section('script')
     <script>
         window.addEventListener('show-detail', event => {
             $('#detail').modal('show');
+        })
+    </script>
+    <script>
+        window.addEventListener('show-edit-price', event => {
+            $('#edit-price').modal('show');
         })
     </script>
     <script>

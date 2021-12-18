@@ -20,6 +20,7 @@ class Menu extends Component
     public $drink_menu_category_id, $null_menu_category_name;
     public $noti = '';
     public $drinkDetail, $drinkDetail_1, $statusModalDetail = false;
+    public $statusModalEditPrice = false, $drink_edit_name, $edit_price_value;
 
     protected $messages = [
         'menu_category_name.required' => 'Tên danh mục không được bỏ trống',
@@ -44,6 +45,7 @@ class Menu extends Component
         'drink_name.required' => 'Tên sản phẩm không được bỏ trống',
         'menu_category_id.required' => 'Danh mục sản phẩm không được bỏ trống',
         'drink_price.required' => 'Giá sản phẩm không được bỏ trống',
+        'drink_price.min' => 'Giá sản phẩm không được nhỏ hơn 0',
         'drink_image.required' => 'Vui lòng chọn ảnh',
         'drink_image.image' => 'Tệp tải lên không phải hình ảnh',
         'drink_image.mimes' => 'Định dạng không hỗ trợ',
@@ -53,7 +55,10 @@ class Menu extends Component
         'type.required' => 'Vui lòng chọn loại sản phẩm',
 
         'drink_menu_category_id.required' => 'Danh mục sản phẩm không được bỏ trống',
-        'null_menu_category_name.required' => 'Vui lòng chọn thức uống'
+        'null_menu_category_name.required' => 'Vui lòng chọn thức uống',
+
+        'edit_price_value.required' => 'Giá không được bỏ trống',
+        'edit_price_value.min' => 'Giá không được nhỏ hơn 0',
     ];
     public function render()
     {
@@ -136,13 +141,13 @@ class Menu extends Component
             'type' => 'required',
             'drink_name' => 'required',
             'menu_category_id' => 'required',
-            'drink_price' => 'required',
+            'drink_price' => 'required|numeric|min:0',
             'drink_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         if ($this->type == 'co_san') {
             $this->validate([
                 'provider' => 'required',
-                'drink_date_exp' => 'required|after:'.Carbon::now()->toDateString(),
+                'drink_date_exp' => 'required|after:' . Carbon::now()->toDateString(),
             ]);
             if (!DrinkDetail::where('drink_name', $this->drink_name)
                 ->where('provider_id', $this->provider)->where('date_exp', $this->drink_date_exp)
@@ -231,6 +236,33 @@ class Menu extends Component
         $this->drinkDetail = DrinkDetail::where('drink_name', $drink_name)->get();
         $this->drinkDetail_1 = DrinkDetail::where('drink_name', $drink_name)->get()->toArray();
         $this->dispatchBrowserEvent('show-detail');
+    }
+    public function showEditPrice($drink_name)
+    {
+        $this->statusModalEditPrice = true;
+        $this->drink_edit_name = $drink_name;
+        $this->dispatchBrowserEvent('show-edit-price');
+        
+        // $this->drinkDetail = DrinkDetail::where('drink_name', $drink_name)->get();
+        // foreach ($this->drinkDetail as $vl) {
+        //     Price::where('price_id', $vl->price_id)->update
+        // }
+    }
+    public function editPrice($drink_name)
+    {    
+        $this->validate([
+            'edit_price_value' => 'required|numeric|min:0'
+        ]);
+        $drinkDetail = DrinkDetail::where('drink_name', $drink_name)->get();
+        foreach ($drinkDetail as $vl) {
+            Price::where('price_id', $vl->price_id)->update([
+                'price_cost' => $this->edit_price_value
+            ]);
+        }
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Đã cập nhật giá!"
+        ]);
     }
     public function deleteDrink($drink_name)
     {

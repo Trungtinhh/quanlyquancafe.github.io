@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-7">
                                 <div class="text-home">
-                                    <h3 class="text-dark mt-1"><span data-plugin="counterup"></span></h3>
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $expired }}</span></h3>
                                     <p class="text-muted mb-1 text-truncate">Hết hạn</p>
                                 </div>
                             </div>
@@ -107,8 +107,156 @@
                 </div>
             </div>
         </div>
+        
         <div class="row">
-            <div class="col-7">
+            <div class="col-12">
+                <div class="widget-rounded-circle card">
+                    <div class="card-body">
+                        <h4 class="header-title mb-4">Nhập kho hôm nay</h4>
+                        <div class='col-3'>
+                            <input class="form-control" id="search3" type="text" placeholder="Tìm kiếm trong bảng hiện tại..">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tickets-table">
+                                <thead>
+                                    <tr>
+                                        <th>Danh mục</th>
+                                        <th>ID</th>
+                                        <th>Tên</th>
+                                        <th>Số lượng</th>
+                                        <th>Nhà cung cấp</th>
+                                        <th>Ngày nhập</th>
+                                        <th>HSD</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id='content3'>
+                                    <?php $temp1 = 0; ?>
+                                    @if(!empty($importgoodsIngredent))
+                                    @foreach($importgoodsIngredent as $vl=>$value )
+                                    <tr>
+                                        <th scope="row">Nguyên liệu</th>
+                                        <th scope="row"><span class="badge bg-success">{{ $value->id }}</span></th>
+                                        <th scope="row">{{ $value->ingredent->ingredent_name }}</th>
+                                        <td scope="row"><span class="badge bg-danger">{{ $value->amount_add }}</span></td>
+                                        <th scope="row">{{ $value->ingredent->ingredentDetail->provider->provider_name }}</th>
+                                        <th scope="row">{{ $value->date_add }}</th>
+                                        <th scope="row" class='text-primary'>{{ $value->ingredent->ingredentDetail->date_exp }}</th>
+                                    </tr>
+                                    <?php $temp1++; ?>
+                                    @endforeach
+                                    @endif
+                                    <?php $temp = 0; ?>
+                                    @if(!empty($importgoodsDrink))
+                                    @foreach($importgoodsDrink as $vl=>$value)
+                                    <tr>
+                                        <th scope="row">Thức uống đóng chai</th>
+                                        <th scope="row"><span class="badge bg-success">{{ $value->drink_id }}</span></th>
+                                        <th scope="row">{{ $value->drink->drink_name }}</th>
+                                        <td scope="row"><span class="badge bg-danger">{{ $value->amount_add }}</span></td>
+                                        <th scope="row">{{ $value->drink->drinkDetail->provider->provider_name }}</th>
+                                        <th scope="row">{{ $value->date_add }}</th>
+                                        <th scope="row" class='text-primary'>{{ $value->drink->drinkDetail->date_exp }}</th>
+                                    </tr>
+                                    <?php $temp++; ?>
+                                    @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                            <div class="page-title-box">
+                                @if($temp1 == 0 && $temp == 0)
+                                <h6 class="page-title" style="text-align: center;">Trống!</h6>
+                                @endif
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card border border-success">
+                    <div class="card-body">
+                        <h4 class="header-title mb-4">Sản phẩm hết hạn</h4>
+                        <div class='col-3'>
+                            <input class="form-control" id="search3" type="text" placeholder="Tìm kiếm trong bảng hiện tại..">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tickets-table">
+                                <thead>
+                                    <tr>
+                                        <th>Danh mục</th>
+                                        <th>ID</th>
+                                        <th>Tên</th>
+                                        <th>HSD</th>
+                                        <th>Số lượng</th>
+                                        <th>Ngày nhập kho gần nhất</th>
+                                        <th>Hạn dùng</th>
+                                        <th class="text-center">Hành động</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id='content3'>
+                                    <?php $temp1 = 0; ?>
+                                    @if(!empty($expired_ingredent))
+                                    @foreach($expired_ingredent as $value)
+                                    <tr>
+                                        <th scope="row">Nguyên liệu</th>
+                                        <th scope="row"><span class="badge bg-success">{{ $value->ingredent_id }}</span></th>
+                                        <th scope="row">{{ $value->ingredent_name }}</th>
+                                        <th scope="row" class='text-primary'>{{ $value->date_exp }}</th>
+                                        <td scope="row">@if($value->amount != 0)<span class="badge bg-danger"> {{ $value->amount }} </span> @else <span class="text-muted">Hết</span> @endif</td>
+                                        <th scope="row">{{ $value->date_add }}</th>
+                                        <th scope="row">{{ $value->date_exp }}</th>
+                                        <td scope="row" class="text-center">
+                                            <button wire:click="deleteIngredent({{ $value->ingredent_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                <i class="mdi mdi-delete" title='Xóa'></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php $temp1++; ?>
+                                    @endforeach
+                                    @endif
+                                    <?php $temp = 0; ?>
+                                    @if(!empty($expired_drink))
+                                    @foreach($expired_drink as $value)
+                                    @if($value->provider_id != null)
+                                    <tr>
+                                        <th scope="row">Thức uống đóng chai</th>
+                                        <th scope="row"><span class="badge bg-success">{{ $value->drink_id }}</span></th>
+                                        <th scope="row">{{ $value->drink_name }}</th>
+                                        <th scope="row" class='text-primary'>{{ $value->date_exp }}</th>
+                                        <td scope="row">@if($value->amount != 0)<span class="badge bg-danger"> {{ $value->amount }} </span> @else <span class="text-muted">Hết</span> @endif</td>
+                                        <th scope="row">{{ $value->date_add }}</th>
+                                        <th scope="row">{{ $value->date_exp }}</th>
+                                        <td scope="row" class="text-center">
+                                            <button wire:click="deleteDrink({{ $value->drink_id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                <i class="mdi mdi-delete" title='Xóa'></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php $temp++; ?>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                            <div class="page-title-box">
+                                @if($temp1 == 0 && $temp == 0)
+                                <h6 class="page-title" style="text-align: center;">Trống!</h6>
+                                @endif
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+        <div class="row">
+            <div class="col-5">
                 <div class="card border border-success">
                     <div class="card-body">
                         <h4 class="header-title mb-4">Thống kê số lượng món đã bán</h4>
@@ -147,7 +295,7 @@
                     </div>
                 </div>
             </div><!-- end col -->
-            <div class="col-5">
+            <div class="col-7">
                 <div class="card border border-success">
                     <div class="card-body">
                         <div class="w-full" style="height: 50%;">
@@ -158,7 +306,6 @@
             </div>
         </div>
         <!-- end row -->
-        
         @section('script')
         <script>
             $(document).ready(function() {
@@ -190,6 +337,16 @@
                 $("#search2").on("keyup", function() {
                     var value = $(this).val().toLowerCase();
                     $("#content2 tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("#search3").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content3 tr").filter(function() {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
@@ -231,9 +388,9 @@
                 chart: {
                     type: 'line',
                     height: '400px',
-                    
+
                 },
-                colors:['#F44336', '#E91E63', '#9C27B0'],
+                colors: ['#F44336', '#E91E63', '#9C27B0'],
                 series: [{
                     name: 'Doanh thu',
                     data: @json($value_revenue)
@@ -268,7 +425,7 @@
                 dataLabels: {
                     enabled: true,
                     formatter: function(val) {
-                        return val ;
+                        return val;
                     },
                     offsetY: -20,
                     style: {
@@ -312,7 +469,7 @@
                     labels: {
                         show: false,
                         formatter: function(val) {
-                            return val ;
+                            return val;
                         }
                     }
 
