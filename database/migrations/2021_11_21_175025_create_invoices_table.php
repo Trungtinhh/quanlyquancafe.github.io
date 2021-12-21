@@ -22,6 +22,7 @@ class CreateInvoicesTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->double('total')->default(0);
+            $table->double('submoney')->default(0);
             $table->dateTime('time_in')->nullable();
             $table->dateTime('time_out')->nullable();
             $table->tinyInteger('status');

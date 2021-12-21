@@ -4,6 +4,7 @@
 <head>
 
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>QUÁN COFEE | Chất lượng - Niềm tin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -200,40 +201,40 @@
                             </span>
                         </a>
                         @canany(['system.view.basic'])
-                        <nav class="nav flex-column" id="two-col-sidenav-main">
-                            <a class="nav-link" href="#home" title="Bảng điều khiển">
-                                <i data-feather="home"></i>
-                            </a>
-                            <a class="nav-link" href="#quanlybanvakhuvuc" title="Quản lý bàn và khu vực">
-                                <i data-feather="grid"></i>
-                            </a>
-                            @canany(['system.permission.management'])
-                            <a class="nav-link" href="#quanlynguoidung" title="Quản lý người dùng">
-                                <i data-feather="file-text"></i>
-                            </a>
-                            @endcanany
-                            <a class="nav-link" href="#quanlynhansu" title="Quản lý nhân sự">
-                                <i data-feather="layout"></i>
-                            </a>
-                            <a class="nav-link" href="#thucuong" title="Quản lý menu và pha chế">
-                                <i data-feather="briefcase"></i>
-                            </a>
-                            @canany(['system.permission.management'])
-                            <a class="nav-link" href="#kho" title="Quản lý kho">
-                                <i data-feather="package"></i>
-                            </a>
-                            @endcanany
-                            @canany(['system.permission.management'])
-                            <a class="nav-link" href="{{ route('management.provider') }}" title="Nhà cung cấp">
-                                <i data-feather="gift"></i>
-                            </a>
-                            @endcanany
-                            @canany(['system.permission.management', 'system.configuration.management'])
-                            <a class="nav-link" href="{{ route('management.statistical') }}" title="Thống kê">
-                                <i data-feather="database"></i>
-                            </a>
-                            @endcanany
-                        </nav>
+                            <nav class="nav flex-column" id="two-col-sidenav-main">
+                                <a class="nav-link" href="#home" title="Bảng điều khiển">
+                                    <i data-feather="home"></i>
+                                </a>
+                                <a class="nav-link" href="#quanlybanvakhuvuc" title="Quản lý bàn và khu vực">
+                                    <i data-feather="grid"></i>
+                                </a>
+                                @canany(['system.permission.management'])
+                                    <a class="nav-link" href="#quanlynguoidung" title="Quản lý người dùng">
+                                        <i data-feather="file-text"></i>
+                                    </a>
+                                @endcanany
+                                <a class="nav-link" href="#quanlynhansu" title="Quản lý nhân sự">
+                                    <i data-feather="layout"></i>
+                                </a>
+                                <a class="nav-link" href="#thucuong" title="Quản lý menu và pha chế">
+                                    <i data-feather="briefcase"></i>
+                                </a>
+                                @canany(['system.permission.management'])
+                                    <a class="nav-link" href="#kho" title="Quản lý kho">
+                                        <i data-feather="package"></i>
+                                    </a>
+                                @endcanany
+                                @canany(['system.permission.management'])
+                                    <a class="nav-link" href="{{ route('management.provider') }}" title="Nhà cung cấp">
+                                        <i data-feather="gift"></i>
+                                    </a>
+                                @endcanany
+                                @canany(['system.permission.management', 'system.configuration.management'])
+                                    <a class="nav-link" href="{{ route('management.statistical') }}" title="Thống kê">
+                                        <i data-feather="database"></i>
+                                    </a>
+                                @endcanany
+                            </nav>
                         @endcanany
                     </div>
                     <!--- Sidemenu -->
@@ -246,9 +247,9 @@
                                         <a class="nav-link" href="{{ route('management.order') }}">Gọi món</a>
                                     </li>
                                     @canany(['system.configuration.management', 'system.permission.management'])
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('management.invoice') }}">Hóa đơn</a>
-                                    </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('management.invoice') }}">Hóa đơn</a>
+                                        </li>
                                     @endcanany
                                 </ul>
                             </div>
@@ -268,52 +269,52 @@
                                 </ul>
                             </div>
                             @canany(['system.permission.management'])
-                            <div class="twocolumn-menu-item" id="quanlynguoidung">
-                                <div class="title-box">
-                                    <h5 class="menu-title">Quản lý người dùng</h5>
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('user.confirm_user') }}">Người dùng mới</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('user.grant_permission_index') }}">Cấp quyền người dùng</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('user.role_index') }}">Nhóm quản trị</a>
-                                        </li>
-                                    </ul>
+                                <div class="twocolumn-menu-item" id="quanlynguoidung">
+                                    <div class="title-box">
+                                        <h5 class="menu-title">Quản lý người dùng</h5>
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('user.confirm_user') }}">Người dùng mới</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('user.grant_permission_index') }}">Cấp quyền người dùng</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('user.role_index') }}">Nhóm quản trị</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
                             @endcanany
                             <div class="twocolumn-menu-item" id="quanlynhansu">
                                 <div class="title-box">
                                     <h5 class="menu-title">Quản lý nhân sự</h5>
                                     <ul class="nav flex-column">
                                         @canany(['system.permission.management', 'system.configuration.management'])
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('management.list') }}">Danh sách nhân sự</a>
-                                        </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('management.list') }}">Danh sách nhân sự</a>
+                                            </li>
                                         @endcanany
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.timekeeping') }}">Chấm công</a>
                                         </li>
                                         @canany(['system.permission.management'])
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('management.manager_timekeeping') }}">Quản lý chấm công</a>
-                                        </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('management.manager_timekeeping') }}">Quản lý chấm công</a>
+                                            </li>
                                         @endcanany
                                         @canany(['system.permission.management'])
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('management.shift') }}">Quản lý ca làm</a>
-                                        </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('management.shift') }}">Quản lý ca làm</a>
+                                            </li>
                                         @endcanany
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('management.calendar') }}">Lịch làm việc</a>
                                         </li>
                                         @canany(['system.permission.management'])
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('management.wage') }}">Lương</a>
-                                        </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('management.wage') }}">Lương</a>
+                                            </li>
                                         @endcanany
                                     </ul>
                                 </div>
@@ -333,22 +334,22 @@
                                 </div>
                             </div>
                             @canany(['system.permission.management'])
-                            <div class="twocolumn-menu-item" id="kho">
-                                <div class="title-box">
-                                    <h5 class="menu-title">Quản lý kho</h5>
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('management.store_house') }}">Tình trạng kho</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('management.import_goods') }}">Nhập hàng</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('management.export_goods') }}">Xuất kho</a>
-                                        </li>
-                                    </ul>
+                                <div class="twocolumn-menu-item" id="kho">
+                                    <div class="title-box">
+                                        <h5 class="menu-title">Quản lý kho</h5>
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('management.store_house') }}">Tình trạng kho</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('management.import_goods') }}">Nhập hàng</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('management.export_goods') }}">Xuất kho</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
                             @endcanany
                         </div>
                     </div>

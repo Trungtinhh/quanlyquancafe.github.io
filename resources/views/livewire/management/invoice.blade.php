@@ -35,6 +35,7 @@
                                         <th>Khu vực</th>
                                         <th>Món đã gọi</th>
                                         <th>Tổng tiền</th>
+                                        <th>Giảm giá</th>
                                         <th>Trạng thái</th>
                                         <th>Hành dộng</th>
                                     </tr>
@@ -43,64 +44,66 @@
                                 <tbody id="content1">
                                     <?php $temp = 0; ?>
                                     @foreach($Invoice as $Invoi=>$invoi)
-                                    @foreach($invoi as $in=>$valu)
-                                    <tr>
-                                        @foreach($valu as $val)
-                                        <?php
-                                        $id = $val->id;
-                                        $time_in = $val->time_in;
-                                        $user_name = $val->user->name;
-                                        $time_out = $val->time_out;
-                                        $money = $val->total;
-                                        $status = $val->status;
-                                        $table_id = $val->table_id;
-                                        $table_invoice = $val->order->table->table_name;
-                                        $area_invoice = $val->order->table->area->sub_name;
-                                        ?>
-                                        @endforeach
-                                        <th scope="row" style="width: 5%;"> <span class="badge bg-warning">{{ $id }}</span></th>
-                                        <th scope="row">{{ $user_name }}</th>
-                                        <th scope="row">{{ $time_in }}</th>
-                                        <th scope="row">{{ $time_out == null ? 'Chưa ra' : $time_out}}</th>
-                                        <th scope="row"><span class="badge bg-soft-danger text-danger">{{ $table_invoice }}</span></th>
-                                        <th scope="row">{{ $area_invoice }}</th>
-                                        <th>
-                                            <table>
+                                        @foreach($invoi as $in=>$valu)
+                                            <tr>
                                                 @foreach($valu as $val)
-                                                @if($val->time_in == $Invoi)
-                                                <tbody>
-                                                    <tr>
-                                                        <th style="width: 20%;">{{ $val->order->drink_amount }}</th>
-                                                        <th style="width: 80%;">{{ $val->order->drink->drink_name }}</th>
-                                                    </tr>
-                                                </tbody>
-                                                @endif
+                                                    <?php
+                                                        $id = $val->id;
+                                                        $time_in = $val->time_in;
+                                                        $user_name = $val->user->name;
+                                                        $time_out = $val->time_out;
+                                                        $money = $val->total;
+                                                        $submoney = $val->submoney;
+                                                        $status = $val->status;
+                                                        $table_id = $val->table_id;
+                                                        $table_invoice = $val->order->table->table_name;
+                                                        $area_invoice = $val->order->table->area->sub_name;
+                                                    ?>
                                                 @endforeach
-                                            </table>
-                                        </th>
-                                        <th scope="row">{{ $money }} VND</th>
-                                        @if($status == 0)
-                                        <th scope="row">
-                                            <span class="badge bg-soft-danger text-danger">Chưa thanh toán</span>
-                                        </th>
-                                        <th scope="row">
-                                            <button wire:click='showInvoice({{ $in }})' style=' margin-bottom:10px;' data-bs-dismiss="modal" class="btn btn-primary btn-rounded waves-effect waves-light">
-                                                <i class="fe-file-text"></i> Chi tiết
-                                            </button>
-                                        </th>
-                                        @else
-                                        <th scope="row">
-                                            <span class="badge bg-soft-success text-success">Đã thanh toán</span>
-                                        </th>
-                                        <th scope="row">
-                                            <button wire:click='printInvoicePayed({{ $in }}, "{{ $Invoi }}")' style=' margin-bottom:10px;' class="btn btn-secondary btn-rounded waves-effect waves-light">
-                                                <i class="fa fa-print mr-1"></i> In
-                                            </button>
-                                        </th>
-                                        @endif
-                                    </tr>
-                                    @endforeach
-                                    <?php ++$temp; ?>
+                                                <th scope="row" style="width: 5%;"> <span class="badge bg-warning">{{ $id }}</span></th>
+                                                <th scope="row">{{ $user_name }}</th>
+                                                <th scope="row">{{ $time_in }}</th>
+                                                <th scope="row">{{ $time_out == null ? 'Chưa ra' : $time_out}}</th>
+                                                <th scope="row"><span class="badge bg-soft-danger text-danger">{{ $table_invoice }}</span></th>
+                                                <th scope="row">{{ $area_invoice }}</th>
+                                                <th>
+                                                    <table>
+                                                        @foreach($valu as $val)
+                                                            @if($val->time_in == $Invoi)
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th style="width: 20%;">{{ $val->order->drink_amount }}</th>
+                                                                    <th style="width: 80%;">{{ $val->order->drink->drink_name }}</th>
+                                                                </tr>
+                                                            </tbody>
+                                                            @endif
+                                                        @endforeach
+                                                    </table>
+                                                </th>
+                                                <th scope="row">{{ $money }} VND</th>
+                                                <th scope="row">{{ $submoney }} VND</th>
+                                                @if($status == 0)
+                                                    <th scope="row">
+                                                        <span class="badge bg-soft-danger text-danger">Chưa thanh toán</span>
+                                                    </th>
+                                                    <th scope="row">
+                                                        <button wire:click='showInvoice({{ $in }})' style=' margin-bottom:10px;' data-bs-dismiss="modal" class="btn btn-primary btn-rounded waves-effect waves-light">
+                                                            <i class="fe-file-text"></i> Chi tiết
+                                                        </button>
+                                                    </th>
+                                                @else
+                                                    <th scope="row">
+                                                        <span class="badge bg-soft-success text-success">Đã thanh toán</span>
+                                                    </th>
+                                                    <th scope="row">
+                                                        <button wire:click='printInvoicePayed({{ $in }}, "{{ $Invoi }}")' style=' margin-bottom:10px;' class="btn btn-secondary btn-rounded waves-effect waves-light">
+                                                            <i class="fa fa-print mr-1"></i> In
+                                                        </button>
+                                                    </th>
+                                                @endif
+                                            </tr>
+                                        @endforeach
+                                        <?php ++$temp; ?>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -176,17 +179,17 @@
 
                                     <tbody id='content_all'>
                                         @foreach($invoice_detail as $indetail)
-                                        <tr>
-                                            <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
-                                            <th scope="row">{{ $indetail->order->drink->drink_name }}</th>
-                                            <td scope="row">{{ $indetail->order->drink->drinkDetail->price->price_cost }}</td>
-                                            <td scope="row">
-                                                {{ $indetail->order->drink_amount }}
-                                            </td>
-                                            <td scope="row" class="text-center text-danger">
-                                                {{ $indetail->order->drink->drinkDetail->price->price_cost*$indetail->order->drink_amount }} VND
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
+                                                <th scope="row">{{ $indetail->order->drink->drink_name }}</th>
+                                                <td scope="row">{{ $indetail->order->drink->drinkDetail->price->price_cost }}</td>
+                                                <td scope="row">
+                                                    {{ $indetail->order->drink_amount }}
+                                                </td>
+                                                <td scope="row" class="text-center text-danger">
+                                                    {{ $indetail->order->drink->drinkDetail->price->price_cost*$indetail->order->drink_amount }} VND
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -202,14 +205,14 @@
                                             <th>{{ $total }} VND</th>
                                         </tr>
                                         <tr>
-                                            <th>Thuế: </th>
+                                            <th>Giảm giá: </th>
                                             <th>{{" "}}</th>
-                                            <th><input class="border-0" type="number" wire:model.lazy='percen'> %</th>
+                                            <th><input class="border-0" type="number" max='{{$total}}' wire:model='percen'> VND</th>
                                         </tr>
                                         <tr>
                                             <th>Tổng tiền:</th>
                                             <th>{{" "}}</th>
-                                            <th>{{ empty($percen) ? $total :  $total + ($total*$percen/100) }} VND</th>
+                                            <th>{{ empty($percen) ? $total :  $total - $percen }} VND</th>
                                         </tr>
                                     </table>
                                 </div>
@@ -227,7 +230,7 @@
                         <button wire:click='print({{ $ID }}, "{{ $user }}", "{{ $table_in }}", "{{ $area_in }}","{{ $total }}", "{{ $percen }}")' style=' margin-bottom:10px;' class="btn btn-secondary btn-rounded waves-effect waves-light">
                             <i class="fa fa-print mr-1"></i> In
                         </button>
-                        <button wire:click='payInvoice' style=' margin-bottom:10px;' data-bs-dismiss="modal" class="btn btn-success btn-rounded waves-effect waves-light">
+                        <button wire:click='payInvoice({{ $total }})' style=' margin-bottom:10px;' data-bs-dismiss="modal" class="btn btn-success btn-rounded waves-effect waves-light">
                             <i class="fe-check-circle"></i> Thanh toán
                         </button>
                     </div>
@@ -237,49 +240,49 @@
     </div>
     @endif
     @section('script')
-    <script>
-        window.addEventListener('show-invoice', event => {
-            $('#invoice').modal('show');
-        })
-    </script>
-    <script>
-        $(document).ready(function() {
-            $("#search").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#content1 tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        <script>
+            window.addEventListener('show-invoice', event => {
+                $('#invoice').modal('show');
+            })
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("#search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content1 tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
-        });
-    </script>
-    <script src="{{asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
-    <script src="{{asset('assets/js/pages/dashboard-1.init.js')}}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-right',
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        });
+        </script>
+        <script src="{{asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+        <script src="{{asset('assets/js/pages/dashboard-1.init.js')}}"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
 
-        window.addEventListener('alert', ({
-            detail: {
-                type,
-                message
-            }
-        }) => {
-            Toast.fire({
-                icon: type,
-                title: message
+            window.addEventListener('alert', ({
+                detail: {
+                    type,
+                    message
+                }
+            }) => {
+                Toast.fire({
+                    icon: type,
+                    title: message
+                })
             })
-        })
-    </script>
+        </script>
     @endsection
 </div>

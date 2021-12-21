@@ -21,11 +21,11 @@
         <div class="row">
             <div class="col-12">
                 @canany(['system.permission.management'])
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button wire:click='closeAdd' data-bs-target="#create-calendar" data-bs-toggle="modal" style='margin-bottom:10px;' class="btn btn-primary btn-rounded waves-effect waves-light">
-                        Sắp lịch làm
-                    </button>
-                </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button wire:click='closeAdd' data-bs-target="#create-calendar" data-bs-toggle="modal" style='margin-bottom:10px;' class="btn btn-primary btn-rounded waves-effect waves-light">
+                            Sắp lịch làm
+                        </button>
+                    </div>
                 @endcanany
                 <div class="card">
                     <div class="card-body">
@@ -33,9 +33,9 @@
                             <div class="col-lg-3">
                                 <h4 class="header-title">Ca làm:</h4>
                                 @foreach($shift as $value)
-                                <div class="external-event {{ $value->color }}" data-class="{{ $value->color }}">
-                                    <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>{{ $value->name .': '.$value->time_start.'-'.$value->time_end }}
-                                </div>
+                                    <div class="external-event {{ $value->color }}" data-class="{{ $value->color }}">
+                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>{{ $value->name .': '.$value->time_start.'-'.$value->time_end }}
+                                    </div>
                                 @endforeach
 
                             </div> <!-- end col-->
@@ -50,7 +50,7 @@
                                                 <th width='20%' class='text-center '>Ca làm</th>
                                                 <th class='text-center'>Nhân viên</th>
                                                 @canany(['system.permission.management'])
-                                                <th width='14%' class='text-center'>Hành động</th>
+                                                    <th width='14%' class='text-center'>Hành động</th>
                                                 @endcanany
                                             </tr>
                                         </thead>
@@ -59,33 +59,35 @@
                                         ?>
                                         <tbody>
                                             @foreach($shift as $value)
-                                            <tr>
-                                                <td scope="row" class='text-center align-middle'>{{ ++$loop->index }}</td>
-                                                <th class='text-center align-middle'>{{ $value->name }}</th>
-                                                <td scope="row" class=' align-middle'>
-                                                    <ul>
-                                                        @foreach($calendar as $cal)
-                                                        @if($cal->shift_id == $value->id)
-                                                        <li>{{ $cal->user->name }}</li>
-                                                        <?php $date_delete = $cal->date;
-                                                        $shift_delete = $value->id; ?>
-                                                        @endif
-                                                        @endforeach
-                                                    </ul>
-                                                </td>
-                                                @canany(['system.permission.management'])
-                                                <td scope="row" class='text-center align-middle'>
-                                                    @if($date_delete != '' && $date_delete != '')
-                                                    <button title='Đặt lại' wire:click="deleteCalendar('{{ $date_delete }}', {{ $shift_delete }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
-                                                        <i class="mdi mdi-file"></i>
-                                                    </button>
-                                                    @endif
-                                                </td>
-                                                @endcanany
-                                            </tr>
-                                            <?php $date_delete = '';
-                                            $shift_delete = '';
-                                            ?>
+                                                <tr>
+                                                    <td scope="row" class='text-center align-middle'>{{ ++$loop->index }}</td>
+                                                    <th class='text-center align-middle'>{{ $value->name }}</th>
+                                                    <td scope="row" class=' align-middle'>
+                                                        <ul>
+                                                            @foreach($calendar as $cal)
+                                                                @if($cal->shift_id == $value->id)
+                                                                    <li>{{ $cal->user->name }}</li>
+                                                                    <?php 
+                                                                        $date_delete = $cal->date;
+                                                                        $shift_delete = $value->id; 
+                                                                    ?>
+                                                                @endif
+                                                            @endforeach
+                                                        </ul>
+                                                    </td>
+                                                    @canany(['system.permission.management'])
+                                                        <td scope="row" class='text-center align-middle'>
+                                                            @if($date_delete != '' && $date_delete != '')
+                                                                <button title='Đặt lại' wire:click="deleteCalendar('{{ $date_delete }}', {{ $shift_delete }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
+                                                                    <i class="mdi mdi-file"></i>
+                                                                </button>
+                                                            @endif
+                                                        </td>
+                                                    @endcanany
+                                                </tr>
+                                                <?php $date_delete = '';
+                                                $shift_delete = '';
+                                                ?>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -110,20 +112,20 @@
                                     <div class="card border-primary border mb-3">
                                         <div class="card-body">
                                             @if ($errors->any())
-                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
+                                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             @endif
                                             @if(!empty($noti))
-                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                <ul>
-                                                    <li>{{ $noti }}</li>
-                                                </ul>
-                                            </div>
+                                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                    <ul>
+                                                        <li>{{ $noti }}</li>
+                                                    </ul>
+                                                </div>
                                             @endif
                                             <div>
                                                 <div class="row">
@@ -139,7 +141,7 @@
                                                             <select class="form-select" wire:model.lazy='shift_work' required>
                                                                 <option>Chọn ca...</option>
                                                                 @foreach($shift as $value)
-                                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -149,12 +151,12 @@
                                                             <label class="form-label">Người làm: </label>
                                                             <div class="row">
                                                                 @foreach($user as $u)
-                                                                <div class="col-3">
-                                                                    <div class="form-check mb-2 form-check-warning">
-                                                                        <input class="form-check-input" wire:model.lazy='user_work' type="checkbox" value="{{ $u->id }}" id="customckeck7">
-                                                                        <label class="form-check-label" for="customckeck7">{{ $u->name }}</label>
+                                                                    <div class="col-3">
+                                                                        <div class="form-check mb-2 form-check-warning">
+                                                                            <input class="form-check-input" wire:model.lazy='user_work' type="checkbox" value="{{ $u->id }}" id="customckeck7">
+                                                                            <label class="form-check-label" for="customckeck7">{{ $u->name }}</label>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
                                                                 @endforeach
                                                             </div>
                                                         </div>
@@ -178,11 +180,11 @@
                     <div class="card-body">
                         <div class="row">
                             @canany(['system.permission.management'])
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button wire:click='deleteAllCalendar' style='margin-bottom:10px;' class="btn btn-danger btn-rounded waves-effect waves-light">
-                                    Đặt lại tất cả
-                                </button>
-                            </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button wire:click='deleteAllCalendar' style='margin-bottom:10px;' class="btn btn-danger btn-rounded waves-effect waves-light">
+                                        Đặt lại tất cả
+                                    </button>
+                                </div>
                             @endcanany
                             <div class="col-lg-12">
                                 <h4 class="header-title">Lịch làm trong 7 ngày gần đây: </h4>
@@ -192,7 +194,7 @@
                                             <tr>
                                                 <th class='text-center align-middle'>Ca làm</th>
                                                 @foreach($week as $w => $value)
-                                                <th class='text-center align-middle'>{{ $w }}</th>
+                                                    <th class='text-center align-middle'>{{ $w }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>
@@ -201,40 +203,43 @@
                                         ?>
                                         <tbody>
                                             @foreach($shift as $value)
-                                            <tr>
-                                                <th class='text-center align-middle'>{{ $value->name }}</th>
-                                                @foreach($week as $w => $temp)
-                                                <td scope="row">
-                                                    <div class='row'>
-                                                       <div class="col-9">
-                                                            <ul>
-                                                                @foreach($dayOfWeek as $cal => $val)
-                                                                    @foreach($val as $a)
-                                                                        @if($a['shift_id'] == $value->id && $a['date'] == $w)
-                                                                            <li>{{ $a['user']->name }}</li>
-                                                                            <?php $date_delete = $a['date'];
-                                                                            $shift_delete = $a['shift_id']; ?>
+                                                <tr>
+                                                    <th class='text-center align-middle'>{{ $value->name }}</th>
+                                                    @foreach($week as $w => $temp)
+                                                        <td scope="row">
+                                                            <div class='row'>
+                                                            <div class="col-8">
+                                                                    <ul>
+                                                                        @foreach($dayOfWeek as $cal => $val)
+                                                                            @foreach($val as $a)
+                                                                                @if($a['shift_id'] == $value->id && $a['date'] == $w)
+                                                                                    <li>{{ $a['user']->name }}</li>
+                                                                                    <?php 
+                                                                                        $date_delete = $a['date'];
+                                                                                        $shift_delete = $a['shift_id']; 
+                                                                                    ?>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    @canany(['system.permission.management'])
+                                                                        @if($date_delete != '' && $shift_delete != '')
+                                                                        <button title='Đặt lại' wire:click="deleteCalendar('{{ $date_delete }}', {{ $shift_delete }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
+                                                                            <i class="mdi mdi-file"></i>
+                                                                        </button>
                                                                         @endif
-                                                                    @endforeach
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            @canany(['system.permission.management'])
-                                                                @if($date_delete != '' && $shift_delete != '')
-                                                                <button title='Đặt lại' wire:click="deleteCalendar('{{ $date_delete }}', {{ $shift_delete }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
-                                                                    <i class="mdi mdi-file"></i>
-                                                                </button>
-                                                                @endif
-                                                            @endcanany
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <?php $date_delete = '';
-                                                $shift_delete = '';
-                                                ?>
-                                                @endforeach
-                                            </tr>
+                                                                    @endcanany
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <?php 
+                                                            $date_delete = '';
+                                                            $shift_delete = '';
+                                                        ?>
+                                                    @endforeach
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -254,9 +259,8 @@
                                         <thead class='table-dark'>
                                             <tr>
                                                 <th class='text-center align-middle'>Ngày</th>
-
                                                 @foreach($shift as $value)
-                                                <th class='text-center align-middle'>{{ $value->name }}</th>
+                                                    <th class='text-center align-middle'>{{ $value->name }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>
@@ -296,44 +300,44 @@
         </div> <!-- content -->
 
         @section('script')
-        <script>
-            $(document).ready(function() {
-                $("#search").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#content tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            <script>
+                $(document).ready(function() {
+                    $("#search").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#content tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
                     });
                 });
-            });
-        </script>
+            </script>
 
-        <!-- Toastr js-->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-right',
-                showConfirmButton: false,
-                showCloseButton: true,
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
+            <!-- Toastr js-->
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
 
-            window.addEventListener('alert', ({
-                detail: {
-                    type,
-                    message
-                }
-            }) => {
-                Toast.fire({
-                    icon: type,
-                    title: message
+                window.addEventListener('alert', ({
+                    detail: {
+                        type,
+                        message
+                    }
+                }) => {
+                    Toast.fire({
+                        icon: type,
+                        title: message
+                    })
                 })
-            })
-        </script>
+            </script>
         @endsection
     </div>

@@ -33,6 +33,7 @@ class Bartending extends Component
         Order::find($bar_id)->update([
             'status_bartending' => 1
         ]);
+        $this->count_bar_no_complete = Order::where('status_bartending', 0)->count();
         $this->count_bar_doing = Order::where('status_bartending', 1)->count();
     }
     public function success($bar_id)
@@ -41,6 +42,7 @@ class Bartending extends Component
         Order::find($bar_id)->update([
             'status_bartending' => 2
         ]);
+        $this->count_bar_doing = Order::where('status_bartending', 1)->count();
         $this->count_bar_complete = Order::where('status_bartending', 2)->count();
     }
     public function refuse($drinkOrderID)

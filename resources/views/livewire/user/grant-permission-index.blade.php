@@ -60,30 +60,31 @@
                             <tbody id="content">
                                 <?php $temp = 0; ?>
                                 @if(!empty($link))
-                                <?php $dem = 1; ?>
-                                @foreach ($link as $user)
-                                <tr>
-                                    <th scope="row">{{$dem++}}</th>
-                                    <th scope="row"> <span class="badge bg-warning">{{$user->id}}</span></th>
-                                    <th scope="row">{{$user->name}}</th>
-                                    <th scope="row">{{$user->email}}</th>
-                                    <th scope="row"><span class="badge bg-soft-success text-success">Đã xác nhận</span></th>
-                                    <th scope="row">
-                                        <button wire:click="grantPermission({{ $user->id }})" class="btn btn-outline-primary btn-rounded waves-effect waves-light">
-                                            Cấp quyền
-                                        </button>
-                                    </th>
+                                    <?php $dem = 1; ?>
+                                    @foreach ($link as $user)
+                                        <tr>
+                                            <th scope="row">{{$dem++}}</th>
+                                            <th scope="row"> <span class="badge bg-warning">{{$user->id}}</span></th>
+                                            <th scope="row">{{$user->name}}</th>
+                                            <th scope="row">{{$user->email}}</th>
+                                            <th scope="row"><span class="badge bg-soft-success text-success">Đã xác nhận</span></th>
+                                            <th scope="row">
+                                                <button wire:click="grantPermission({{ $user->id }})" class="btn btn-outline-primary btn-rounded waves-effect waves-light">
+                                                    Cấp quyền
+                                                </button>
+                                            </th>
 
-                                </tr>
-                                <?php
-                                $temp++; ?>
-                                @endforeach
+                                        </tr>
+                                        <?php
+                                            $temp++; 
+                                        ?>
+                                    @endforeach
                                 @endif
                             </tbody>
                         </table>
                         <div class="page-title-box">
                             @if($temp == 0)
-                            <h6 class="page-title" style="text-align: center;">Không có tài khoản mới!</h6>
+                                <h6 class="page-title" style="text-align: center;">Không có tài khoản mới!</h6>
                             @endif
                         </div>
                         {{$link->links()}}
@@ -94,15 +95,15 @@
     </div>
     <!-- end row -->
     @section('script')
-    <script>
-        $(document).ready(function() {
-            $("#search").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#content tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        <script>
+            $(document).ready(function() {
+                $("#search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
-        });
-    </script>
+        </script>
     @endsection
 </div>

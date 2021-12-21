@@ -68,7 +68,7 @@ class ManagerTimekeeping extends Component
         foreach ($this->info_TKP as $val) {
             $date = new Carbon($val->time_start, 'Asia/Ho_Chi_minh');
             $dt = Carbon::now('Asia/Ho_Chi_minh');
-            if ($date->diffInDays($dt) <= $dt->daysInMonth) {
+            if ($date->diffInDays($dt) <= $dt->daysInMonth && $val->status == 3 && ($val->status_edit == 2 || $val->status_edit == null)) {
                 $this->hour_wage += $val->hour;
             }
         }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StatisticalController;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\Management\Area;
 use App\Http\Livewire\Management\Calendar;
@@ -112,10 +113,12 @@ Route::name('management.')->group(function () {
         Route::get('/menu', Menu::class)->name('menu');
         Route::get('/bartending', Bartending::class)->name('bartending');
         Route::get('/statistical', Statistical::class)->name('statistical');
+
         Route::get('/order', Order::class)->name('order');
         Route::get('/invoice', Invoice::class)->name('invoice');
     });
 });
+Route::get('/dashboard-filter', [StatisticalController::class, 'dashboard_filter'])->name('dashboard-filter');
 
 
 //edit profile

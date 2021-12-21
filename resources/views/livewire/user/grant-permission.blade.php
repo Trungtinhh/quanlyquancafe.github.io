@@ -17,10 +17,9 @@
         <div class="card border-primary border mb-3">
             <div class="card-body">
                 <h4 class="card-title text-primary">Cấp quyền cho tài khoản: <i> {{$results_user->name}} </i></h4>
-
                 <?php
-                $a = 0;
-                $b = 0;
+                    $a = 0;
+                    $b = 0;
                 ?>
                 <span class="message">Nhóm quyền hiện tại: </i></span>
                 @foreach($results_roles as $role)
@@ -37,7 +36,7 @@
                 @foreach( $results_permissions as $per=>$val)
                     @if($results_user->hasPermissionTo($val['name']))
                         {{ ' | '.$val['title'] }}
-                    <?php $b++; ?>
+                        <?php $b++; ?>
                     @endif
                 @endforeach
                 @if($b == 0)
@@ -60,10 +59,10 @@
                                             <label class="form-check-label" for="customckeck7">Thu hồi nhóm quyền</label>
                                         </div>
                                         @foreach($results_roles as $results_role)
-                                        <div class="form-check mb-2 form-check-blue">
-                                            <input class="form-check-input" wire:model.lazy='role' type="checkbox" value="{{ $results_role->id }}" id="customckeck7">
-                                            <label class="form-check-label" for="customckeck7">{{ $results_role->name }}</label>
-                                        </div>
+                                            <div class="form-check mb-2 form-check-blue">
+                                                <input class="form-check-input" wire:model.lazy='role' type="checkbox" value="{{ $results_role->id }}" id="customckeck7">
+                                                <label class="form-check-label" for="customckeck7">{{ $results_role->name }}</label>
+                                            </div>
                                         @endforeach
 
                                         <div class="clearfix"></div>
@@ -79,10 +78,10 @@
                                             <label class="form-check-label" for="customckeck7">Thu hồi quyền</label>
                                         </div>
                                         @foreach($results_permissions as $results_permission => $per)
-                                        <div class="form-check mb-2 form-check-danger">
-                                            <input class="form-check-input" wire:model.lazy='permission' type="checkbox" value="{{ $per['name'] }}" id="customckeck7">
-                                            <label class="form-check-label" for="customckeck7">{{ $per['title'] }}</label>
-                                        </div>
+                                            <div class="form-check mb-2 form-check-danger">
+                                                <input class="form-check-input" wire:model.lazy='permission' type="checkbox" value="{{ $per['name'] }}" id="customckeck7">
+                                                <label class="form-check-label" for="customckeck7">{{ $per['title'] }}</label>
+                                            </div>
                                         @endforeach
 
                                     </div>
@@ -102,33 +101,33 @@
         </div>
     </div>
     @section('script')
-    <!-- Toastr js-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-right',
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        });
+        <!-- Toastr js-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
 
-        window.addEventListener('alert', ({
-            detail: {
-                type,
-                message
-            }
-        }) => {
-            Toast.fire({
-                icon: type,
-                title: message
+            window.addEventListener('alert', ({
+                detail: {
+                    type,
+                    message
+                }
+            }) => {
+                Toast.fire({
+                    icon: type,
+                    title: message
+                })
             })
-        })
-    </script>
+        </script>
     @endsection
 </div>

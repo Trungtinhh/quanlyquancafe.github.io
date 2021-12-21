@@ -60,33 +60,33 @@
                             <tbody id='content'>
                                 <?php $temp = 0; ?>
                                 @if(!empty($link))
-                                <?php $dem = 1; ?>
-                                @foreach ($link as $user)
-                                <tr>
-                                    <th scope="row">{{$dem++}}</th>
-                                    <th scope="row"> <span class="badge bg-success">{{$user->id}}</span></th>
-                                    <th scope="row">{{$user->name}}</th>
-                                    <td scope="row">{{$user->email}}</td>
-                                    <td scope="row"><span class="badge bg-soft-danger text-danger">Chờ xác nhận</span></td>
-                                    <td scope="row">
-                                        <button wire:click="confirmUser({{ $user->id }})" class="btn btn-success btn-rounded waves-effect waves-light">
-                                            <i class="mdi mdi-check" title='Chấp nhận'></i>
-                                        </button>
-                                        <button wire:click="refuseUser({{ $user->id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
-                                            <i class="mdi mdi-delete" title='Xóa'></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <?php
-                                $temp++;
-                                ?>
-                                @endforeach
+                                    <?php $dem = 1; ?>
+                                    @foreach ($link as $user)
+                                        <tr>
+                                            <th scope="row">{{$dem++}}</th>
+                                            <th scope="row"> <span class="badge bg-success">{{$user->id}}</span></th>
+                                            <th scope="row">{{$user->name}}</th>
+                                            <td scope="row">{{$user->email}}</td>
+                                            <td scope="row"><span class="badge bg-soft-danger text-danger">Chờ xác nhận</span></td>
+                                            <td scope="row">
+                                                <button wire:click="confirmUser({{ $user->id }})" class="btn btn-success btn-rounded waves-effect waves-light">
+                                                    <i class="mdi mdi-check" title='Chấp nhận'></i>
+                                                </button>
+                                                <button wire:click="refuseUser({{ $user->id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                    <i class="mdi mdi-delete" title='Xóa'></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                            $temp++;
+                                        ?>
+                                    @endforeach
                                 @endif
                             </tbody>
                         </table>
                         <div class="page-title-box">
                             @if($temp == 0)
-                            <h6 class="page-title" style="text-align: center;">Không có tài khoản mới!</h6>
+                                <h6 class="page-title" style="text-align: center;">Không có tài khoản mới!</h6>
                             @endif
                         </div>
                         {{$link->links()}}
@@ -97,43 +97,43 @@
     </div>
     <!-- end row -->
     @section('script')
-    <script>
-        $(document).ready(function() {
-            $("#search").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#content tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        <script>
+            $(document).ready(function() {
+                $("#search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
-        });
-    </script>
-    <!-- Toastr js-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-right',
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        });
+        </script>
+        <!-- Toastr js-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
 
-        window.addEventListener('alert', ({
-            detail: {
-                type,
-                message
-            }
-        }) => {
-            Toast.fire({
-                icon: type,
-                title: message
+            window.addEventListener('alert', ({
+                detail: {
+                    type,
+                    message
+                }
+            }) => {
+                Toast.fire({
+                    icon: type,
+                    title: message
+                })
             })
-        })
-    </script>
+        </script>
     @endsection
 </div>

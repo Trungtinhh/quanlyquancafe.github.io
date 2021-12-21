@@ -20,6 +20,7 @@ class InvoiceDetail extends Model
         'time_in',
         'time_out',
         'total',
+        'submoney',
         'status',
     ];
     public function invoice()

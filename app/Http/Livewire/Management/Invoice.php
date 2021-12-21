@@ -39,47 +39,77 @@ class Invoice extends Component
             $this->user = $in->invoiceDetail->user_name;
             $this->total = $in->total;
         }
+        $this->percen = 0;
         $this->statusShowInvoice = true;
         $this->dispatchBrowserEvent('show-invoice');
     }
-    public function payInvoice()
+    public function payInvoice($to)
     {
-        $turnover = 0;
-        $pay = Iv::where('table_id', $this->invoice_table)->where('status', 0)->get();
-        foreach ($pay as $value) {
-            InvoiceDetail::where('invoice_id', $value->id)->update([
-                'time_out' => Carbon::now('Asia/Ho_Chi_Minh'),
-                'status' => 1,
+        if ($this->percen <= $to) {
+            $turnover = 0;
+            $pay = Iv::where('table_id', $this->invoice_table)->where('status', 0)->get();
+            if ($this->percen == 0) {
+                foreach ($pay as $value) {
+                    InvoiceDetail::where('invoice_id', $value->id)->update([
+                        'time_out' => Carbon::now('Asia/Ho_Chi_Minh'),
+                        'status' => 1,
+                    ]);
+                    $turnover = $value->total;
+                }
+                Iv::where('table_id', $this->invoice_table)->where('status', 0)->update([
+                    'status' => 1,
+                    'time_out' => Carbon::now('Asia/Ho_Chi_Minh')
+                ]);
+                Od::where('table_id', $this->invoice_table)->update([
+                    'status' => 2
+                ]);
+            } else {
+                foreach ($pay as $value) {
+                    InvoiceDetail::where('invoice_id', $value->id)->update([
+                        'time_out' => Carbon::now('Asia/Ho_Chi_Minh'),
+                        'total' => $value->total - $this->percen,
+                        'submoney' => $this->percen,
+                        'status' => 1,
+                    ]);
+                    $turnover = $value->total - $this->percen;
+                }
+                Iv::where('table_id', $this->invoice_table)->where('status', 0)->update([
+                    'status' => 1,
+                    'time_out' => Carbon::now('Asia/Ho_Chi_Minh'),
+                    'total' => $value->total - $this->percen,
+                    'submoney' => $this->percen,
+                ]);
+                Od::where('table_id', $this->invoice_table)->update([
+                    'status' => 2
+                ]);
+            }
+            Table::where('id', $this->invoice_table)->update([
+                'status' => 0
             ]);
-            $turnover += $value->total;
-        }
-        Iv::where('table_id', $this->invoice_table)->where('status', 0)->update([
-            'status' => 1,
-            'time_out' => Carbon::now('Asia/Ho_Chi_Minh')
-        ]);
-        Table::where('id', $this->invoice_table)->update([
-            'status' => 0
-        ]);
-        Od::where('table_id', $this->invoice_table)->update([
-            'status' => 2
-        ]);
-        if (!Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->exists()) {
-            Statistical::create([
-                'date' => Carbon::now('Asia/Ho_Chi_Minh')->toDateString(),
-                'turnover' => $turnover,
-                'total_order' => 1
+            if (!Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->exists()) {
+                Statistical::create([
+                    'date' => Carbon::now('Asia/Ho_Chi_Minh')->toDateString(),
+                    'turnover' => $turnover,
+                    'total_order' => 1
+                ]);
+            } else {
+                $statistical_update = Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->first();
+                Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->update([
+                    'turnover' => $statistical_update->turnover + $turnover,
+                    'total_order' => $statistical_update->total_order += 1
+                ]);
+            }
+            $this->percen = 0;
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Thanh toán thành công!"
             ]);
         }else{
-            $statistical_update = Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->first();
-            Statistical::where('date', Carbon::now('Asia/Ho_Chi_Minh')->toDateString())->update([
-                'turnover' => $statistical_update->turnover + $turnover,
-                'total_order' => $statistical_update->total_order += 1
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'warning',
+                'message' => "Giảm giá quá nhiều!"
             ]);
         }
-        $this->dispatchBrowserEvent('alert', [
-            'type' => 'success',
-            'message' => "Thanh toán thành công!"
-        ]);
     }
     public function printInvoicePayed($table_id, $time)
     {
@@ -90,10 +120,11 @@ class Invoice extends Component
             $table_in = $in->invoiceDetail->table_name;
             $area_in = $in->table->area->sub_name;
             $user = $in->invoiceDetail->user_name;
-            $total = $in->total;
+            $total_temp = $in->total;
+            $percen = $in->submoney;
         }
+        $total = $total_temp + $percen;
         //dd($this->invoice_detail);
-        $percen = 0;
         $status = 'Đã thanh toán';
         $pdf = PDF::loadView('livewire.management.invoice_print-p-d-f', compact('ID', 'user', 'table_in', 'area_in', 'total', 'percen', 'status', 'invoice_detail'))->output(); //
         return response()->streamDownload(

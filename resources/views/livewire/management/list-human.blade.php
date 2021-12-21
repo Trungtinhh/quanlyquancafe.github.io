@@ -60,96 +60,96 @@
                             <tbody id='content'>
                                 <?php $temp = 0; ?>
                                 @if(!empty($link))
-                                <?php $dem = 1; ?>
-                                @foreach ($link as $value)
-                                <tr>
-                                    <td scope="row"><span class="badge bg-soft-warning text-danger">{{$dem++}}</span></td>
-                                    <td scope="row">{{$value->name}}</td>
-                                    <td scope="row">{{$value->email}}</td>
-                                    <td scope="row">{{$value->profile->phone}}</td>
-                                    <td scope="row"> <span class="badge bg-warning">
-                                            @foreach($role as $rol)
-                                            @if($value->hasRole($rol->name))
-                                            {{ $rol->name }}
-                                            @endif
-                                            @endforeach
-                                        </span></td>
-                                    <td scope="row">
-                                        <button wire:click='detail({{ $value }})' class="btn btn-outline-success btn-rounded waves-effect waves-light">
-                                            Hồ sơ
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-                                <?php
-                                $temp++; ?>
-                                @endforeach
+                                    <?php $dem = 1; ?>
+                                    @foreach ($link as $value)
+                                        @if($value->email != 'admin@gmail.com')
+                                            <tr>
+                                                <td scope="row"><span class="badge bg-soft-warning text-danger">{{++$loop->index}}</span></td>
+                                                <td scope="row">{{$value->name}}</td>
+                                                <td scope="row">{{$value->email}}</td>
+                                                <td scope="row">{{$value->profile->phone}}</td>
+                                                <td scope="row"> <span class="badge bg-warning">
+                                                        @foreach($role as $rol)
+                                                            @if($value->hasRole($rol->name))
+                                                                {{ $rol->name }}
+                                                            @endif
+                                                        @endforeach
+                                                    </span></td>
+                                                <td scope="row">
+                                                    <button wire:click='detail({{ $value }})' class="btn btn-outline-success btn-rounded waves-effect waves-light">
+                                                        Hồ sơ
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                                $temp++; 
+                                            ?>
+                                        @endif
+                                    @endforeach
                                 @endif
                             </tbody>
                         </table>
                         <!-- Modal -->
 
                         @if($showDetail)
+                            <div class="modal fade" wire:ignore.self id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Thông tin nhân sự</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-centered table-borderless table-striped mb-0">
+                                                    <tbody>
+                                                        @if(!empty($detail))
+                                                            <tr>
+                                                                <th style="widtd: 35%;">Tên</th>
+                                                                <td>{{ $detail['name'] }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Chức vụ</th>
+                                                                <td>@foreach($role as $rol)
+                                                                        @if($detail->hasRole($rol->name))
+                                                                            {{ $rol->name }}
+                                                                        @endif
+                                                                    @endforeach
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Ngày sinh</th>
+                                                                <td>{{ $detail['profile']['birthday'] }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Số điện tdoại</th>
+                                                                <td>{{ $detail['profile']['phone'] }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Email</th>
+                                                                <td>{{ $detail['email'] }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Địa chỉ</th>
+                                                                <td>{{ $detail['profile']['address'] }}
+                                                            </tr>
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div> <!-- end .table-responsive -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class='fa fa-times-circle mr-1'></i> Close</button>
+                                            <button type="button" wire:click='print({{ $detail }})' class="btn btn-primary"><i class='fa fa-print mr-1'></i> In</button>
+                                        </div>
 
-                        <div class="modal fade" wire:ignore.self id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Thông tin nhân sự</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-centered table-borderless table-striped mb-0">
-                                                <tbody>
-                                                    @if(!empty($detail))
-                                                    <tr>
-                                                        <th style="widtd: 35%;">Tên</th>
-                                                        <td>{{ $detail['name'] }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Chức vụ</th>
-                                                        <td>@foreach($role as $rol)
-                                                            @if($detail->hasRole($rol->name))
-                                                            {{ $rol->name }}
-                                                            @endif
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Ngày sinh</th>
-                                                        <td>{{ $detail['profile']['birthday'] }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Số điện tdoại</th>
-                                                        <td>{{ $detail['profile']['phone'] }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Email</th>
-                                                        <td>{{ $detail['email'] }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Địa chỉ</th>
-                                                        <td>{{ $detail['profile']['address'] }}
-                                                    </tr>
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        </div> <!-- end .table-responsive -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class='fa fa-times-circle mr-1'></i> Close</button>
-                                        <button type="button" wire:click='print({{ $detail }})' class="btn btn-primary"><i class='fa fa-print mr-1'></i> In</button>
-                                    </div>
-
                                 </div>
                             </div>
-                        </div>
                         @endif
                         <div class="page-title-box">
                             @if($temp == 0)
-                            <h6 class="page-title" style="text-align: center;">Không có tài khoản mới!</h6>
+                                <h6 class="page-title" style="text-align: center;">Không có tài khoản mới!</h6>
                             @endif
                         </div>
                         {{$link->links()}}
@@ -159,22 +159,22 @@
         </div><!-- end col -->
     </div>
     @section('script')
-    <script>
-        window.addEventListener('show-detail', event => {
-            $('#detail').modal('show');
-        })
-    </script>
+        <script>
+            window.addEventListener('show-detail', event => {
+                $('#detail').modal('show');
+            })
+        </script>
 
-    <script>
-        $(document).ready(function() {
-            $("#search").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#content tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        <script>
+            $(document).ready(function() {
+                $("#search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
-        });
-    </script>
+        </script>
     @endsection
     <!-- end row -->
 </div>

@@ -20,18 +20,18 @@
                     <div class="row">
                         <div class="col-lg-8">
                             @if ($errors->any())
-                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             @endif
                             @if(!empty($message))
-                            <div class="alert alert-success" role="alert">
-                                {{ $message }}
-                            </div>
+                                <div class="alert alert-success" role="alert">
+                                    {{ $message }}
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -60,10 +60,10 @@
                                             <h4 class="header-title">Thêm quyền cho nhóm</h4>
                                             <br />
                                             @foreach($results_permissions as $results_permission => $per)
-                                            <div class="form-check mb-2 form-check-danger">
-                                                <input class="form-check-input" wire:model.lazy='permission' type="checkbox" value="{{ $per['name'] }}" id="customckeck7">
-                                                <label class="form-check-label" for="customckeck7">{{ $per['title'] }}</label>
-                                            </div>
+                                                <div class="form-check mb-2 form-check-danger">
+                                                    <input class="form-check-input" wire:model.lazy='permission' type="checkbox" value="{{ $per['name'] }}" id="customckeck7">
+                                                    <label class="form-check-label" for="customckeck7">{{ $per['title'] }}</label>
+                                                </div>
                                             @endforeach
                                         </div>
                                     </div>

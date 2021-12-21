@@ -20,15 +20,17 @@ class Statistical extends Component
         $importgoodsIngredent = [], $importgoodsDrink = [],
         $expired_drink = [], $expired_ingredent = [];
 
-    public $drink_sale = [], $date_revenue = [], $value_revenue = [];
+    public $drink_sale = [], $date_revenue = [], $value_revenue = [], $date_revenue_week, $value_revenue_week;
     public $data_revenue_all = [], $value_revenue_all = [];
     public $data_drink_sale = [], $value_drink_sale = [];
+    public $filter = '', $data_filter = [], $value_filter = [];
     public function render()
     {
         return view('livewire.management.statistical');
     }
     public function mount()
     {
+        $money = 0;
         $this->date_revenue = [];
         $this->value_revenue = [];
         $invoice = Invoice::where('status', 1)->get()->groupBy(['time_out', 'table_id']);
@@ -41,8 +43,18 @@ class Statistical extends Component
                     }
                     $this->revenue += $money;
                 }
-                $this->value_revenue[] = $this->revenue;
+                $this->value_revenue[] = $money;
                 $this->date_revenue[] = $date->toTimeString();
+            }
+        }
+        $sub7days = Carbon::now('Asia/Ho_Chi_Minh')->subDays(7)->toDateString();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        $week = Statis::whereBetween('date', [$sub7days, $now])->get();
+        foreach ($week as $invoi) {
+            $date = new Carbon($invoi->date, 'Asia/Ho_Chi_Minh');
+            if ($date->toDateString() == Carbon::now('Asia/Ho_Chi_Minh')->toDateString()) {
+                $this->value_revenue_week[] = $invoi->turnover;
+                $this->date_revenue_week[] = $invoi->date;
             }
         }
         //dd($this->value_revenue, $this->date_revenue);

@@ -65,34 +65,37 @@
                             <tbody id='content'>
                                 <?php $temp = 0; ?>
                                 @if(!empty($roles))
-                                @foreach ($roles as $role)
-                                <tr>
-                                    <td scope="row">{{++$loop->index}}</td>
-                                    <td scope="row"> <span class="badge bg-success">{{$role->id}}</span></td>
-                                    <td scope="row">{{$role->name}}</td>
-                                    <td scope="row"><span class="badge  text-primary">
-                                            @foreach( $permission as $per=>$val)
-                                            @if($role->hasPermissionTo($val['name']))
-                                            {{ '| '.$val['title'] }}
-                                            @endif
-                                            @endforeach
-                                        </span>
-                                    </td>
-                                    <td scope="row" class='text-center'>
-                                        <button wire:click="deleteRole({{ $role->id }})" class="btn btn-soft-danger btn-rounded waves-effect waves-light">
-                                            <i class="mdi mdi-delete" title='Xóa'></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <?php
-                                $temp++; ?>
-                                @endforeach
+                                    @foreach ($roles as $role)
+                                        <tr>
+                                            <td scope="row">{{++$loop->index}}</td>
+                                            <td scope="row"> <span class="badge bg-success">{{$role->id}}</span></td>
+                                            <td scope="row">{{$role->name}}</td>
+                                            <td scope="row"><span class="badge  text-primary">
+                                                    @foreach( $permission as $per=>$val)
+                                                        @if($role->hasPermissionTo($val['name']))
+                                                            {{ '| '.$val['title'] }}
+                                                        @endif
+                                                    @endforeach
+                                                </span>
+                                            </td>                                           
+                                            <td scope="row" class='text-center'>
+                                                @if($role->name != 'Admin')
+                                                    <button wire:click="deleteRole({{ $role->id }})" class="btn btn-soft-danger btn-rounded waves-effect waves-light">
+                                                        <i class="mdi mdi-delete" title='Xóa'></i>
+                                                    </button>
+                                                @endif
+                                            </td>                                           
+                                        </tr>
+                                        <?php
+                                            $temp++; 
+                                        ?>
+                                    @endforeach
                                 @endif
                             </tbody>
                         </table>
                         <div class="page-title-box">
                             @if($temp == 0)
-                            <h6 class="page-title" style="text-align: center;">trống!</h6>
+                                <h6 class="page-title" style="text-align: center;">trống!</h6>
                             @endif
                         </div>
                         {{$roles->links()}}
@@ -117,13 +120,13 @@
                                 <div class="row">
                                     <div class="col-lg-8">
                                         @if ($errors->any())
-                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -150,10 +153,10 @@
                                                     <h4 class="header-title">Thêm quyền cho nhóm</h4>
                                                     <br />
                                                     @foreach($permission as $results => $per)
-                                                    <div class="form-check mb-2 form-check-danger">
-                                                        <input class="form-check-input" wire:model.lazy='per' type="checkbox" value="{{ $per['name'] }}" id="customckeck7">
-                                                        <label class="form-check-label" for="customckeck7">{{ $per['title'] }}</label>
-                                                    </div>
+                                                        <div class="form-check mb-2 form-check-danger">
+                                                            <input class="form-check-input" wire:model.lazy='per' type="checkbox" value="{{ $per['name'] }}" id="customckeck7">
+                                                            <label class="form-check-label" for="customckeck7">{{ $per['title'] }}</label>
+                                                        </div>
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -171,44 +174,44 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     @section('script')
-    <script>
-        $(document).ready(function() {
-            $("#search").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#content tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        <script>
+            $(document).ready(function() {
+                $("#search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
-        });
-    </script>
+        </script>
 
-    <!-- Toastr js-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-right',
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        });
+        <!-- Toastr js-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
 
-        window.addEventListener('alert', ({
-            detail: {
-                type,
-                message
-            }
-        }) => {
-            Toast.fire({
-                icon: type,
-                title: message
+            window.addEventListener('alert', ({
+                detail: {
+                    type,
+                    message
+                }
+            }) => {
+                Toast.fire({
+                    icon: type,
+                    title: message
+                })
             })
-        })
-    </script>
+        </script>
     @endsection
 </div>

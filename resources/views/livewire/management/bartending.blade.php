@@ -95,40 +95,40 @@
                                         <th>Số lượng</th>
                                         <th>Trạng thái</th>
                                         @canany(['system.basic.management', 'system.permission.management'])
-                                        <th class='text-center'>Hành động</th>
+                                            <th class='text-center'>Hành động</th>
                                         @endcanany
                                     </tr>
                                 </thead>
                                 <tbody id='content'>
                                     <?php $temp = 0; ?>
                                     @foreach($Bartending_no_complete as $bar)
-                                    <tr>
-                                        <td scope="row">{{ ++$loop->index }}</td>
-                                        <td scope="row">{{ $bar->drink->drink_name }}</td>
-                                        <td scope="row">{{ $bar->table->table_name }}</td>
-                                        <td scope="row">{{ $bar->table->area->sub_name }}</td>
-                                        <td scope="row">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
-                                        <td scope="row"> <span class="badge bg-danger">Chưa làm</span></td>
-                                        @canany(['system.basic.management', 'system.permission.management'])
-                                        <td scope="row" class='text-center'>
-                                            <button wire:click="doing({{ $bar->id }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
-                                                <i class="mdi mdi-check-circle" title='Chế biến'></i>
-                                            </button>
-                                            <button wire:click="refuse({{ $bar->id }})" class="btn btn-soft-danger btn-rounded waves-effect waves-light">
-                                                <i class="mdi mdi-close" title='Từ chối'></i>
-                                            </button>
-                                        </td>
-                                        @endcanany
-                                    </tr>
-                                    <?php $temp++; ?>
+                                        <tr>
+                                            <td scope="row">{{ ++$loop->index }}</td>
+                                            <td scope="row">{{ $bar->drink->drink_name }}</td>
+                                            <td scope="row">{{ $bar->table->table_name }}</td>
+                                            <td scope="row">{{ $bar->table->area->sub_name }}</td>
+                                            <td scope="row">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
+                                            <td scope="row"> <span class="badge bg-danger">Chưa làm</span></td>
+                                            @canany(['system.basic.management', 'system.permission.management'])
+                                                <td scope="row" class='text-center'>
+                                                    <button wire:click="doing({{ $bar->id }})" class="btn btn-soft-primary btn-rounded waves-effect waves-light">
+                                                        <i class="mdi mdi-check-circle" title='Chế biến'></i>
+                                                    </button>
+                                                    <button wire:click="refuse({{ $bar->id }})" class="btn btn-soft-danger btn-rounded waves-effect waves-light">
+                                                        <i class="mdi mdi-close" title='Từ chối'></i>
+                                                    </button>
+                                                </td>
+                                            @endcanany
+                                        </tr>
+                                        <?php $temp++; ?>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                         @if($temp == 0)
-                        <div>
-                            <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
-                        </div>
+                            <div>
+                                <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -154,36 +154,36 @@
                                         <th>Số lượng</th>
                                         <th>Trạng thái</th>
                                         @canany(['system.basic.management', 'system.permission.management'])
-                                        <th class='text-center'>Hành động</th>
+                                            <th class='text-center'>Hành động</th>
                                         @endcanany
                                     </tr>
                                 </thead>
                                 <tbody id='content1'>
                                     <?php $temp = 0; ?>
                                     @foreach($Bartending_doing as $bar)
-                                    <tr>
-                                        <td scope="row">{{ ++$loop->index }}</td>
-                                        <td scope="row">{{ $bar->drink->drink_name }}</td>
-                                        <td scope="row">{{ $bar->table->table_name }}</td>
-                                        <td scope="row">{{ $bar->table->area->sub_name }}</td>
-                                        <td scope="row">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
-                                        <td scope="row"> <span class="badge bg-warning">Đang làm</span></td>
-                                        @canany(['system.basic.management', 'system.permission.management'])
-                                        <td scope="row" class='text-center'>
-                                            <button wire:click="success({{ $bar->id }})" class="btn btn-success btn-rounded waves-effect waves-light">
-                                                Hoàn thành
-                                            </button>
-                                        </td>
-                                        @endcanany
-                                    </tr>
-                                    <?php $temp++ ?>
+                                        <tr>
+                                            <td scope="row">{{ ++$loop->index }}</td>
+                                            <td scope="row">{{ $bar->drink->drink_name }}</td>
+                                            <td scope="row">{{ $bar->table->table_name }}</td>
+                                            <td scope="row">{{ $bar->table->area->sub_name }}</td>
+                                            <td scope="row">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
+                                            <td scope="row"> <span class="badge bg-warning">Đang làm</span></td>
+                                            @canany(['system.basic.management', 'system.permission.management'])
+                                                <td scope="row" class='text-center'>
+                                                    <button wire:click="success({{ $bar->id }})" class="btn btn-success btn-rounded waves-effect waves-light">
+                                                        Hoàn thành
+                                                    </button>
+                                                </td>
+                                            @endcanany
+                                        </tr>
+                                        <?php $temp++ ?>
                                     @endforeach
                                 </tbody>
                             </table>
                             @if($temp == 0)
-                            <div>
-                                <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
-                            </div>
+                                <div>
+                                    <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -208,28 +208,30 @@
                                         <th class="text-center">Số lượng</th>
                                         <th class="text-center">Bàn</th>
                                         <th class="text-center">Khu vực</th>
+                                        <th class="text-center">Ngày</th>
                                         <th class="text-center">Trạng thái</th>
                                     </tr>
                                 </thead>
                                 <tbody id='content2'>
                                     <?php $temp = 0; ?>
                                     @foreach($Bartending_complete as $bar)
-                                    <tr>
-                                        <td scope="row" class="text-center">{{ ++$loop->index }}</td>
-                                        <td scope="row">{{ $bar->drink->drink_name }}</td>
-                                        <td scope="row">{{ $bar->table->table_name }}</td>
-                                        <td scope="row">{{ $bar->table->area->sub_name }}</td>
-                                        <td scope="row" class="text-center">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
-                                        <td scope="row" class="text-center"> <span class="badge bg-success">Hoàn thành</span></td>
-                                    </tr>
-                                    <?php $temp++ ?>
+                                        <tr>
+                                            <td scope="row" class="text-center">{{ ++$loop->index }}</td>
+                                            <td scope="row">{{ $bar->drink->drink_name }}</td>
+                                            <td scope="row" class="text-center"><span class="badge  text-primary">{{ $bar->drink_amount }}</span></td>
+                                            <td scope="row" class="text-center">{{ $bar->table->table_name }}</td>
+                                            <td scope="row" class="text-center">{{ $bar->table->area->sub_name }}</td>
+                                            <td scope="row" class="text-center">{{ $bar->created_at->toDateString() }}</td>  
+                                            <td scope="row" class="text-center"> <span class="badge bg-success">Hoàn thành</span></td>
+                                        </tr>
+                                        <?php $temp++ ?>
                                     @endforeach
                                 </tbody>
                             </table>
                             @if($temp == 0)
-                            <div>
-                                <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
-                            </div>
+                                <div>
+                                    <h5 class="bg-light d-block-flex p-2 text-center">Trống!</h5>
+                                </div>
                             @endif
                         </div>
                         {{ $Bartending_complete->links() }}
@@ -239,70 +241,70 @@
         </div>
         <!-- end row -->
         @section('script')
-        <script>
-            $(document).ready(function() {
-                $("#search").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#content tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            <script>
+                $(document).ready(function() {
+                    $("#search").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#content tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
                     });
                 });
-            });
-        </script>
-        <script>
-            window.addEventListener('show-detail', event => {
-                $('#detail').modal('show');
-            })
-        </script>
-        <script>
-            $(document).ready(function() {
-                $("#search1").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#content1 tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $("#search2").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#content2 tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
-
-        <!-- Toastr js-->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-right',
-                showConfirmButton: false,
-                showCloseButton: true,
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
-
-            window.addEventListener('alert', ({
-                detail: {
-                    type,
-                    message
-                }
-            }) => {
-                Toast.fire({
-                    icon: type,
-                    title: message
+            </script>
+            <script>
+                window.addEventListener('show-detail', event => {
+                    $('#detail').modal('show');
                 })
-            })
-        </script>
+            </script>
+            <script>
+                $(document).ready(function() {
+                    $("#search1").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#content1 tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+            <script>
+                $(document).ready(function() {
+                    $("#search2").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#content2 tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+
+            <!-- Toastr js-->
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                window.addEventListener('alert', ({
+                    detail: {
+                        type,
+                        message
+                    }
+                }) => {
+                    Toast.fire({
+                        icon: type,
+                        title: message
+                    })
+                })
+            </script>
         @endsection
     </div>
 </div>

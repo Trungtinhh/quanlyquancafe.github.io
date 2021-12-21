@@ -68,26 +68,26 @@
                                 <?php $temp = 0; ?>
 
                                 @if(!empty($shift))
-                                @foreach ($shift as $shi=>$value)
-                                <tr>
-                                    <td scope="row">{{ ++$loop->index }}</td>
-                                    <td scope="row"> <span class="badge bg-primary ">{{ $value['name'] }}</span></td>
-                                    <td scope="row">{{ $value['time_start'] }}</td>
-                                    <td scope="row">{{ $value['time_end'] }}</td>
-                                    <td scope="row">
-                                        <div class="avatar-sm rounded-circle {{ $value['color'] }}">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php
-                                $temp++; ?>
-                                @endforeach
+                                    @foreach ($shift as $shi=>$value)
+                                        <tr>
+                                            <td scope="row">{{ ++$loop->index }}</td>
+                                            <td scope="row"> <span class="badge bg-primary ">{{ $value['name'] }}</span></td>
+                                            <td scope="row">{{ $value['time_start'] }}</td>
+                                            <td scope="row">{{ $value['time_end'] }}</td>
+                                            <td scope="row">
+                                                <div class="avatar-sm rounded-circle {{ $value['color'] }}">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        $temp++; ?>
+                                    @endforeach
                                 @endif
                             </tbody>
                         </table>
                         <div class="page-title-box">
                             @if($temp == 0)
-                            <h6 class="page-title" style="text-align: center;">trống!</h6>
+                                <h6 class="page-title" style="text-align: center;">trống!</h6>
                             @endif
                         </div>
 
@@ -120,9 +120,9 @@
                                                         <div class="col-sm-10">
                                                             <input wire:model.lazy='shift_name' type="text" class="form-control" value="">
                                                             @error('shift_name')
-                                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                                {{ $message}}
-                                                            </div>
+                                                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                                    {{ $message}}
+                                                                </div>
                                                             @enderror
                                                         </div>
                                                     </div>
@@ -143,20 +143,20 @@
                                             <div class='row'>
                                                 <div class="col-lg-4">
                                                     @if(empty($shift))
-                                                    <span class="header-title">Quán bạn làm từ mấy giờ?: </span>
-                                                    <input type="time" wire:model.lazy='time_start' class="form-control">
+                                                        <span class="header-title">Quán bạn làm từ mấy giờ?: </span>
+                                                        <input type="time" wire:model.lazy='time_start' class="form-control">
                                                     @else
-                                                    <span class="header-title">Bắt đầu lúc: </span>
-                                                    <input type="time" wire:model.lazy='time_start' class="form-control" readonly>
+                                                        <span class="header-title">Bắt đầu lúc: </span>
+                                                        <input type="time" wire:model.lazy='time_start' class="form-control" readonly>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-5">
                                                     <span class="header-title">Kết thúc lúc: (Tối đa đến 23:59) </span>
                                                     <input type="time" wire:model.lazy='time_end' class="form-control">
                                                     @error('time_end')
-                                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        {{ $message}}
-                                                    </div>
+                                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                            {{ $message}}
+                                                        </div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -174,9 +174,9 @@
                                                         <option value="bg-warning">Vàng</option>
                                                     </select>
                                                     @error('color')
-                                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        {{ $message}}
-                                                    </div>
+                                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                            {{ $message}}
+                                                        </div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -196,78 +196,79 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     @if($shift_edit)
-    <div class="modal fade" wire:ignore.self id="edit-shift" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <form method="GET" wire:submit.prevent='storeEditShift'>
-                @csrf
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myLargeModalLabel">Sửa ca làm</h4>
-                        <button type="button" wire:click='closeEdit' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card border-primary border mb-3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @if ($errors->any())
-                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div>
+        <div class="modal fade" wire:ignore.self id="edit-shift" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form method="GET" wire:submit.prevent='storeEditShift'>
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myLargeModalLabel">Sửa ca làm</h4>
+                            <button type="button" wire:click='closeEdit' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card border-primary border mb-3">
+                                <div class="card-body">
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <h4 class="header-title">Tên ca:</h4>
-                                                    <br />
-                                                    <div class="mb-3 row">
-                                                        <div class="col-sm-10">
-                                                            <input wire:model.lazy='shift_name' type="text" placeholder="{{ $shift_edit['name'] }}" class="form-control" value="">
+                                        <div class="col-lg-8">
+                                            @if ($errors->any())
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <h4 class="header-title">Tên ca:</h4>
+                                                        <br />
+                                                        <div class="mb-3 row">
+                                                            <div class="col-sm-10">
+                                                                <input wire:model.lazy='shift_name' type="text" placeholder="{{ $shift_edit['name'] }}" class="form-control" value="">
+                                                            </div>
                                                         </div>
+                                                        <div class="clearfix"></div>
                                                     </div>
-                                                    <div class="clearfix"></div>
+                                                    <br />
+                                                    <br />
+                                                    <br />
                                                 </div>
-                                                <br />
-                                                <br />
-                                                <br />
-                                            </div>
-                                            <div class='row'>
-                                                <div class="col-lg-4">
-                                                    <h4 class="header-title">Thời gian làm: </h4>
+                                                <div class='row'>
+                                                    <div class="col-lg-4">
+                                                        <h4 class="header-title">Thời gian làm: </h4>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <br>
-                                            <br>
-                                            <div class='row'>
-                                                <div class="col-lg-4">
-                                                    <span class="header-title">Bắt đầu lúc: </span>
-                                                    <input type="time" wire:model.lazy='time_start' class="form-control">
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <span class="header-title">Kết thúc lúc: </span>
-                                                    <input type="time" wire:model.lazy='time_end' class="form-control">
-                                                </div>
+                                                <br>
                                                 <br>
                                                 <div class='row'>
                                                     <div class="col-lg-4">
-                                                        <label for="example-color" class="form-label">Màu đại diện:</label>
-                                                        <select class="form-select" wire:model.lazy='color' required>
-                                                            <option>Chọn màu</option>
-                                                            <option value="bg-danger">Đỏ</option>
-                                                            <option value="bg-success">Xanh lá </option>
-                                                            <option value="bg-primary">Xanh dương</option>
-                                                            <option value="bg-info">Xanh nhạt</option>
-                                                            <option value="bg-dark">Đen</option>
-                                                            <option value="bg-warning">Vàng</option>
-                                                        </select>
+                                                        <span class="header-title">Bắt đầu lúc: </span>
+                                                        <input type="time" wire:model.lazy='time_start' class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <span class="header-title">Kết thúc lúc: </span>
+                                                        <input type="time" wire:model.lazy='time_end' class="form-control">
+                                                    </div>
+                                                    <br>
+                                                    <div class='row'>
+                                                        <div class="col-lg-4">
+                                                            <label for="example-color" class="form-label">Màu đại diện:</label>
+                                                            <select class="form-select" wire:model.lazy='color' required>
+                                                                <option>Chọn màu</option>
+                                                                <option value="bg-danger">Đỏ</option>
+                                                                <option value="bg-success">Xanh lá </option>
+                                                                <option value="bg-primary">Xanh dương</option>
+                                                                <option value="bg-info">Xanh nhạt</option>
+                                                                <option value="bg-dark">Đen</option>
+                                                                <option value="bg-warning">Vàng</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -276,65 +277,64 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button wire:click='closeEdit' type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Close</button>
-                        <button style='padding-left: 30px;padding-right: 30px;' class="btn btn-success" type="submit"><i class="mdi mdi-file-edit"></i> Cập nhật </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </form>
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                        <div class="modal-footer">
+                            <button wire:click='closeEdit' type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Close</button>
+                            <button style='padding-left: 30px;padding-right: 30px;' class="btn btn-success" type="submit"><i class="mdi mdi-file-edit"></i> Cập nhật </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     @endif
     @section('script')
-    <script>
-        window.addEventListener('show-edit', event => {
-            $('#edit-shift').modal('show');
-        })
-    </script>
-    <script>
-        window.addEventListener('show-add', event => {
-            $('#create-shift').modal('show');
-        })
-    </script>
-    <script>
-        $(document).ready(function() {
-            $("#search").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#content tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        <script>
+            window.addEventListener('show-edit', event => {
+                $('#edit-shift').modal('show');
+            })
+        </script>
+        <script>
+            window.addEventListener('show-add', event => {
+                $('#create-shift').modal('show');
+            })
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("#search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
-        });
-    </script>
+        </script>
 
-    <!-- Toastr js-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-right',
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        });
+        <!-- Toastr js-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
 
-        window.addEventListener('alert', ({
-            detail: {
-                type,
-                message
-            }
-        }) => {
-            Toast.fire({
-                icon: type,
-                title: message
+            window.addEventListener('alert', ({
+                detail: {
+                    type,
+                    message
+                }
+            }) => {
+                Toast.fire({
+                    icon: type,
+                    title: message
+                })
             })
-        })
-    </script>
+        </script>
     @endsection
 </div>

@@ -17,6 +17,7 @@ class Invoice extends Model
         'table_id',
         'user_id',
         'total',
+        'submoney',
         'time_in',
         'time_out',
         'status',

@@ -48,17 +48,17 @@
 
                     <tbody id='content_all'>
                         @foreach($invoice_detail as $indetail)
-                        <tr>
-                            <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
-                            <th scope="row">{{ $indetail->order->drink->drink_name }}</th>
-                            <td scope="row">{{ $indetail->order->drink->drinkDetail->price->price_cost }}</td>
-                            <td scope="row">
-                                {{ $indetail->order->drink_amount }}
-                            </td>
-                            <td scope="row" class="text-center text-danger">
-                                {{ $indetail->order->drink->drinkDetail->price->price_cost*$indetail->order->drink_amount }} VND
-                            </td>
-                        </tr>
+                            <tr>
+                                <th scope="row"><span class="badge bg-primary">{{ ++$loop->index }}</span></th>
+                                <th scope="row">{{ $indetail->order->drink->drink_name }}</th>
+                                <td scope="row">{{ $indetail->order->drink->drinkDetail->price->price_cost }}</td>
+                                <td scope="row">
+                                    {{ $indetail->order->drink_amount }}
+                                </td>
+                                <td scope="row" class="text-center text-danger">
+                                    {{ $indetail->order->drink->drinkDetail->price->price_cost*$indetail->order->drink_amount }} VND
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -74,14 +74,14 @@
                             <th>{{ $total }} VND</th>
                         </tr>
                         <tr>
-                            <th>Thuế: </th>
+                            <th>Giảm giá: </th>
                             <th>{{" "}}</th>
-                            <th>{{$percen}} %</th>
+                            <th>{{$percen}} VND</th>
                         </tr>
                         <tr>
                             <th>Tổng tiền:</th>
                             <th>{{" "}}</th>
-                            <th>{{ empty($percen) ? $total :  $total + ($total*$percen/100) }} VND</th>
+                            <th>{{ $total - $percen}} VND</th>
                         </tr>
                     </table>
                 </div>

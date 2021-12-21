@@ -64,29 +64,29 @@
                                                     <tbody id='content1'>
                                                         <?php $temp = 0; ?>
                                                         @if(!empty($drink))
-                                                        @foreach($drink as $value)
-                                                        <tr>
-                                                            <th scope="row">{{ ++$loop->index }}</th>
-                                                            <th scope="row"><span class="badge bg-success">{{ $value->drink_id }}</span></th>
-                                                            <th scope="row">{{ $value->drink->drink_name }}</th>
-                                                            <th scope="row" class='text-primary'>{{ $value->drink->drinkDetail->date_exp }}</th>
-                                                            <th scope="row">{{ $value->drink->drinkDetail->provider->provider_name }}</th>
-                                                            <td scope="row"><span class="badge bg-danger">{{ $value->amount_add }}</span></td>
-                                                            <th scope="row">{{ $value->date_add }}</th>
-                                                            <td scope="row" class="text-center">
-                                                                <button wire:click="undoDrink({{ $value->id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
-                                                                    <i class="mdi mdi-undo" title='Hoàn tác'></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        <?php $temp++; ?>
-                                                        @endforeach
+                                                            @foreach($drink as $value)
+                                                                <tr>
+                                                                    <th scope="row">{{ ++$loop->index }}</th>
+                                                                    <th scope="row"><span class="badge bg-success">{{ $value->drink_id }}</span></th>
+                                                                    <th scope="row">{{ $value->drink->drink_name }}</th>
+                                                                    <th scope="row" class='text-primary'>{{ $value->drink->drinkDetail->date_exp }}</th>
+                                                                    <th scope="row">{{ $value->drink->drinkDetail->provider->provider_name }}</th>
+                                                                    <td scope="row"><span class="badge bg-danger">{{ $value->amount_add }}</span></td>
+                                                                    <th scope="row">{{ $value->date_add }}</th>
+                                                                    <td scope="row" class="text-center">
+                                                                        <button wire:click="undoDrink({{ $value->id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                                            <i class="mdi mdi-undo" title='Hoàn tác'></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php $temp++; ?>
+                                                            @endforeach
                                                         @endif
                                                     </tbody>
                                                 </table>
                                                 <div class="page-title-box">
                                                     @if($temp == 0)
-                                                    <h6 class="page-title" style="text-align: center;">Trống!</i></h6>
+                                                        <h6 class="page-title" style="text-align: center;">Trống!</i></h6>
                                                     @endif
                                                 </div>
 
@@ -116,29 +116,29 @@
                                                     <tbody id='content2'>
                                                         <?php $temp1 = 0; ?>
                                                         @if(!empty($ingredent))
-                                                        @foreach($ingredent as $value)
-                                                        <tr>
-                                                            <th scope="row">{{ ++$loop->index }}</th>
-                                                            <th scope="row"><span class="badge bg-success">{{ $value->ingredent_id }}</span></th>
-                                                            <th scope="row">{{ $value->ingredent->ingredent_name }}</th>
-                                                            <th scope="row" class='text-primary'>{{ $value->ingredent->ingredentDetail->date_exp }}</th>
-                                                            <th scope="row">{{ $value->ingredent->ingredentDetail->provider->provider_name }}</th>
-                                                            <td scope="row"><span class="badge bg-danger">{{ $value->amount_add }}</span></td>
-                                                            <th scope="row">{{ $value->date_add }}</th>
-                                                            <td scope="row" class="text-center">
-                                                                <button wire:click="undoIngredent({{ $value->id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
-                                                                    <i class="mdi mdi-undo" title='Hoàn tác'></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        <?php $temp1++; ?>
-                                                        @endforeach
+                                                            @foreach($ingredent as $value)
+                                                                <tr>
+                                                                    <th scope="row">{{ ++$loop->index }}</th>
+                                                                    <th scope="row"><span class="badge bg-success">{{ $value->ingredent_id }}</span></th>
+                                                                    <th scope="row">{{ $value->ingredent->ingredent_name }}</th>
+                                                                    <th scope="row" class='text-primary'>{{ $value->ingredent->ingredentDetail->date_exp }}</th>
+                                                                    <th scope="row">{{ $value->ingredent->ingredentDetail->provider->provider_name }}</th>
+                                                                    <td scope="row"><span class="badge bg-danger">{{ $value->amount_add }}</span></td>
+                                                                    <th scope="row">{{ $value->date_add }}</th>
+                                                                    <td scope="row" class="text-center">
+                                                                        <button wire:click="undoIngredent({{ $value->id }})" class="btn btn-danger btn-rounded waves-effect waves-light">
+                                                                            <i class="mdi mdi-undo" title='Hoàn tác'></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php $temp1++; ?>
+                                                            @endforeach
                                                         @endif
                                                     </tbody>
                                                 </table>
                                                 <div class="page-title-box">
                                                     @if($temp1 == 0)
-                                                    <h6 class="page-title" style="text-align: center;">Trống!</h6>
+                                                        <h6 class="page-title" style="text-align: center;">Trống!</h6>
                                                     @endif
                                                 </div>
 
@@ -157,53 +157,53 @@
     </div>
     <!-- end row -->
     @section('script')
-    <script>
-        $(document).ready(function() {
-            $("#search1").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#content1 tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        <script>
+            $(document).ready(function() {
+                $("#search1").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content1 tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $("#search2").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#content2 tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("#search2").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#content2 tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
             });
-        });
-    </script>
-    <!-- Toastr js-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-right',
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        });
+        </script>
+        <!-- Toastr js-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
 
-        window.addEventListener('alert', ({
-            detail: {
-                type,
-                message
-            }
-        }) => {
-            Toast.fire({
-                icon: type,
-                title: message
+            window.addEventListener('alert', ({
+                detail: {
+                    type,
+                    message
+                }
+            }) => {
+                Toast.fire({
+                    icon: type,
+                    title: message
+                })
             })
-        })
-    </script>
+        </script>
     @endsection
 </div>

@@ -57,7 +57,6 @@ class Provider extends Component
     public function resetAll()
     {
         $this->resetValidation();
-        $this->statusEditProvider = false;
         $this->provider_name = '';
         $this->phone = '';
         $this->email = '';
