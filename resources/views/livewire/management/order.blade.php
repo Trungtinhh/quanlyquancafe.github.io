@@ -421,7 +421,7 @@
                                     <table class="table table-borderless mb-0">
                                         <tbody>
                                             <tr>
-                                                <th style="widtd: 35%;">Nhân viên Order: {{ $user }}</th>
+                                                <th style="width: 35%;">Nhân viên Order: {{ $user }}</th>
                                                 <td></td>
                                             </tr>
                                             <tr>

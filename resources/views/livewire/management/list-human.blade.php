@@ -105,7 +105,7 @@
                                                     <tbody>
                                                         @if(!empty($detail))
                                                             <tr>
-                                                                <th style="widtd: 35%;">Tên</th>
+                                                                <th style="width: 35%;">Tên</th>
                                                                 <td>{{ $detail['name'] }}</td>
                                                             </tr>
                                                             <tr>
