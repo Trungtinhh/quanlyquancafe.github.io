@@ -45,7 +45,7 @@ class Invoice extends Component
     }
     public function payInvoice($to)
     {
-        if ($this->percen <= $to) {
+        if ($this->percen <= $to && $this->percen >= 0) {
             $turnover = 0;
             $pay = Iv::where('table_id', $this->invoice_table)->where('status', 0)->get();
             if ($this->percen == 0) {
@@ -104,7 +104,7 @@ class Invoice extends Component
                 'type' => 'success',
                 'message' => "Thanh toán thành công!"
             ]);
-        }else{
+        } else {
             $this->dispatchBrowserEvent('alert', [
                 'type' => 'warning',
                 'message' => "Giảm giá quá nhiều!"
@@ -136,6 +136,9 @@ class Invoice extends Component
     {
         $invoice_detail = $this->invoice_detail;
         $status = 'Chưa thanh toán';
+        if($percen == null){
+            $percen = 0;
+        }
         $pdf = PDF::loadView('livewire.management.invoice_print-p-d-f', compact('ID', 'user', 'table_in', 'area_in', 'total', 'percen', 'status', 'invoice_detail'))->output(); //
         return response()->streamDownload(
             fn () => print($pdf),

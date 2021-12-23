@@ -51,11 +51,8 @@ class Statistical extends Component
         $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
         $week = Statis::whereBetween('date', [$sub7days, $now])->get();
         foreach ($week as $invoi) {
-            $date = new Carbon($invoi->date, 'Asia/Ho_Chi_Minh');
-            if ($date->toDateString() == Carbon::now('Asia/Ho_Chi_Minh')->toDateString()) {
-                $this->value_revenue_week[] = $invoi->turnover;
-                $this->date_revenue_week[] = $invoi->date;
-            }
+            $this->value_revenue_week[] = $invoi->turnover;
+            $this->date_revenue_week[] = $invoi->date;
         }
         //dd($this->value_revenue, $this->date_revenue);
         foreach ($invoice as $Invoi => $invoi) {
@@ -103,11 +100,8 @@ class Statistical extends Component
             $drink_amount_sale = 0;
             $drink_sale_name = '';
             foreach ($drink as $val) {
-                $weekOfMonth = new Carbon($val->created_at, 'Asia/Ho_Chi_Minh');
-                if ($weekOfMonth->weekOfMonth == Carbon::now()->weekOfMonth) {
-                    $drink_amount_sale += $val->drink_amount;
-                    $drink_sale_name = $val->drink->drink_name;
-                }
+                $drink_amount_sale += $val->drink_amount;
+                $drink_sale_name = $val->drink->drink_name;
             }
             if ($drink_amount_sale != 0) {
                 $this->drink_sale[$drink_sale_name] = ($drink_amount_sale);

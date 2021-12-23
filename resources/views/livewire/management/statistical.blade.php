@@ -457,7 +457,7 @@
                         width: 380,
                         type: 'pie',
                     },
-                    colors: ['#fc03d3', '#E91E63', '#9C27B0'],
+                    colors: ['#fc03d3', '#E91E63', '#9C27B0', '#fcba03', '#0303fc'],
                     labels: @json($date_revenue_week),
                     responsive: [{
                         breakpoint: 480,
