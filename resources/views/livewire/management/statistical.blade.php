@@ -306,7 +306,7 @@
                                                 <th>{{ $drink_sal }}</th>
                                                 <th>{{ $val }}</th>
                                                 <th>
-                                                    @if(($loop->index == 1 || $loop->index == 2 || $loop->index == 3 || $loop->index == 4 || $loop->index == 5) && $val>9 )
+                                                    @if(($loop->index == 1 || $loop->index == 2 || $loop->index == 3 || $loop->index == 4 || $loop->index == 5 || $loop->index == 6 || $loop->index == 7 || $loop->index == 8 || $loop->index == 9 || $loop->index == 10) && $val>9 )
                                                     Bán chạy <i class="fa fa-star" style="font-size:20px;color:yellow"></i>
                                                     @endif
                                                 </th>

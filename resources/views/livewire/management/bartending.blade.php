@@ -93,6 +93,7 @@
                                         <th>Bàn</th>
                                         <th>Khu vực</th>
                                         <th>Số lượng</th>
+                                        <th>Thời gian vào</th>
                                         <th>Trạng thái</th>
                                         @canany(['system.basic.management', 'system.permission.management'])
                                             <th class='text-center'>Hành động</th>
@@ -103,11 +104,12 @@
                                     <?php $temp = 0; ?>
                                     @foreach($Bartending_no_complete as $bar)
                                         <tr>
-                                            <td scope="row">{{ ++$loop->index }}</td>
+                                            <td scope="row"><span class="bg-soft-primary badge  text-primary">{{ ++$loop->index }}</span></td>
                                             <td scope="row">{{ $bar->drink->drink_name }}</td>
                                             <td scope="row">{{ $bar->table->table_name }}</td>
                                             <td scope="row">{{ $bar->table->area->sub_name }}</td>
-                                            <td scope="row">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
+                                            <td scope="row">{{ $bar->drink_amount }}</td>
+                                            <td scope="row"><span class="bg-soft-success badge  text-success">{{ $bar->invoice->time_in }}</span></td>
                                             <td scope="row"> <span class="badge bg-danger">Chưa làm</span></td>
                                             @canany(['system.basic.management', 'system.permission.management'])
                                                 <td scope="row" class='text-center'>
@@ -147,11 +149,12 @@
                             <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                    <th>STT</th>
                                         <th>Tên</th>
                                         <th>Bàn</th>
                                         <th>Khu vực</th>
                                         <th>Số lượng</th>
+                                        <th>Thời gian vào</th>
                                         <th>Trạng thái</th>
                                         @canany(['system.basic.management', 'system.permission.management'])
                                             <th class='text-center'>Hành động</th>
@@ -162,11 +165,12 @@
                                     <?php $temp = 0; ?>
                                     @foreach($Bartending_doing as $bar)
                                         <tr>
-                                            <td scope="row">{{ ++$loop->index }}</td>
+                                            <td scope="row"><span class="bg-soft-primary badge  text-primary">{{ ++$loop->index }}</span></td>
                                             <td scope="row">{{ $bar->drink->drink_name }}</td>
                                             <td scope="row">{{ $bar->table->table_name }}</td>
                                             <td scope="row">{{ $bar->table->area->sub_name }}</td>
-                                            <td scope="row">{{ $bar->drink_amount }}<span class="badge  text-primary"></span></td>
+                                            <td scope="row">{{ $bar->drink_amount }}</td>
+                                            <td scope="row"><span class="bg-soft-success badge  text-success">{{ $bar->invoice->time_in }}</span></td>
                                             <td scope="row"> <span class="badge bg-warning">Đang làm</span></td>
                                             @canany(['system.basic.management', 'system.permission.management'])
                                                 <td scope="row" class='text-center'>
@@ -216,12 +220,12 @@
                                     <?php $temp = 0; ?>
                                     @foreach($Bartending_complete as $bar)
                                         <tr>
-                                            <td scope="row" class="text-center">{{ ++$loop->index }}</td>
+                                        <td scope="row"><span class="bg-soft-primary badge  text-primary">{{ ++$loop->index }}</span></td>
                                             <td scope="row">{{ $bar->drink->drink_name }}</td>
-                                            <td scope="row" class="text-center"><span class="badge  text-primary">{{ $bar->drink_amount }}</span></td>
+                                            <td scope="row" class="text-center"><span class="bg-soft-warning badge  text-danger">{{ $bar->drink_amount }}</span></td>
                                             <td scope="row" class="text-center">{{ $bar->table->table_name }}</td>
                                             <td scope="row" class="text-center">{{ $bar->table->area->sub_name }}</td>
-                                            <td scope="row" class="text-center">{{ $bar->created_at->toDateString() }}</td>  
+                                            <td scope="row" class="text-center"><span class="bg-soft-danger badge  text-danger">{{ $bar->invoice->time_in }}</span></td>
                                             <td scope="row" class="text-center"> <span class="badge bg-success">Hoàn thành</span></td>
                                         </tr>
                                         <?php $temp++ ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 21, 2021 at 08:31 AM
+-- Generation Time: Dec 23, 2021 at 04:50 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -195,8 +195,8 @@ CREATE TABLE `drink_details` (
 INSERT INTO `drink_details` (`id`, `drink_id`, `drink_name`, `price_id`, `provider_id`, `amount`, `date_add`, `date_exp`, `image`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Sting', 1, 1, 100, '2021-12-21', '2021-12-23', 'images/5b6Tb8v9yOPZauCRzs1yEpogHyjTImdwT48CaBen.jpg', '2021-12-20 22:41:42', '2021-12-21 00:25:32'),
 (3, 3, 'Mirinda Thái', 3, 1, 100, '2021-12-21', '2021-12-23', 'images/Sjd5FpC2xh0cijGTNylOEfqV0QD4XZBWta576RCX.jpg', '2021-12-20 22:42:22', '2021-12-21 00:26:22'),
-(4, 4, 'Redbull', 4, 1, 100, '2021-12-21', '2021-12-30', 'images/WzSVU4uEzR2TXPzpcQgkgIjer1JGwsHUEK2llk2x.jpg', '2021-12-20 22:42:50', '2021-12-21 00:26:38'),
-(5, 5, 'Carabao', 5, 2, 100, '2021-12-21', '2021-12-30', 'images/HOevsoPU7sKn71qIeRX10Lc82K2B8IzrBbGia2lB.jpg', '2021-12-20 22:43:16', '2021-12-21 00:26:46'),
+(4, 4, 'Redbull', 4, 1, 87, '2021-12-21', '2021-12-30', 'images/WzSVU4uEzR2TXPzpcQgkgIjer1JGwsHUEK2llk2x.jpg', '2021-12-20 22:42:50', '2021-12-23 08:07:54'),
+(5, 5, 'Carabao', 5, 2, 98, '2021-12-21', '2021-12-30', 'images/HOevsoPU7sKn71qIeRX10Lc82K2B8IzrBbGia2lB.jpg', '2021-12-20 22:43:16', '2021-12-23 08:08:09'),
 (6, 6, 'Cafe đen đá', 6, NULL, 0, NULL, NULL, 'images/AJiksouBij9WAfuMwyaCECfWO55IkevOlhnAOGdx.jpg', '2021-12-20 22:43:45', '2021-12-20 22:43:45'),
 (7, 7, 'Cafe đặc biệt', 7, NULL, 0, NULL, NULL, 'images/7LS0UhlKu1AEYswJqdIIPqlPrlcNJ5ikAWB7ZsRn.jpg', '2021-12-20 22:44:28', '2021-12-20 22:44:28'),
 (8, 8, 'Cappucino', 8, NULL, 0, NULL, NULL, 'images/80oKFC8WSGKtwu9PuXf2HyEOZwYS6qxDAGaoFDmm.jpg', '2021-12-20 22:44:50', '2021-12-20 22:44:50'),
@@ -210,8 +210,8 @@ INSERT INTO `drink_details` (`id`, `drink_id`, `drink_name`, `price_id`, `provid
 (17, 17, 'Sinh tố dâu', 17, NULL, 0, NULL, NULL, 'images/pAmRHGpIGaREDnlvy4sx7gRcSxPNTbDAc0nT7FXe.jpg', '2021-12-20 22:47:43', '2021-12-20 22:47:43'),
 (18, 18, 'Sinh tố đu đủ', 18, NULL, 0, NULL, NULL, 'images/X4qkTYGcKUiWhGNzgmTBkBdU0Vj74AoBS6LUQCon.jpg', '2021-12-20 22:47:59', '2021-12-20 22:47:59'),
 (19, 19, 'Cafe sữa đá', 19, NULL, 0, NULL, NULL, 'images/pM49Zf5AaPYK0ddqSyDS0n8NFMI8SDLy1SgdIZ1h.jpg', '2021-12-20 22:48:45', '2021-12-20 22:48:45'),
-(20, 20, 'Sting', 20, 1, 100, '2021-12-21', '2021-12-30', 'images/5b6Tb8v9yOPZauCRzs1yEpogHyjTImdwT48CaBen.jpg', '2021-12-21 00:25:41', '2021-12-21 00:25:41'),
-(21, 21, 'Mirinda Thái', 21, 1, 100, '2021-12-23', '2021-12-30', 'images/Sjd5FpC2xh0cijGTNylOEfqV0QD4XZBWta576RCX.jpg', '2021-12-21 00:25:59', '2021-12-21 00:25:59');
+(20, 20, 'Sting', 20, 1, 98, '2021-12-21', '2021-12-30', 'images/5b6Tb8v9yOPZauCRzs1yEpogHyjTImdwT48CaBen.jpg', '2021-12-21 00:25:41', '2021-12-23 07:56:48'),
+(21, 21, 'Mirinda Thái', 21, 1, 97, '2021-12-23', '2021-12-30', 'images/Sjd5FpC2xh0cijGTNylOEfqV0QD4XZBWta576RCX.jpg', '2021-12-21 00:25:59', '2021-12-23 07:45:35');
 
 -- --------------------------------------------------------
 
@@ -371,7 +371,16 @@ INSERT INTO `invoices` (`id`, `order_id`, `table_id`, `user_id`, `total`, `submo
 (28, 28, 2, 1, 50000, 2000, '2021-12-21 13:58:29', '2021-12-21 14:01:07', 1, '2021-12-20 23:58:26', '2021-12-21 00:01:07'),
 (29, 29, 2, 1, 50000, 2000, '2021-12-21 13:58:29', '2021-12-21 14:01:07', 1, '2021-12-20 23:58:27', '2021-12-21 00:01:07'),
 (30, 30, 2, 1, 104000, 0, '2021-12-21 14:02:58', '2021-12-21 14:03:19', 1, '2021-12-21 00:02:56', '2021-12-21 00:03:19'),
-(31, 31, 23, 1, 210000, 6000, '2021-12-21 14:03:41', '2021-12-21 14:04:03', 1, '2021-12-21 00:03:39', '2021-12-21 00:04:03');
+(31, 31, 23, 1, 210000, 6000, '2021-12-21 14:03:41', '2021-12-21 14:04:03', 1, '2021-12-21 00:03:39', '2021-12-21 00:04:03'),
+(43, 43, 1, 1, 106000, 0, '2021-12-23 22:07:16', '2021-12-23 22:08:23', 1, '2021-12-23 08:07:05', '2021-12-23 08:08:23'),
+(44, 44, 1, 1, 106000, 0, '2021-12-23 22:07:16', '2021-12-23 22:08:23', 1, '2021-12-23 08:07:08', '2021-12-23 08:08:23'),
+(45, 45, 10, 1, 91000, 5000, '2021-12-23 22:07:38', '2021-12-23 22:08:52', 1, '2021-12-23 08:07:29', '2021-12-23 08:08:52'),
+(46, 46, 10, 1, 91000, 5000, '2021-12-23 22:07:38', '2021-12-23 22:08:52', 1, '2021-12-23 08:07:34', '2021-12-23 08:08:52'),
+(47, 47, 11, 1, 315000, 3000, '2021-12-23 22:07:55', '2021-12-23 22:08:59', 1, '2021-12-23 08:07:50', '2021-12-23 08:08:59'),
+(48, 48, 11, 1, 315000, 3000, '2021-12-23 22:07:55', '2021-12-23 22:08:59', 1, '2021-12-23 08:07:54', '2021-12-23 08:08:59'),
+(49, 49, 7, 1, 140000, 0, '2021-12-23 22:08:15', '2021-12-23 22:09:03', 1, '2021-12-23 08:08:09', '2021-12-23 08:09:03'),
+(50, 50, 7, 1, 140000, 0, '2021-12-23 22:08:15', '2021-12-23 22:09:03', 1, '2021-12-23 08:08:13', '2021-12-23 08:09:03'),
+(51, 51, 7, 1, 52000, 0, '2021-12-23 22:17:19', '2021-12-23 22:17:53', 1, '2021-12-23 08:17:17', '2021-12-23 08:17:53');
 
 -- --------------------------------------------------------
 
@@ -412,7 +421,16 @@ INSERT INTO `invoice_details` (`id`, `invoice_id`, `drink_name`, `table_name`, `
 (28, 28, 'Sinh tố sabo', 'Bàn 2', 'Admin', '2021-12-21 13:58:29', '2021-12-21 14:01:07', 50000, 2000, 1, '2021-12-20 23:58:26', '2021-12-21 00:01:07'),
 (29, 29, 'Sinh tố xoài', 'Bàn 2', 'Admin', '2021-12-21 13:58:29', '2021-12-21 14:01:07', 50000, 2000, 1, '2021-12-20 23:58:27', '2021-12-21 00:01:07'),
 (30, 30, 'Sinh tố xoài', 'Bàn 2', 'Admin', '2021-12-21 14:02:58', '2021-12-21 14:03:19', 104000, 0, 1, '2021-12-21 00:02:56', '2021-12-21 00:03:19'),
-(31, 31, 'Cafe sữa đá', 'Bàn 23', 'Admin', '2021-12-21 14:03:41', '2021-12-21 14:04:03', 210000, 6000, 1, '2021-12-21 00:03:39', '2021-12-21 00:04:03');
+(31, 31, 'Cafe sữa đá', 'Bàn 23', 'Admin', '2021-12-21 14:03:41', '2021-12-21 14:04:03', 210000, 6000, 1, '2021-12-21 00:03:39', '2021-12-21 00:04:03'),
+(43, 43, 'Sinh tố bơ', 'Bàn 1', 'Admin', '2021-12-23 22:07:16', '2021-12-23 22:08:23', 106000, 0, 1, '2021-12-23 08:07:05', '2021-12-23 08:08:23'),
+(44, 44, 'Sinh tố xoài', 'Bàn 1', 'Admin', '2021-12-23 22:07:16', '2021-12-23 22:08:23', 106000, 0, 1, '2021-12-23 08:07:08', '2021-12-23 08:08:23'),
+(45, 45, 'Cafe đen đá', 'Bàn 10', 'Admin', '2021-12-23 22:07:38', '2021-12-23 22:08:52', 91000, 5000, 1, '2021-12-23 08:07:29', '2021-12-23 08:08:52'),
+(46, 46, 'Cafe đặc biệt', 'Bàn 10', 'Admin', '2021-12-23 22:07:38', '2021-12-23 22:08:52', 91000, 5000, 1, '2021-12-23 08:07:34', '2021-12-23 08:08:52'),
+(47, 47, 'Sinh tố dâu', 'Bàn 11', 'Admin', '2021-12-23 22:07:55', '2021-12-23 22:08:59', 315000, 3000, 1, '2021-12-23 08:07:50', '2021-12-23 08:08:59'),
+(48, 48, 'Redbull', 'Bàn 11', 'Admin', '2021-12-23 22:07:55', '2021-12-23 22:08:59', 315000, 3000, 1, '2021-12-23 08:07:54', '2021-12-23 08:08:59'),
+(49, 49, 'Carabao', 'Bàn 7', 'Admin', '2021-12-23 22:08:15', '2021-12-23 22:09:03', 140000, 0, 1, '2021-12-23 08:08:09', '2021-12-23 08:09:03'),
+(50, 50, 'Cappucino', 'Bàn 7', 'Admin', '2021-12-23 22:08:15', '2021-12-23 22:09:03', 140000, 0, 1, '2021-12-23 08:08:13', '2021-12-23 08:09:03'),
+(51, 51, 'Sinh tố sabo', 'Bàn 7', 'Admin', '2021-12-23 22:17:19', '2021-12-23 22:17:53', 52000, 0, 1, '2021-12-23 08:17:17', '2021-12-23 08:17:53');
 
 -- --------------------------------------------------------
 
@@ -514,7 +532,8 @@ CREATE TABLE `model_has_roles` (
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', 1),
 (3, 'App\\Models\\User', 2),
-(4, 'App\\Models\\User', 3);
+(4, 'App\\Models\\User', 3),
+(5, 'App\\Models\\User', 4);
 
 -- --------------------------------------------------------
 
@@ -542,17 +561,26 @@ INSERT INTO `orders` (`id`, `table_id`, `user_id`, `drink_id`, `drink_amount`, `
 (14, 30, 1, 6, 15, 2, 2, '2021-12-20 23:16:22', '2021-12-21 00:06:05'),
 (15, 30, 1, 7, 1, 2, 2, '2021-12-20 23:16:23', '2021-12-21 00:06:07'),
 (16, 30, 1, 12, 1, 2, 2, '2021-12-20 23:16:26', '2021-12-21 00:06:06'),
-(17, 2, 1, 15, 2, 2, 2, '2021-12-20 23:17:11', '2021-12-21 00:06:08'),
-(18, 2, 1, 13, 3, 2, 2, '2021-12-20 23:17:13', '2021-12-21 00:06:08'),
-(19, 7, 1, 19, 1, 2, 2, '2021-12-20 23:17:24', '2021-12-21 00:06:10'),
-(20, 7, 1, 18, 1, 2, 2, '2021-12-20 23:17:26', '2021-12-21 00:06:09'),
+(17, 2, 1, 15, 2, 2, 2, '2021-12-20 23:17:11', '2021-12-23 07:53:49'),
+(18, 2, 1, 13, 3, 2, 2, '2021-12-20 23:17:13', '2021-12-23 07:53:49'),
+(19, 7, 1, 19, 1, 2, 2, '2021-12-20 23:17:24', '2021-12-23 08:17:53'),
+(20, 7, 1, 18, 1, 2, 2, '2021-12-20 23:17:26', '2021-12-23 08:17:53'),
 (21, 5, 1, 6, 2, 2, 2, '2021-12-20 23:17:44', '2021-12-21 00:06:11'),
-(22, 10, 1, 9, 1, 2, 2, '2021-12-20 23:17:56', '2021-12-21 00:06:13'),
-(23, 10, 1, 13, 2, 2, 2, '2021-12-20 23:18:01', '2021-12-21 00:06:13'),
-(28, 2, 1, 15, 1, 2, 2, '2021-12-20 23:58:26', '2021-12-21 00:06:14'),
-(29, 2, 1, 16, 1, 2, 2, '2021-12-20 23:58:27', '2021-12-21 00:06:15'),
-(30, 2, 1, 16, 4, 2, 2, '2021-12-21 00:02:56', '2021-12-21 00:06:16'),
-(31, 23, 1, 19, 12, 2, 2, '2021-12-21 00:03:38', '2021-12-21 00:06:16');
+(22, 10, 1, 9, 1, 2, 2, '2021-12-20 23:17:56', '2021-12-23 08:08:52'),
+(23, 10, 1, 13, 2, 2, 2, '2021-12-20 23:18:01', '2021-12-23 08:08:52'),
+(28, 2, 1, 15, 1, 2, 2, '2021-12-20 23:58:26', '2021-12-23 07:53:49'),
+(29, 2, 1, 16, 1, 2, 2, '2021-12-20 23:58:27', '2021-12-23 07:53:49'),
+(30, 2, 1, 16, 4, 2, 2, '2021-12-21 00:02:56', '2021-12-23 07:53:49'),
+(31, 23, 1, 19, 12, 2, 2, '2021-12-21 00:03:38', '2021-12-21 00:06:16'),
+(43, 1, 1, 14, 1, 2, 1, '2021-12-23 08:07:05', '2021-12-23 08:43:43'),
+(44, 1, 1, 16, 3, 2, 0, '2021-12-23 08:07:08', '2021-12-23 08:08:23'),
+(45, 10, 1, 6, 3, 2, 0, '2021-12-23 08:07:29', '2021-12-23 08:08:52'),
+(46, 10, 1, 7, 3, 2, 0, '2021-12-23 08:07:34', '2021-12-23 08:08:52'),
+(47, 11, 1, 17, 3, 2, 0, '2021-12-23 08:07:50', '2021-12-23 08:08:59'),
+(48, 11, 1, 4, 12, 2, NULL, '2021-12-23 08:07:54', '2021-12-23 08:08:59'),
+(49, 7, 1, 5, 2, 2, NULL, '2021-12-23 08:08:09', '2021-12-23 08:17:53'),
+(50, 7, 1, 8, 4, 2, 0, '2021-12-23 08:08:13', '2021-12-23 08:17:53'),
+(51, 7, 1, 15, 2, 2, 0, '2021-12-23 08:17:17', '2021-12-23 08:17:53');
 
 -- --------------------------------------------------------
 
@@ -591,7 +619,16 @@ INSERT INTO `order_details` (`id`, `order_id`, `table_name`, `user_name`, `drink
 (28, 28, 'Bàn 2', 'Admin', 'Sinh tố sabo', 1, 26000, 0, '2021-12-20 23:58:26', '2021-12-20 23:58:26'),
 (29, 29, 'Bàn 2', 'Admin', 'Sinh tố xoài', 1, 26000, 0, '2021-12-20 23:58:27', '2021-12-20 23:58:27'),
 (30, 30, 'Bàn 2', 'Admin', 'Sinh tố xoài', 4, 26000, 0, '2021-12-21 00:02:56', '2021-12-21 00:02:56'),
-(31, 31, 'Bàn 23', 'Admin', 'Cafe sữa đá', 12, 18000, 0, '2021-12-21 00:03:39', '2021-12-21 00:03:39');
+(31, 31, 'Bàn 23', 'Admin', 'Cafe sữa đá', 12, 18000, 0, '2021-12-21 00:03:39', '2021-12-21 00:03:39'),
+(43, 43, 'Bàn 1', 'Admin', 'Sinh tố bơ', 1, 28000, 0, '2021-12-23 08:07:05', '2021-12-23 08:07:05'),
+(44, 44, 'Bàn 1', 'Admin', 'Sinh tố xoài', 3, 26000, 0, '2021-12-23 08:07:08', '2021-12-23 08:07:08'),
+(45, 45, 'Bàn 10', 'Admin', 'Cafe đen đá', 3, 14000, 0, '2021-12-23 08:07:29', '2021-12-23 08:07:35'),
+(46, 46, 'Bàn 10', 'Admin', 'Cafe đặc biệt', 3, 18000, 0, '2021-12-23 08:07:34', '2021-12-23 08:07:34'),
+(47, 47, 'Bàn 11', 'Admin', 'Sinh tố dâu', 3, 26000, 0, '2021-12-23 08:07:50', '2021-12-23 08:07:50'),
+(48, 48, 'Bàn 11', 'Admin', 'Redbull', 12, 20000, 0, '2021-12-23 08:07:54', '2021-12-23 08:07:54'),
+(49, 49, 'Bàn 7', 'Admin', 'Carabao', 2, 20000, 0, '2021-12-23 08:08:09', '2021-12-23 08:08:09'),
+(50, 50, 'Bàn 7', 'Admin', 'Cappucino', 4, 25000, 0, '2021-12-23 08:08:13', '2021-12-23 08:08:13'),
+(51, 51, 'Bàn 7', 'Admin', 'Sinh tố sabo', 2, 26000, 0, '2021-12-23 08:17:17', '2021-12-23 08:17:17');
 
 -- --------------------------------------------------------
 
@@ -719,7 +756,8 @@ CREATE TABLE `profiles` (
 INSERT INTO `profiles` (`id`, `user_id`, `email`, `address`, `phone`, `birthday`, `created_at`, `updated_at`) VALUES
 (1, 2, 'tinhb1706880@student.ctu.edu.vn', 'Cần Thơ', '0582812164', '1999-12-09', '2021-12-20 21:37:19', '2021-12-20 21:37:19'),
 (2, 3, 'duongtrungtinh.19899@gmail.com', 'Cần Thơ', '0582812164', '1999-12-23', '2021-12-20 21:44:14', '2021-12-20 21:44:14'),
-(3, 4, 'MuoiiPhamm@gmail.com', 'Cần Thơ', '0743889223', '1999-12-08', '2021-12-20 21:48:49', '2021-12-20 21:48:49');
+(3, 4, 'MuoiiPhamm@gmail.com', 'Cần Thơ', '0743889223', '1999-12-08', '2021-12-20 21:48:49', '2021-12-20 21:48:49'),
+(4, 5, 'tinhduong390@gmail.com', 'Cần Thơ', '0582812166', '1999-12-16', '2021-12-23 07:29:12', '2021-12-23 07:29:12');
 
 -- --------------------------------------------------------
 
@@ -838,8 +876,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('jO4CpBqUvf7ybKlW3om2alOmkd5AhkynNCK2HmbK', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiM2hGb1ZFRDdjZUNvTmZkYTU3S2tWbFNGS3pVZENjckY1R2xkUVRVNSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9tYW5hZ2VtZW50L3RpbWVrZWVwaW5nIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHpHeE5rZlZHS3g2TXRVZ0VidEZ6RXVlWG8vZ3JQN29TV2lkbFR6Z1h0TmRzMFF5eDRYUnpXIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCR6R3hOa2ZWR0t4Nk10VWdFYnRGekV1ZVhvL2dyUDdvU1dpZGxUemdYdE5kczBReXg0WFJ6VyI7fQ==', 1640070977),
-('ZnT9yqwdT4tLlFK46vAU8No8OiwSITZwfSp00ffm', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiRFdrb1JERGx0VTl6SkdWZE8xczN0dlY0QWo5d1RVUnU2Y1RYbmdYcyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9tYW5hZ2VtZW50L3N0YXRpc3RpY2FsIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHhhYU1KZlpoSFZHWlhhWGhMdEdZdy5IVjlZc0pPMlpTV3Y0bEUxcWZKeWx5eG1XVVBOS1plIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCR4YWFNSmZaaEhWR1pYYVhoTHRHWXcuSFY5WXNKTzJaU1d2NGxFMXFmSnlseXhtV1VQTktaZSI7fQ==', 1640071815);
+('dMZVKJLhOwSQLwE9X1IRjufs33jhDxK4MS9qrpMJ', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiempxb2NFWDlnOVRza29xSHdQYWtBZXB0RzhJNEg5UWduMlp1NUNzSSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9tYW5hZ2VtZW50L29yZGVyIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHhhYU1KZlpoSFZHWlhhWGhMdEdZdy5IVjlZc0pPMlpTV3Y0bEUxcWZKeWx5eG1XVVBOS1plIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCR4YWFNSmZaaEhWR1pYYVhoTHRHWXcuSFY5WXNKTzJaU1d2NGxFMXFmSnlseXhtV1VQTktaZSI7fQ==', 1640274625);
 
 -- --------------------------------------------------------
 
@@ -886,7 +923,8 @@ CREATE TABLE `statisticals` (
 --
 
 INSERT INTO `statisticals` (`id`, `date`, `turnover`, `total_order`, `created_at`, `updated_at`) VALUES
-(2, '2021-12-21', 809000, 14, '2021-12-20 23:15:55', '2021-12-21 00:04:03');
+(2, '2021-12-21', 809000, 14, '2021-12-20 23:15:55', '2021-12-21 00:04:03'),
+(4, '2021-12-23', 704000, 5, '2021-12-23 08:08:23', '2021-12-23 08:17:53');
 
 -- --------------------------------------------------------
 
@@ -908,22 +946,22 @@ CREATE TABLE `tables` (
 --
 
 INSERT INTO `tables` (`id`, `table_name`, `sub_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Bàn 1', 1, 0, '2021-12-20 21:56:52', '2021-12-20 22:56:26'),
-(2, 'Bàn 2', 1, 0, '2021-12-20 21:56:53', '2021-12-21 00:03:19'),
+(1, 'Bàn 1', 1, 0, '2021-12-20 21:56:52', '2021-12-23 08:08:23'),
+(2, 'Bàn 2', 1, 0, '2021-12-20 21:56:53', '2021-12-23 07:53:49'),
 (3, 'Bàn 3', 1, 0, '2021-12-20 21:56:54', '2021-12-20 23:05:16'),
 (4, 'Bàn 4', 1, 0, '2021-12-20 21:56:56', '2021-12-20 21:58:49'),
 (5, 'Bàn 5', 1, 0, '2021-12-20 21:56:57', '2021-12-20 23:40:31'),
-(6, 'Bàn 6', 1, 0, '2021-12-20 21:56:58', '2021-12-20 23:15:55'),
-(7, 'Bàn 7', 1, 0, '2021-12-20 21:56:59', '2021-12-20 23:19:05'),
+(6, 'Bàn 6', 1, 0, '2021-12-20 21:56:58', '2021-12-23 07:46:36'),
+(7, 'Bàn 7', 1, 0, '2021-12-20 21:56:59', '2021-12-23 08:17:53'),
 (8, 'Bàn 8', 1, 0, '2021-12-20 21:57:00', '2021-12-20 21:58:49'),
-(9, 'Bàn 9', 1, 0, '2021-12-20 21:57:01', '2021-12-20 21:58:49'),
-(10, 'Bàn 10', 1, 0, '2021-12-20 21:57:04', '2021-12-20 23:40:37'),
-(11, 'Bàn 11', 2, 0, '2021-12-20 21:57:06', '2021-12-20 21:59:06'),
+(9, 'Bàn 9', 1, 0, '2021-12-20 21:57:01', '2021-12-23 07:50:22'),
+(10, 'Bàn 10', 1, 0, '2021-12-20 21:57:04', '2021-12-23 08:08:52'),
+(11, 'Bàn 11', 2, 0, '2021-12-20 21:57:06', '2021-12-23 08:08:59'),
 (12, 'Bàn 12', 2, 0, '2021-12-20 21:57:07', '2021-12-20 21:59:06'),
 (13, 'Bàn 13', 2, 0, '2021-12-20 21:57:09', '2021-12-20 23:16:01'),
 (14, 'Bàn 14', 2, 0, '2021-12-20 21:57:11', '2021-12-20 21:59:06'),
 (15, 'Bàn 15', 2, 0, '2021-12-20 21:57:13', '2021-12-20 21:59:06'),
-(16, 'Bàn 16', 2, 0, '2021-12-20 21:57:14', '2021-12-20 23:16:04'),
+(16, 'Bàn 16', 2, 0, '2021-12-20 21:57:14', '2021-12-23 07:56:59'),
 (17, 'Bàn 17', 2, 0, '2021-12-20 21:57:15', '2021-12-20 21:59:06'),
 (18, 'Bàn 18', 2, 0, '2021-12-20 21:57:16', '2021-12-20 21:59:06'),
 (19, 'Bàn 19', 2, 0, '2021-12-20 21:57:17', '2021-12-20 21:59:06'),
@@ -1004,10 +1042,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Admin', 'admin@gmail.com', '2021-12-07 10:27:41', '$2y$10$xaaMJfZhHVGZXaXhLtGYw.HV9YsJO2ZSWv4lE1qfJylyxmWUPNKZe', NULL, NULL, 'Ryoz4F28EF', NULL, NULL, '2021-12-19 13:06:53', '2021-12-19 13:06:53', 1),
+(1, 'Admin', 'admin@gmail.com', '2021-12-07 10:27:41', '$2y$10$xaaMJfZhHVGZXaXhLtGYw.HV9YsJO2ZSWv4lE1qfJylyxmWUPNKZe', NULL, NULL, 'BskN51UCPRYWexNWPwUBOpkqN9ozXjco1mEW89tXCig8mZkC7tV7ZBl5U3PP', NULL, NULL, '2021-12-19 13:06:53', '2021-12-19 13:06:53', 1),
 (2, 'Thu ngân', 'tinhb1706880@student.ctu.edu.vn', '2021-12-20 21:43:25', '$2y$10$B2AAegLFm2G8Sim790ZbZeshxBgeB6RZajwZnpddkzTHN8E0Sq7MC', NULL, NULL, NULL, NULL, NULL, '2021-12-20 21:37:19', '2021-12-20 21:55:02', 1),
 (3, 'Pha chế', 'duongtrungtinh.19899@gmail.com', '2021-12-20 21:45:14', '$2y$10$zGxNkfVGKx6MtUgEbtFzEueXo/grP7oSWidlTzgXtNds0Qyx4XRzW', NULL, NULL, NULL, NULL, NULL, '2021-12-20 21:44:14', '2021-12-20 21:55:04', 1),
-(4, 'Nhân viên', 'MuoiiPhamm@gmail.com', '2021-12-20 21:49:45', '$2y$10$o71Dpsl6mF04YakrumFg6OXGaw0PklEw3tMMjwNELoAiIEUgUuok6', NULL, NULL, NULL, NULL, NULL, '2021-12-20 21:48:49', '2021-12-20 21:49:45', 0);
+(4, 'Nhân viên', 'MuoiiPhamm@gmail.com', '2021-12-20 21:49:45', '$2y$10$o71Dpsl6mF04YakrumFg6OXGaw0PklEw3tMMjwNELoAiIEUgUuok6', NULL, NULL, NULL, NULL, NULL, '2021-12-20 21:48:49', '2021-12-23 07:30:19', 1),
+(5, 'Nhân Viên 2', 'tinhduong390@gmail.com', '2021-12-23 07:29:29', '$2y$10$GzeYuuUp43HhmlmtqfgaJOZScy.9u02apGbbWY9bj2U7FNrEGrHR2', NULL, NULL, NULL, NULL, NULL, '2021-12-23 07:29:12', '2021-12-23 07:29:29', 0);
 
 -- --------------------------------------------------------
 
@@ -1315,13 +1354,13 @@ ALTER TABLE `ingredent_details`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `menu_categorys`
@@ -1339,13 +1378,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1369,7 +1408,7 @@ ALTER TABLE `prices`
 -- AUTO_INCREMENT for table `profiles`
 --
 ALTER TABLE `profiles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `providers`
@@ -1393,7 +1432,7 @@ ALTER TABLE `shifts`
 -- AUTO_INCREMENT for table `statisticals`
 --
 ALTER TABLE `statisticals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tables`
@@ -1411,7 +1450,7 @@ ALTER TABLE `time_keepings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `wages`

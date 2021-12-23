@@ -34,10 +34,10 @@ class Order extends Model
     }
     public function invoice()
     {
-        return $this->belongsTo('App\models\Invoice', 'invoice_id', 'id');
+        return $this->belongsTo('App\models\Invoice', 'id', 'order_id');
     }
     public function orderDetail()
     {
-        return $this->belongsTo('App\models\OrderDetail', 'order_id', 'id');
+        return $this->belongsTo('App\models\OrderDetail', 'id', 'order_id');
     }
 }

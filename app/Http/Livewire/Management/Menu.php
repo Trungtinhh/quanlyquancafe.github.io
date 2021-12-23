@@ -64,7 +64,7 @@ class Menu extends Component
     {
         return view('livewire.management.menu', [
             'Menu_category' => MenuCategory::all(),
-            'Drink' => Drink::all()->groupBy('drink_name'),
+            'Drink' => Drink::orderBy('drink_name', 'ASC')->get()->groupBy('drink_name'),
             'DrinkNullMenuCategory' => Drink::where('menu_category_id', null)->get()->groupBy('drink_name'),
             'Pro' => Provider::all(),
             'Ingredent' => Ingredent::all()

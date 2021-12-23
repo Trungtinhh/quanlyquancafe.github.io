@@ -25,7 +25,7 @@ class Invoice extends Component
     public function render()
     {
         return view('livewire.management.invoice', [
-            'Invoice' => Iv::all()->groupBy(['time_in', 'table_id']),
+            'Invoice' => Iv::orderBy('id', 'DESC')->get()->groupBy(['time_in', 'table_id']),
         ]);
     }
     public function showInvoice($invoice_table)
