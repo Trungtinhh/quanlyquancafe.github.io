@@ -46,7 +46,7 @@
                                             <th scope="row">{{$vl->user->name}}</th>
                                             <td scope="row"><span class="badge bg-warning text-light">{{ $vl->wage }}</span> VND</td>
                                             <td scope="row"><span class="badge bg-soft-danger text-danger">{{ $vl->date }}</span></td>
-                                            <td scope="row">{{$vl->user->timeKeeping->hour/60}}</td>
+                                            <td scope="row">{{$vl->hour}}</td>
                                         </tr>
                                         <?php
                                             $temp++;

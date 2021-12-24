@@ -14,6 +14,7 @@ class Wage extends Model
     protected $fillable = [
         'id',
         'wage',
+        'hour',
         'user_id',
         'date',
     ];

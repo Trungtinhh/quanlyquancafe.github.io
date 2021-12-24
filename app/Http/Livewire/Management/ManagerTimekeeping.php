@@ -108,6 +108,7 @@ class ManagerTimekeeping extends Component
             if (!Wage::where('wage', $this->wage)->where('user_id', $this->user_id)->where('date', Carbon::now()->toDateString())->exists()) {
                 $this->insertWage = Wage::create([
                     'wage' => $this->wage,
+                    'hour' => $this->hour_wage,
                     'user_id' => $this->user_id,
                     'date' => Carbon::now()->toDateString(),
                 ]);

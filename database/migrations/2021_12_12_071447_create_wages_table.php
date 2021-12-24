@@ -16,6 +16,7 @@ class CreateWagesTable extends Migration
         Schema::create('wages', function (Blueprint $table) {
             $table->id();
             $table->double('wage');
+            $table->float('hour');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('date');
