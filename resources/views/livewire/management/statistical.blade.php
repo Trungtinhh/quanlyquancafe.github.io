@@ -284,7 +284,7 @@
             <div class="col-5">
                 <div class="card border border-success">
                     <div class="card-body">
-                        <h4 class="header-title mb-4">Thống kê số lượng món đã bán</h4>
+                        <h4 class="header-title mb-4">Thống kê số lượng món đã bán 7 ngày qua</h4>
                         <div class='col-3'>
                             <input class="form-control" id="search" type="text" placeholder="Tìm kiếm trong bảng hiện tại..">
                         </div>
@@ -306,7 +306,7 @@
                                                 <th>{{ $drink_sal }}</th>
                                                 <th>{{ $val }}</th>
                                                 <th>
-                                                    @if(($loop->index == 1 || $loop->index == 2 || $loop->index == 3 || $loop->index == 4 || $loop->index == 5 || $loop->index == 6 || $loop->index == 7 || $loop->index == 8 || $loop->index == 9 || $loop->index == 10) && $val>9 )
+                                                    @if(($loop->index == 1 || $loop->index == 2 || $loop->index == 3 || $loop->index == 4 || $loop->index == 5 || $loop->index == 6 || $loop->index == 7 || $loop->index == 8 || $loop->index == 9 || $loop->index == 10) && $val>50 )
                                                     Bán chạy <i class="fa fa-star" style="font-size:20px;color:yellow"></i>
                                                     @endif
                                                 </th>

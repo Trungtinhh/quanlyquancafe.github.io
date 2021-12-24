@@ -100,8 +100,12 @@ class Statistical extends Component
             $drink_amount_sale = 0;
             $drink_sale_name = '';
             foreach ($drink as $val) {
-                $drink_amount_sale += $val->drink_amount;
-                $drink_sale_name = $val->drink->drink_name;
+                $day = new Carbon($val->created_at,'Asia/Ho_Chi_Minh');
+                $_7days = Carbon::now('Asia/Ho_Chi_Minh')->subDays(7);
+                if ($day->greaterThan($_7days)) {
+                    $drink_amount_sale += $val->drink_amount;
+                    $drink_sale_name = $val->drink->drink_name;
+                }
             }
             if ($drink_amount_sale != 0) {
                 $this->drink_sale[$drink_sale_name] = ($drink_amount_sale);
