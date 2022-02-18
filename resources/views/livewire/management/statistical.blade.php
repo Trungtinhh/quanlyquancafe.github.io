@@ -278,8 +278,7 @@
                     </div>
                 </div>
             </div><!-- end col -->
-        </div>
-        
+        </div>     
         <!-- end row -->
         <div class="row">
             <div class="col-5">
